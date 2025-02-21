@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static ItemManager Instance;
+    private List<Item> itemDatabase = new List<Item>();
+
+    void Awake()
     {
-        
+        if (Instance == null) Instance = this;
+        LoadItemsFromJson();
     }
 
-    // Update is called once per frame
-    void Update()
+    void LoadItemsFromJson()
     {
         
     }
