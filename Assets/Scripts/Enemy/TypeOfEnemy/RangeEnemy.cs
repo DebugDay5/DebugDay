@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class RangeEnemy : BaseEnemy
 {
-    [SerializeField] private float attackRange = 8f;
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float attackRange = 8f; // 공격 범위
+    [SerializeField] private float attackCooldown = 1.0f; // 연사 속도
+    [SerializeField] private GameObject projectilePrefab; // 투사체
+
+    private float lastAttackTime; // 공격 시간
 
     private void Awake()
     {
         hp = 70;
         speed = 2;
-        attackPower = 15;
+        attackPower = 0;
         gold = 5;
     }
     
@@ -22,7 +25,7 @@ public class RangeEnemy : BaseEnemy
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
         }
-        else
+        else if (Time.time >= lastAttackTime + attackCooldown)
         {
             Attack();
         }
@@ -30,6 +33,7 @@ public class RangeEnemy : BaseEnemy
     
     public override void Attack()
     {
+        lastAttackTime = Time.time;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetDirection((player.position - transform.position).normalized);
     }

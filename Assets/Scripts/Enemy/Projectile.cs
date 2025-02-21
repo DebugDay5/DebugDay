@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private int damage = 15;
+    [SerializeField] private float speed = 10f; // 투사체 속도
+    [SerializeField] private int damage = 15; // 투사체 데미지
     private Vector3 direction;
 
     public void SetDirection(Vector3 newDirection)
@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // collision.GetComponent<Player>().TakeDamage(damage);
+            // collision.GetComponent<Player>().TakeDamage(damage); 플레이어에게 TakeDamage가 있어야함
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Wall"))
