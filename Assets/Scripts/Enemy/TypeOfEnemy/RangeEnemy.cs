@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class RangeEnemy : BaseEnemy
 {
-    [SerializeField] private float attackRange = 8f; // 공격 범위
-    [SerializeField] private float attackCooldown = 1.0f; // 연사 속도
+    [SerializeField] private float attackRange = 5f; // 공격 범위
+    [SerializeField] private float attackCooldown = 2.0f; // 공격 속도
     [SerializeField] private GameObject projectilePrefab; // 투사체
 
     private float lastAttackTime; // 공격 시간
+    private bool isAttacking = false; // 공격 여부
 
     private void Awake()
     {
+        base.Awake();
         hp = 70;
-        speed = 2;
+        speed = 0.5f;
         attackPower = 0;
         gold = 5;
     }
@@ -21,6 +23,9 @@ public class RangeEnemy : BaseEnemy
     private void Update()
     {
         float distance = Vector3.Distance(transform.position, player.position);
+
+        FlipSprite();
+
         if (distance > attackRange)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
@@ -36,5 +41,24 @@ public class RangeEnemy : BaseEnemy
         lastAttackTime = Time.time;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetDirection((player.position - transform.position).normalized);
+        isAttacking = true;
+        animationHandler.Attack(OnAttackComplete);
+    }
+
+    private void OnAttackComplete()
+    {
+        isAttacking = false;
+    }
+
+    private void FlipSprite()
+    {
+        if (player.position.x > transform.position.x)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 }
