@@ -17,40 +17,39 @@ public class MeleeEnemy : BaseEnemy
         attackPower = 10;
         gold = 5;
     }
-    
+
     private void Update()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, player.position); // 상호 간 거리 계산
 
-        FlipSprite();
+        FlipSprite(); // 스프라이트 방향 전환
 
-        // 공격 중이면 움직이거나 다시 공격하지 않음
-        if (isAttacking)
+        if (isAttacking) // true 공격 x, false 공격 o
             return;
 
-        if (distance > attackRange)
+        if (distance > attackRange) // 공격 범위보다 거리가 멀면 이동
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime); // 현재 위치에서 플레이어 위치로 일정한 속도로 이동
             animationHandler.Move(true);
         }
-        else if (Time.time >= lastAttackTime + attackCooldown)
+        else if (Time.time >= lastAttackTime + attackCooldown) // 공격 쿨타임 계산
         {
             animationHandler.Move(false);
             Attack();
         }
     }
-    
-    public override void Attack()
+
+    public override void Attack() // BaseEnemy의 Attack을 Override
     {
-        lastAttackTime = Time.time;
-        isAttacking = true;
-        animationHandler.Attack(OnAttackComplete);
-        // player.GetComponent<Player>().TakeDamage(attackPower);
+        lastAttackTime = Time.time; // 쿨타임 계산
+        isAttacking = true; // 공격
+        animationHandler.Attack(OnAttackComplete); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
+        // player.GetComponent<Player>().TakeDamage(attackPower); // Player에게 데미지를 입힘
     }
 
     private void OnAttackComplete()
     {
-        isAttacking = false;
+        isAttacking = false; // 다시 공격할 수 있도록 함
     }
 
     private void FlipSprite()

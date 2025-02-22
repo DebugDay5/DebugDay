@@ -17,7 +17,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     [SerializeField] protected float speed;
     [SerializeField] protected int attackPower;
     [SerializeField] protected int gold;
-    protected Transform player;
+    protected Transform player; // 플레이어 추적
     protected AnimationHandler animationHandler;
     
     public int HP { get => hp; set => hp = value; }
@@ -32,10 +32,8 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         EnemyManager.Instance?.AddEnemy(this);
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform; // player에 Player Tag 할당
     }
-    
-    public abstract void Attack(); // abstract를 사용하여 각 Enemy마다 다른 공격을 하도록 override함
     
     public virtual void TakeDamage(int damage)
     {
@@ -51,6 +49,8 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
         animationHandler?.Die();
         EnemyManager.Instance?.RemoveEnemy(this);
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 4f);
     }
+    
+    public abstract void Attack(); // abstract를 사용하여 각 Enemy마다 공격 방식 정의
 }

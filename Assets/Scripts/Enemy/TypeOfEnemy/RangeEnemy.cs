@@ -39,9 +39,9 @@ public class RangeEnemy : BaseEnemy
     public override void Attack()
     {
         lastAttackTime = Time.time;
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetDirection((player.position - transform.position).normalized);
         isAttacking = true;
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity); // 현재 위치에 투사체 생성
+        projectile.GetComponent<Projectile>().SetDirection((player.position - transform.position).normalized); // 투사체 방향 할당
         animationHandler.Attack(OnAttackComplete);
     }
 
