@@ -17,6 +17,8 @@ namespace Cainos.PixelArtTopDown_Basic
         {
             animator = GetComponent<Animator>();
             rb = GetComponent<Rigidbody2D>();
+
+            UpdateBounds(); // 현재 맵의 이동범위 설정
         }
 
 
@@ -56,6 +58,15 @@ namespace Cainos.PixelArtTopDown_Basic
             pos.y = Mathf.Clamp(pos.y, minBounds.y, maxBounds.y);
 
             transform. position = pos;
+        }
+
+        public void UpdateBounds()
+        {
+            if (DungeonManager.Instance != null && DungeonManager.Instance.currentDungeonData != null)
+            {
+                minBounds = DungeonManager.Instance.currentDungeonData.minBounds;
+                maxBounds = DungeonManager.Instance.currentDungeonData.maxBounds;
+            }
         }
     }
 }
