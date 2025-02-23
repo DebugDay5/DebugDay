@@ -68,5 +68,6 @@ namespace Cainos.PixelArtTopDown_Basic
                 maxBounds = DungeonManager.Instance.currentDungeonData.maxPlayerBounds;
             }
         }
+
     }
 }

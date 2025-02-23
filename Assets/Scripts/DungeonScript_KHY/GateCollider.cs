@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GateCollider : MonoBehaviour
 {
-    public int nextStage = 0; // 다음 스테이지 번호
 
     private void OnTriggerEnter2D(Collider2D other)
     {
