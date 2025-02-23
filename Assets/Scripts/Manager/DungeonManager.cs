@@ -8,6 +8,7 @@ public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager Instance { get; private set; }
 
+    public GameObject startDungeon;
     public List<GameObject> normalDungeon;  // 노멀맵 프리팹 리스트
     public List<GameObject> hardDungeon;  // 하드맵 프리팹 리스트
     public List<GameObject> angelDungeon;  //  엔젤맵 프리팹 리스트 (버프하는 엔젤npc가 있는 맵 1개. 이 맵 포함할지?)
@@ -23,6 +24,8 @@ public class DungeonManager : MonoBehaviour
 
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
 
+    public Transform player;
+
     public void Awake()
     {
         if(Instance == null)
@@ -35,6 +38,8 @@ public class DungeonManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+
+        currentDungeon = Instantiate(startDungeon);  // sartDungeon부터 시작해라
         currentStage = 0;  // 현재 스테이지 번호
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버
         // 핸드폰 화면 꺼놨다가 다시 했을 때 이어하기 되는 기능을 하려면 이 부분이 세이브가 되어야 하는데... 
@@ -58,6 +63,7 @@ public class DungeonManager : MonoBehaviour
             case 0:  // 노멀 맵 로드
                 if (normalDungeon.Count > 0)
                 {
+
                     int normalIndex = Random.Range(0, normalDungeon.Count);
                     currentDungeon = Instantiate(normalDungeon[normalIndex]);
                 }
@@ -121,11 +127,18 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-    public void AdvanceToNextStage()   // 스테이지를 증가시키는 메서드
+    public void ResetPosition()  // 던전이 바뀔 때마다 플레이어의 포지션을 0,0,0으로 리셋해줌
+    {
+        player.position = Vector3.zero;
+    }
+
+    public void AdvanceToNextStage()   // 스테이지가 증가될 때 발동되는 메서드
     {
         StageCheker();
+        ResetPosition();
         LoadCurrentDungeon();
     }
+
 }
 
 
