@@ -44,7 +44,7 @@ public class MeleeEnemy : BaseEnemy
         lastAttackTime = Time.time; // 쿨타임 계산
         isAttacking = true; // 공격
         animationHandler.Attack(OnAttackComplete); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
-        // player.GetComponent<Player>().TakeDamage(attackPower); // Player에게 데미지를 입힘
+        // GetComponent<Player>().TakeDamage(attackPower); // Player에게 데미지를 입힘
     }
 
     private void OnAttackComplete()

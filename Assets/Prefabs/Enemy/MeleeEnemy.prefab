@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3162398886107038955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.007, y: 0.28, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -159,8 +159,8 @@ MonoBehaviour:
   speed: 1.5
   attackPower: 10
   gold: 5
-  attackRange: 2
-  attackCooldown: 1
+  attackRange: 1
+  attackCooldown: 2
 --- !u!114 &8732353018777888684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,14 +244,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.2111634, y: -0.09962034}
-      - {x: 0.16492307, y: 0.020995617}
-      - {x: -0.038004875, y: 0.033710003}
-      - {x: -0.21647596, y: -0.015696526}
-      - {x: -0.3005939, y: -0.12303898}
-      - {x: -0.35183835, y: -0.26079893}
-      - {x: -0.36028403, y: -0.35647595}
-      - {x: -0.31455445, y: -0.4908104}
-      - {x: 0.2476356, y: -0.4894476}
-      - {x: 0.24946332, y: -0.19832188}
+    - - {x: 0.27290702, y: 0.0658381}
+      - {x: 0.2233988, y: 0.23397088}
+      - {x: -0.03432429, y: 0.27947974}
+      - {x: -0.25145686, y: 0.2086227}
+      - {x: -0.33134454, y: 0.1094251}
+      - {x: -0.34253836, y: -0.014680624}
+      - {x: -0.32090753, y: -0.12309945}
+      - {x: -0.30719352, y: -0.22213268}
+      - {x: 0.25499654, y: -0.2170887}
+      - {x: 0.26967132, y: -0.07778221}
   m_UseDelaunayMesh: 0

@@ -160,7 +160,7 @@ MonoBehaviour:
   attackPower: 15
   gold: 5
   attackRange: 5
-  attackCooldown: 1
+  attackCooldown: 2
   projectilePrefab: {fileID: 3728256965279023165, guid: 1b87c22798673401bbc63dd2ad47a5de,
     type: 3}
 --- !u!114 &3730171077761712531

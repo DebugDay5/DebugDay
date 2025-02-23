@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 10f; // 투사체 속도
     [SerializeField] private int damage = 15; // 투사체 데미지
-    private float slowDownRate = 10f;
+    private float slowDownRate = 50f;
     private Vector3 direction;
     private Animator animator;
      private bool isSlowingDown = false;

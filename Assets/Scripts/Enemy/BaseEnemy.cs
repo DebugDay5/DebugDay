@@ -4,25 +4,25 @@ using UnityEngine;
 
 public interface IEnemy
 {
-    int HP { get; set; }
+    float HP { get; set; }
     float Speed { get; set; }
-    int AttackPower { get; set; }
+    float AttackPower { get; set; }
     void Attack();
-    void TakeDamage(int damage);
+    void TakeDamage(float damage);
 }
 
 public abstract class BaseEnemy : MonoBehaviour, IEnemy
 {
-    [SerializeField] protected int hp;
+    [SerializeField] protected float hp;
     [SerializeField] protected float speed;
-    [SerializeField] protected int attackPower;
+    [SerializeField] protected float attackPower;
     [SerializeField] protected int gold;
     protected Transform player; // 플레이어 추적
     protected AnimationHandler animationHandler;
     
-    public int HP { get => hp; set => hp = value; }
+    public float HP { get => hp; set => hp = value; }
     public float Speed { get => speed; set => speed = value; }
-    public int AttackPower { get => attackPower; set => attackPower = value; }
+    public float AttackPower { get => attackPower; set => attackPower = value; }
 
     protected virtual void Awake()
     {
@@ -35,7 +35,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         player = GameObject.FindGameObjectWithTag("Player").transform; // player에 Player Tag 할당
     }
     
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         HP -= damage;
         animationHandler?.Hit();
