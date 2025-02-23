@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DungeonChanger : MonoBehaviour
 {
-
     public DungeonSO dungeonSO;
 
     public TopDownCharacterController playerController;
@@ -20,8 +19,7 @@ public class DungeonChanger : MonoBehaviour
 
     private void Awake()
     {
-        playerController = GameObject.Find("Player").GetComponent<TopDownCharacterController>();
-
+        playerController = GameObject.Find("TestPlayer").GetComponent<TopDownCharacterController>();
     }
     private void Start()
     {

@@ -15,6 +15,8 @@ public class TestCamera_KHY : MonoBehaviour
             return;
 
         offsetY = transform.position.y - target.position.y;
+
+        CameraUpdateBounds();
     }
 
     private void Update()
@@ -28,6 +30,15 @@ public class TestCamera_KHY : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, minBounds, maxBounds);  // 카메라 위치 제한
 
         transform.position = pos;
+    }
+
+    public void CameraUpdateBounds()
+    {
+        if (DungeonManager.Instance != null && DungeonManager.Instance.currentDungeonData != null)
+        {
+            minBounds = DungeonManager.Instance.currentDungeonData.minCameraBounds;
+            maxBounds = DungeonManager.Instance.currentDungeonData.maxCameraBounds;
+        }
     }
 
 }

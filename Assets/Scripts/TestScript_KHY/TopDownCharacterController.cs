@@ -64,8 +64,8 @@ namespace Cainos.PixelArtTopDown_Basic
         {
             if (DungeonManager.Instance != null && DungeonManager.Instance.currentDungeonData != null)
             {
-                minBounds = DungeonManager.Instance.currentDungeonData.minBounds;
-                maxBounds = DungeonManager.Instance.currentDungeonData.maxBounds;
+                minBounds = DungeonManager.Instance.currentDungeonData.minPlayerBounds;
+                maxBounds = DungeonManager.Instance.currentDungeonData.maxPlayerBounds;
             }
         }
     }
