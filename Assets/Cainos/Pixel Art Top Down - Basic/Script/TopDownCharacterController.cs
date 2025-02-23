@@ -7,12 +7,16 @@ namespace Cainos.PixelArtTopDown_Basic
     public class TopDownCharacterController : MonoBehaviour
     {
         public float speed;
+        public Vector2 minBounds;  // 이동 가능한 최소 x,y값
+        public Vector2 maxBounds;  // 이동 가능한 최대 x,y값
 
         private Animator animator;
+        private Rigidbody2D rb;
 
         private void Start()
         {
             animator = GetComponent<Animator>();
+            rb = GetComponent<Rigidbody2D>();
         }
 
 
@@ -44,7 +48,14 @@ namespace Cainos.PixelArtTopDown_Basic
             dir.Normalize();
             animator.SetBool("IsMoving", dir.magnitude > 0);
 
-            GetComponent<Rigidbody2D>().velocity = speed * dir;
+            rb.velocity = speed * dir;
+
+            Vector3 pos = transform.position; 
+
+            pos.x = Mathf.Clamp(pos.x, minBounds.x, maxBounds.x);
+            pos.y = Mathf.Clamp(pos.y, minBounds.y, maxBounds.y);
+
+            transform. position = pos;
         }
     }
 }
