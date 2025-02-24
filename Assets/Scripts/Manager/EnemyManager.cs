@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static EnemyManager Instance { get; private set; }
+    private List<BaseEnemy> enemies = new List<BaseEnemy>();
+
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddEnemy(BaseEnemy enemy)
     {
-        
+        if (!enemies.Contains(enemy))
+        {
+            enemies.Add(enemy);
+        }
+    }
+
+    public void RemoveEnemy(BaseEnemy enemy)
+    {
+        if (enemies.Contains(enemy))
+        {
+            enemies.Remove(enemy);
+        }
     }
 }
