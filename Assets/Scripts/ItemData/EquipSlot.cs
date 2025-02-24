@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipSlot : MonoBehaviour      // 인벤토리 화면에서 아이템 장착
+public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 {
     public Image icon;
     private Item equippedItem;

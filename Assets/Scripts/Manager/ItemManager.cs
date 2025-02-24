@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터 로드, 관리
 {
     public static ItemManager Instance;
     private List<Item> itemDatabase = new List<Item>();

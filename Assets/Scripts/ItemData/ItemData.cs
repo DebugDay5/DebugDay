@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemData : MonoBehaviour
+public class ItemData : MonoBehaviour   // ItemData.json 데이터모델
 {
     public int itemId;
     public string itemName;

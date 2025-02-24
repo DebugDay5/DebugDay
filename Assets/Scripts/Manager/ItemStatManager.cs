@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class ItemStatManager : MonoBehaviour
+public class ItemStatManager : MonoBehaviour    // StatData.json, 아이템 스탯 관리
 {
     public static ItemStatManager Instance;
     private Dictionary<int, string> statDictionary = new Dictionary<int, string>();
