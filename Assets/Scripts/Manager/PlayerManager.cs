@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
         get { return moveSpeed; }
     }
 
-    private float attackSpeed = 1f;  //공격속도
+    private float attackSpeed = 3f;  //공격속도
     public float AttackSpeed
     {
         get { return attackSpeed; }

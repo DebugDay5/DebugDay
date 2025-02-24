@@ -13,6 +13,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection; //이동 방향
     private Vector2 lookDirection;  //발사 방향
 
+    public GameObject projectile;//테스트용
+
+    private float ShootTime = 2f;//테스트용
+    private float currentShoot = 2f;//테스트용
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         Movement(moveDirection);
         LookTarget();
+        Shoot();//테스트용
     }
 
     private void Movement(Vector2 moveDirection)
@@ -66,5 +72,19 @@ public class PlayerController : MonoBehaviour
         float rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         bool isLeft = Mathf.Abs(rotZ) > 90f;
         _spriteRenderer.flipX = isLeft;
+    }
+
+    private void Shoot() //테스트용
+    {
+        if(projectile == null) return;
+        currentShoot -= Time.deltaTime;
+        if (currentShoot < 0)
+        {
+            GameObject obj = Instantiate(projectile, transform.position, Quaternion.Euler(0f, 0f, 0f));
+            obj.transform.right = lookDirection;
+            Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
+            objRigid.velocity = lookDirection * playerManager.AttackSpeed;
+            currentShoot = ShootTime;
+        }
     }
 }
