@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
             GameObject obj = Instantiate(projectile, transform.position, Quaternion.Euler(0f, 0f, 0f));
             obj.transform.right = lookDirection;
             Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
-            objRigid.velocity = lookDirection * playerManager.AttackSpeed;
+            objRigid.velocity = lookDirection * playerManager.ShotSpeed;
             currentShoot = ShootTime;
         }
     }

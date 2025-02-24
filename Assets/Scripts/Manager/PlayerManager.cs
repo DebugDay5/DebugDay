@@ -13,36 +13,44 @@ public class PlayerManager : MonoBehaviour
         set { hp = Mathf.Clamp(value, 0f, maxhp); } 
     }
 
-    private float maxhp = 100f;
+    [SerializeField] private float maxhp = 100f;
     public float MaxHp { 
         get { return maxhp; } 
         set { maxhp = value; } 
     }
 
-    private float moveSpeed = 5f;    //이동속도
+    [SerializeField] private float moveSpeed = 5f;    //이동속도
     public float MoveSpeed
     {
         get { return moveSpeed; }
     }
 
-    private float attackSpeed = 3f;  //공격속도
+    [SerializeField] private float attackSpeed = 3f;  //공격속도
     public float AttackSpeed
     {
         get { return attackSpeed; }
     }
+    
+    [SerializeField] private float shotSpeed = 3f;     //발사체의 속도
+    public float ShotSpeed
+    {
+        get { return shotSpeed; }
+    }
 
-    private float damage = 1f;
+    [SerializeField] private float damage = 1f;     //아이템 공격력 곱하기 or 그냥 공격력
+    [SerializeField] private float defense = 0f;
 
-    private int gold = 100;
+    [SerializeField] private int gold = 100;
 
+    private const int maxLv = 20; //최대레벨
     private int level = 1;
+    
     private int exp = 0;
 
-    private float defense = 0f;
+    private int[] expGuage = new int[maxLv]; //레벨 업 경험치 통
 
-    private float critRate = 0f;     //크리 확률
-    private float critDamage = 1f;   //크리 데미지
-
+    [SerializeField] private float critRate = 0f;     //크리 확률
+    [SerializeField] private float critDamage = 1f;   //크리 데미지
 
     public GameObject[] target; //발사할 적
 
@@ -62,7 +70,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    public GameObject GetTarget()
+    public GameObject GetTarget()   //가까운 적 찾기
     {
         if (target.Length == 0) return null; //적이 없다면
 
