@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
     private Vector2 moveDirection; //이동 방향
     private Vector2 lookDirection;  //발사 방향
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
+        _animator = GetComponentInChildren<Animator>();
 
         moveDirection = Vector2.zero;
         lookDirection = Vector2.zero;
@@ -46,16 +47,20 @@ public class PlayerController : MonoBehaviour
     private void Movement(Vector2 moveDirection)
     {
         moveDirection = moveDirection * playerManager.MoveSpeed;
+        if (moveDirection != Vector2.zero)
+            _animator.SetBool("IsMove", true);
+        else
+            _animator.SetBool("IsMove", false);
 
         _rigidbody.velocity = moveDirection;
     }
 
     private void LookTarget()
     {
-        Vector2 target = playerManager.GetTarget();
-        if (target == Vector2.zero) return;
+        GameObject target = playerManager.GetTarget();
+        if (target == null) return;
 
-        lookDirection = target - (Vector2)transform.position;
+        lookDirection = target.transform.position - transform.position;
         lookDirection = lookDirection.normalized;
 
         float rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;

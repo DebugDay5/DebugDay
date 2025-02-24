@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     {
         get { return moveSpeed; }
     }
+
     private float attackSpeed = 1f;  //공격속도
     public float AttackSpeed
     {
@@ -37,7 +38,13 @@ public class PlayerManager : MonoBehaviour
     private int level = 1;
     private int exp = 0;
 
-    public Transform[] target; //발사할 적
+    private float defense = 0f;
+
+    private float critRate = 0f;     //크리 확률
+    private float critDamage = 1f;   //크리 데미지
+
+
+    public GameObject[] target; //발사할 적
 
     private void Awake()
     {
@@ -55,16 +62,16 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    public Vector2 GetTarget()
+    public GameObject GetTarget()
     {
-        if (target.Length == 0) return Vector2.zero; //적이 없다면
+        if (target.Length == 0) return null; //적이 없다면
 
-        Transform go = target[0];
+        GameObject go = target[0];
         float min = Mathf.Infinity;
 
         foreach (var t in target)
         {
-            float distance = (t.position - transform.position).sqrMagnitude;
+            float distance = (t.transform.position - transform.position).sqrMagnitude;
             if (distance < min)
             {
                 min = distance;
@@ -72,6 +79,6 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        return go.position;
+        return go;
     }
 }
