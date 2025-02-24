@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
     private void LookTarget()
     {
         Vector2 target = playerManager.GetTarget();
+        if (target == Vector2.zero) return;
+
         lookDirection = target - (Vector2)transform.position;
         lookDirection = lookDirection.normalized;
 
