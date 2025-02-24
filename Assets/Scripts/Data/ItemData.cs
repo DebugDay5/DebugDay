@@ -12,4 +12,5 @@ public class ItemData : MonoBehaviour
     public float itemStat1;
     public float? itemStat2;    // 레어리티 낮은 템 null
     public int itemSellPrice;
+    public string iconPath;
 }

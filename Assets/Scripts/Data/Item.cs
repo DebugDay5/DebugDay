@@ -10,6 +10,7 @@ public class Item : MonoBehaviour
     public string type { get; private set; }
     public Dictionary<int, float> stats { get; private set; }
     public int sellPrice { get; private set; }
+    public Sprite icon { get; private set; }
 
     public Item(ItemData data)
     {
@@ -25,5 +26,9 @@ public class Item : MonoBehaviour
             stats[data.itemStatCode[0]] = data.itemStat1;
         if (data.itemStatCode.Length > 1 && data.itemStat2.HasValue)
             stats[data.itemStatCode[1]] = data.itemStat2.Value;
+
+        icon = Resources.Load<Sprite>($"Item/{data.iconPath}");
+        if (icon == null)
+            Debug.LogError($"아이템 아이콘을 찾을 수 없습니다 : {data.iconPath}");
     }
 }

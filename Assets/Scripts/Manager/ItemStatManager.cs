@@ -19,7 +19,36 @@ public class ItemStatManager : MonoBehaviour
     }
 
     private void LoadStatData()
-    { 
-        
+    {
+        if (!File.Exists(savePath))
+        {
+            Debug.LogError("StatData.json 파일이 존재하지 않음");
+            return;
+        }
+
+        string json = File.ReadAllText(savePath);
+        ItemStatList statList = JsonUtility.FromJson<ItemStatList>(json);
+
+        foreach (var stat in statList.stats)
+            statDictionary[stat.statCode] = stat.statName;
+
+        Debug.Log($"{statDictionary.Count}개의 스탯 로드됨");
     }
+
+    public string GetStatName(int statCode)
+    {
+        return statDictionary.ContainsKey(statCode) ? statDictionary[statCode] : "????";
+    }
+}
+
+[System.Serializable]
+public class ItemStatData
+{
+    public int statCode;
+    public string statName;
+}
+
+public class ItemStatList
+{
+    public List<ItemStatData> stats;
 }
