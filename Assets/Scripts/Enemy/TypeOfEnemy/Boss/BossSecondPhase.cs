@@ -5,7 +5,11 @@ using UnityEngine;
 public class BossSecondPhase : BossState
 {
     private BossAnimatorController animatorController;
-    public BossSecondPhase(BossEnemy boss) : base(boss) { }
+    public BossSecondPhase(BossEnemy boss) : base(boss)
+    {
+        animatorController = boss.GetComponent<BossAnimatorController>();
+    }
+
     public override void UpdateState()
     {
         // AI 업데이트 로직
@@ -36,7 +40,8 @@ public class BossSecondPhase : BossState
         Debug.Log("SecondPhase Attack1: 랜덤한 5곳에 범위 공격");
         animatorController.SecondAttackPattern1(true);
 
-        yield return new WaitForSeconds(2f);
+        float animationLength = animatorController.GetAnimationLength("SecondAttack1");
+        yield return new WaitForSeconds(animationLength);
 
         // AttackPattern1 로직
 
@@ -48,7 +53,8 @@ public class BossSecondPhase : BossState
         Debug.Log("Attack2: Boss 주변 범위 공격");
         animatorController.SecondAttackPattern2(true);
 
-        yield return new WaitForSeconds(2f);
+        float animationLength = animatorController.GetAnimationLength("SecondAttack2");
+        yield return new WaitForSeconds(animationLength);
 
         // AttackPattern2 로직
 
@@ -60,7 +66,8 @@ public class BossSecondPhase : BossState
         Debug.Log("SecondPhase Attack3: 투사체 발사");
         animatorController.SecondAttackPattern3(true);
 
-        yield return new WaitForSeconds(2f);
+        float animationLength = animatorController.GetAnimationLength("SecondAttack3");
+        yield return new WaitForSeconds(animationLength);
 
         // AttackPattern3 로직
 
@@ -72,7 +79,8 @@ public class BossSecondPhase : BossState
         Debug.Log("SecondPhase: Boss 체력 5% 회복");
         animatorController.SecondHeal(true);
 
-        yield return new WaitForSeconds(2f);
+        float animationLength = animatorController.GetAnimationLength("Heal");
+        yield return new WaitForSeconds(animationLength);
 
         boss.HP += boss.HP * 0.05f;
         
