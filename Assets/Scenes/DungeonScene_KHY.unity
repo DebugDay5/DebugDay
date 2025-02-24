@@ -268,11 +268,9 @@ MonoBehaviour:
   - {fileID: 1025527431899130146, guid: c86fa747d73e52a48aa3721943aff94f, type: 3}
   hardDungeon:
   - {fileID: 1025527431899130146, guid: 988115fe3cf62f944a1c7bbff781d05a, type: 3}
-  angelDungeon: []
   bossDungeon: []
   passedNum: 0
   toHardNum: 3
-  toAngelNum: 5
   toBossNum: 6
   currentDungeonData: {fileID: 0}
   player: {fileID: 5628018141265681010}
