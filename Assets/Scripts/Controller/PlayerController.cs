@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
         foreach(var t in target)
         {
-            float distance = (t.position - transform.position).magnitude;
+            float distance = (t.position - transform.position).sqrMagnitude;
             if (distance < min)
             {
                 min = distance;
