@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GateCollider : MonoBehaviour
 {
+    // Enemy를 몇 마리 이상 죽였을 때 GateCollider 활성화 -> EnemyManaager에서 관리
+    // 몬스터 마리 수 세는 건 던전매니저에서 해줘야 하나??
 
     private void OnTriggerEnter2D(Collider2D other)
     {
