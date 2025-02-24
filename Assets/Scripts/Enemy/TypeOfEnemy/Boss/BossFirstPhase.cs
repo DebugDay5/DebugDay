@@ -34,7 +34,7 @@ public class BossFirstPhase : BossState
 
     private IEnumerator AttackPattern1()
     {
-        Debug.Log("Attack1: 2초 후 범위 공격");
+        Debug.Log("Attack1: Player를 향한 투사체");
         animatorController.FirstAttackPattern1(true);
 
         float animationLength = animatorController.GetAnimationLength("Attack1");

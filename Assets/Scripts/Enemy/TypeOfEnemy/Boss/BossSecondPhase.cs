@@ -50,7 +50,7 @@ public class BossSecondPhase : BossState
 
     private IEnumerator AttackPattern2()
     {
-        Debug.Log("Attack2: Boss 주변 범위 공격");
+        Debug.Log("SecondPhase Attack2: Boss 주변 범위 공격");
         animatorController.SecondAttackPattern2(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack2");
