@@ -4,7 +4,7 @@ using System.IO;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 
-public class PlayerInventoryManager : MonoBehaviour
+public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비아이템
 {
     public static PlayerInventoryManager Instance;
     private List<Item> ownedItems = new List<Item>();

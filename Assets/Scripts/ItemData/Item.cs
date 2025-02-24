@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour   // 게임 내 아이템 인스턴스 제조
 {
     public int id { get; private set; }
     public string name { get; private set; }
