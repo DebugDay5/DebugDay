@@ -101,7 +101,6 @@ public class BossEnemy : BaseEnemy
 
     private IEnumerator BreakArmor()
     {
-        Debug.Log("Boss: 갑옷 파괴");
         animatorController.SecondBreakArmor(true);
 
         float animationLength = animatorController.GetAnimationLength("BreakArmor");
@@ -112,7 +111,6 @@ public class BossEnemy : BaseEnemy
 
     private IEnumerator Last()
     {
-        Debug.Log("Boss: 최후의 발악");
         animatorController.SecondLast(true);
 
         float animationLength = animatorController.GetAnimationLength("Last");
