@@ -5,6 +5,7 @@ public class BossEnemy : BaseEnemy
 {
     [SerializeField] private float attackCooldown = 5f;
     [SerializeField] private Transform attackPoint;
+    [SerializeField] private float passiveHealthDecayRate = 10f;
     
     private bool isSecondPhase = false;
     private BossState currentState;
@@ -21,6 +22,7 @@ public class BossEnemy : BaseEnemy
     {
         base.Start();
         StartCoroutine(BossAttackPattern());
+        StartCoroutine(PassiveHealthDecay());
     }
 
     private void Update()
@@ -43,6 +45,15 @@ public class BossEnemy : BaseEnemy
             }
             yield return new WaitForSeconds(attackCooldown);
             currentState.Attack();
+        }
+    }
+
+    private IEnumerator PassiveHealthDecay()
+    {
+        while (HP > 0)
+        {
+            HP -= passiveHealthDecayRate * Time.deltaTime;
+            yield return null;
         }
     }
 

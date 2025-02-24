@@ -23,10 +23,10 @@ public class BossFirstPhase : BossState
                 boss.StartCoroutine(AttackPattern1());
                 break;
             case 1:
-                AttackPattern2();
+                boss.StartCoroutine(AttackPattern2());
                 break;
             case 2:
-                AttackPattern3();
+                boss.StartCoroutine(AttackPattern3());
                 break;
         }
     }
@@ -36,29 +36,33 @@ public class BossFirstPhase : BossState
         Debug.Log("Attack1: 2초 후 범위 공격");
         animatorController.FirstAttackPattern1(true);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.2f); // 공격 지연 시간
 
-        // AttackPattern1 로직
+        // AttackPattern1 실행 로직
 
         animatorController.FirstAttackPattern1(false);
     }
 
-    private void AttackPattern2()
+    private IEnumerator AttackPattern2()
     {
         Debug.Log("Attack2: Boss 주변 범위 공격");
         animatorController.FirstAttackPattern2(true);
 
-        // AttackPattern2 로직
+        yield return new WaitForSeconds(0.5f); // 애니메이션 지속 시간 고려
+
+        // AttackPattern2 실행 로직
 
         animatorController.FirstAttackPattern2(false);
     }
 
-    private void AttackPattern3()
+    private IEnumerator AttackPattern3()
     {
         Debug.Log("Attack3: 근접 공격");
         animatorController.FirstAttackPattern3(true);
 
-        // AttackPattern3 로직
+        yield return new WaitForSeconds(0.5f); // 애니메이션 지속 시간 고려
+
+        // AttackPattern3 실행 로직
 
         animatorController.FirstAttackPattern3(false);
     }

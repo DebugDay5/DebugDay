@@ -20,13 +20,13 @@ public class BossSecondPhase : BossState
                 boss.StartCoroutine(AttackPattern1());
                 break;
             case 1:
-                AttackPattern2();
+                boss.StartCoroutine(AttackPattern2());
                 break;
             case 2:
-                AttackPattern3();
+                boss.StartCoroutine(AttackPattern3());
                 break;
             case 3:
-                Heal();
+                boss.StartCoroutine(Heal());
                 break;
         }
     }
@@ -43,31 +43,39 @@ public class BossSecondPhase : BossState
         animatorController.SecondAttackPattern1(false);
     }
 
-    private void AttackPattern2()
+    private IEnumerator AttackPattern2()
     {
         Debug.Log("Attack2: Boss 주변 범위 공격");
         animatorController.SecondAttackPattern2(true);
+
+        yield return new WaitForSeconds(2f);
 
         // AttackPattern2 로직
 
         animatorController.SecondAttackPattern2(false);
     }
 
-    private void AttackPattern3()
+    private IEnumerator AttackPattern3()
     {
         Debug.Log("SecondPhase Attack3: 투사체 발사");
         animatorController.SecondAttackPattern3(true);
+
+        yield return new WaitForSeconds(2f);
 
         // AttackPattern3 로직
 
         animatorController.SecondAttackPattern3(false);
     }
 
-    private void Heal()
+    private IEnumerator Heal()
     {
         Debug.Log("SecondPhase: Boss 체력 5% 회복");
         animatorController.SecondHeal(true);
+
+        yield return new WaitForSeconds(2f);
+
         boss.HP += boss.HP * 0.05f;
+        
         animatorController.SecondHeal(false);
     }
 }
