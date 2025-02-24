@@ -37,6 +37,7 @@ public class PlayerManager : MonoBehaviour
     private int level = 1;
     private int exp = 0;
 
+    public Transform[] target; //발사할 적
 
     private void Awake()
     {
@@ -52,5 +53,25 @@ public class PlayerManager : MonoBehaviour
     private void UpdateStat() //스탯이 변경되는 경우 //파라미터 미정
     {
 
+    }
+
+    public Vector2 GetTarget()
+    {
+        if (target.Length == 0) return Vector2.zero; //적이 없다면
+
+        Transform go = target[0];
+        float min = Mathf.Infinity;
+
+        foreach (var t in target)
+        {
+            float distance = (t.position - transform.position).sqrMagnitude;
+            if (distance < min)
+            {
+                min = distance;
+                go = t;
+            }
+        }
+
+        return go.position;
     }
 }
