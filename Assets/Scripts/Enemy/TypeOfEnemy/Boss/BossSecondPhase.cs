@@ -34,38 +34,40 @@ public class BossSecondPhase : BossState
     private IEnumerator AttackPattern1()
     {
         Debug.Log("SecondPhase Attack1: 랜덤한 5곳에 범위 공격");
-        animatorController.SetAttackAnimation(true);
+        animatorController.SecondAttackPattern1(true);
 
         yield return new WaitForSeconds(2f);
 
         // AttackPattern1 로직
 
-        animatorController.SetAttackAnimation(false);
+        animatorController.SecondAttackPattern1(false);
     }
 
     private void AttackPattern2()
     {
         Debug.Log("Attack2: Boss 주변 범위 공격");
-        animatorController.SetAttackAnimation(true);
+        animatorController.SecondAttackPattern2(true);
 
         // AttackPattern2 로직
 
-        animatorController.SetAttackAnimation(false);
+        animatorController.SecondAttackPattern2(false);
     }
 
     private void AttackPattern3()
     {
         Debug.Log("SecondPhase Attack3: 투사체 발사");
-        animatorController.SetAttackAnimation(true);
+        animatorController.SecondAttackPattern3(true);
 
         // AttackPattern3 로직
 
-        animatorController.SetAttackAnimation(false);
+        animatorController.SecondAttackPattern3(false);
     }
 
     private void Heal()
     {
         Debug.Log("SecondPhase: Boss 체력 5% 회복");
+        animatorController.SecondHeal(true);
         boss.HP += boss.HP * 0.05f;
+        animatorController.SecondHeal(false);
     }
 }

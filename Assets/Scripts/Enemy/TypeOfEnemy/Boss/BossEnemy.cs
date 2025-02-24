@@ -13,7 +13,7 @@ public class BossEnemy : BaseEnemy
     protected override void Awake()
     {
         base.Awake();
-        animatorController = GetComponent<BossAnimatorController>();
+        animatorController = GetComponentInChildren<BossAnimatorController>();
         currentState = new BossFirstPhase(this);
     }
 
@@ -49,7 +49,7 @@ public class BossEnemy : BaseEnemy
     private void TransitionToSecondPhase()
     {
         isSecondPhase = true;
-        animatorController.SetTrigger("IsBreakArmor");
+        animatorController.SetTransitionTrigger("IsPhaseTransition");
         currentState = new BossSecondPhase(this);
     }
 }

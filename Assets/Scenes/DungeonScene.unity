@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &1291258677
+--- !u!1001 &70660747
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -131,15 +131,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 985642943893558156, guid: 8912b8b0a4bd141c99031b57b6024d5a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 985642943893558156, guid: 8912b8b0a4bd141c99031b57b6024d5a,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 985642943893558156, guid: 8912b8b0a4bd141c99031b57b6024d5a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4628221225906215552, guid: 6946cd59d8c7e234f851a23d8ce98454,
+        type: 3}
+    - target: {fileID: 985642943893558156, guid: 8912b8b0a4bd141c99031b57b6024d5a,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302839449592720988, guid: 8912b8b0a4bd141c99031b57b6024d5a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 43ffd0e7451a14a43824ed9ef1c9391f, type: 2}
     - target: {fileID: 2614824579871921037, guid: 8912b8b0a4bd141c99031b57b6024d5a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1023874
+      value: 0.08178221
       objectReference: {fileID: 0}
     - target: {fileID: 2614824579871921037, guid: 8912b8b0a4bd141c99031b57b6024d5a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.0823812
+      value: 4.224745
       objectReference: {fileID: 0}
     - target: {fileID: 2614824579871921037, guid: 8912b8b0a4bd141c99031b57b6024d5a,
         type: 3}
@@ -179,6 +205,11 @@ PrefabInstance:
     - target: {fileID: 2614824579871921037, guid: 8912b8b0a4bd141c99031b57b6024d5a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553637068543715235, guid: 8912b8b0a4bd141c99031b57b6024d5a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5810129143310140628, guid: 8912b8b0a4bd141c99031b57b6024d5a,
@@ -538,4 +569,4 @@ SceneRoots:
   - {fileID: 1888516045}
   - {fileID: 1924076124}
   - {fileID: 1496073695}
-  - {fileID: 1291258677}
+  - {fileID: 70660747}

@@ -10,7 +10,6 @@ public class AnimationHandler : MonoBehaviour
     private static readonly int IsDie = Animator.StringToHash("IsDie");
 
     protected Animator animator;
-    private System.Action attackCompleteCallback; // 공격 애니메이션 완료 후 콜백 함수 호출
 
     protected virtual void Awake()
     {
@@ -22,11 +21,9 @@ public class AnimationHandler : MonoBehaviour
         animator.SetBool(IsMove, isMoving); // 받아온 값을 IsMove에 설정
     }
 
-    public void Attack(System.Action onComplete)
+    public void Attack(bool isAttacking)
     {
-        animator.SetBool(IsAttack, true);
-        attackCompleteCallback = onComplete; // 콜백 함수 저장
-        StartCoroutine(DisableAttackBool()); // 애니메이션이 끝난 후 상태 초기화
+        animator.SetBool(IsAttack, isAttacking);
     }
 
     public void Hit()
@@ -37,12 +34,5 @@ public class AnimationHandler : MonoBehaviour
     public void Die()
     {
         animator.SetBool(IsDie, true);
-    }
-
-    private IEnumerator DisableAttackBool()
-    {
-        yield return new WaitForSeconds(0.8f); // 애니메이션의 길이에 맞춘 값
-        animator.SetBool(IsAttack, false);
-        attackCompleteCallback?.Invoke(); // 공격 완료 후 콜백 함수 호출
     }
 }

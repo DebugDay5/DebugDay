@@ -7,7 +7,7 @@ public class MeleeEnemy : BaseEnemy
     [SerializeField] private float attackRange = 2f; // 공격 범위
     [SerializeField] private float attackCooldown = 2.0f; // 공격 속도
     private float lastAttackTime; // 공격 시간
-    private bool isAttacking = false; // 공격 여부
+    private bool isAttacking = true;
 
     private void Awake()
     {
@@ -24,9 +24,6 @@ public class MeleeEnemy : BaseEnemy
 
         FlipSprite(); // 스프라이트 방향 전환
 
-        if (isAttacking) // true 공격 x, false 공격 o
-            return;
-
         if (distance > attackRange) // 공격 범위보다 거리가 멀면 이동
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime); // 현재 위치에서 플레이어 위치로 일정한 속도로 이동
@@ -41,15 +38,25 @@ public class MeleeEnemy : BaseEnemy
 
     public override void Attack() // BaseEnemy의 Attack을 Override
     {
-        lastAttackTime = Time.time; // 쿨타임 계산
-        isAttacking = true; // 공격
-        animationHandler.Attack(OnAttackComplete); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
-        // GetComponent<Player>().TakeDamage(attackPower); // Player에게 데미지를 입힘
+        if (isAttacking)
+        {
+            lastAttackTime = Time.time; // 쿨타임 계산
+
+            animationHandler.Attack(true); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
+            // GetComponent<Player>().TakeDamage(attackPower); // Player에게 데미지를 입힘
+
+            isAttacking = false; // 공격 후에는 공격 불가능 상태로 변경
+
+            // 애니메이션이 끝난 후 false로 설정
+            StartCoroutine(AttackDelay(0.7f));
+        }
     }
 
-    private void OnAttackComplete()
+    private IEnumerator AttackDelay(float delay)
     {
-        isAttacking = false; // 다시 공격할 수 있도록 함
+        yield return new WaitForSeconds(delay); // 애니메이션 길이만큼 대기
+        animationHandler.Attack(false); // 애니메이션 중지
+        isAttacking = true; // 쿨타임이 끝나면 공격 가능 상태로 변경
     }
 
     private void FlipSprite()

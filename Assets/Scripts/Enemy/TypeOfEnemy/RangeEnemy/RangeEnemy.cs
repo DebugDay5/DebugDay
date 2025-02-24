@@ -7,9 +7,8 @@ public class RangeEnemy : BaseEnemy
     [SerializeField] private float attackRange = 5f; // 공격 범위
     [SerializeField] private float attackCooldown = 2.0f; // 공격 속도
     [SerializeField] private GameObject projectilePrefab; // 투사체
-
     private float lastAttackTime; // 공격 시간
-    private bool isAttacking = false; // 공격 여부
+    private bool isAttacking = true;
 
     private void Awake()
     {
@@ -38,16 +37,22 @@ public class RangeEnemy : BaseEnemy
     
     public override void Attack()
     {
-        lastAttackTime = Time.time;
-        isAttacking = true;
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity); // 현재 위치에 투사체 생성
-        projectile.GetComponent<Projectile>().SetDirection((player.position - transform.position).normalized); // 투사체 방향 할당
-        animationHandler.Attack(OnAttackComplete);
+        if (isAttacking)
+        {
+            lastAttackTime = Time.time;
+            GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity); // 현재 위치에 투사체 생성
+            projectile.GetComponent<Projectile>().SetDirection((player.position - transform.position).normalized); // 투사체 방향 할당
+            animationHandler.Attack(true);
+            isAttacking = false;
+            StartCoroutine(AttackDelay(0.65f));
+        }
     }
 
-    private void OnAttackComplete()
+    private IEnumerator AttackDelay(float delay)
     {
-        isAttacking = false;
+        yield return new WaitForSeconds(delay);
+        animationHandler.Attack(false);
+        isAttacking = true;
     }
 
     private void FlipSprite()
