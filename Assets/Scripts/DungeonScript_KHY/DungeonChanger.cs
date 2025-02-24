@@ -18,7 +18,6 @@ public class DungeonChanger : MonoBehaviour
         cameraController.CameraUpdateBounds();  // 카메라 이동 범위 업데이트
     }
 
-
     private void Awake()
     {
         playerController = GameObject.Find("TestPlayer").GetComponent<TopDownCharacterController>();
