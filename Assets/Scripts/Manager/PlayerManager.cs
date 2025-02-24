@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private static PlayerManager instance;
-    public static PlayerManager Instance { get => instance }
+    public static PlayerManager Instance { get => instance; }
 
     private float hp = 100f;
     public float Hp { 
