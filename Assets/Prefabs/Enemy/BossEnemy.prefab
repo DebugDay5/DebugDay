@@ -244,11 +244,13 @@ MonoBehaviour:
   speed: 0
   attackPower: 0
   gold: 100
-  attackCooldown: 5
-  attackPoint: {fileID: 7998165053421847135}
-  passiveHealthDecayRate: 1
+  player: {fileID: 0}
+  attackCooldown: 3
   firstPhaseAnimator: {fileID: 9100000, guid: 43ffd0e7451a14a43824ed9ef1c9391f, type: 2}
   secondPhaseAnimator: {fileID: 9100000, guid: 3900555431d4043bc98c3cdadb3b4ff4, type: 2}
+  projectilePrefab: {fileID: 1416141274379433541, guid: 0756e8daa7f3c47a2b107b864dd7376f,
+    type: 3}
+  attackPoint: {fileID: 7998165053421847135}
 --- !u!212 &985642943893558156
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -467,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 8193786454644936640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.085, y: -0.104, z: 0}
+  m_LocalPosition: {x: -0.018, y: -0.143, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -40,7 +40,9 @@ public class BossFirstPhase : BossState
         float animationLength = animatorController.GetAnimationLength("Attack1");
         yield return new WaitForSeconds(animationLength);
 
-        // AttackPattern1 실행 로직
+        GameObject projectile = Object.Instantiate(projectilePrefab, boss.attackPoint.position, Quaternion.identity); // 투사체 생성
+        SecondProjectile secondProjectile = projectile.GetComponent<SecondProjectile>(); // Projectile 스크립트 참조
+        secondProjectile.GetComponent<SecondProjectile>().SetDirection((boss.player.position - boss.attackPoint.position).normalized); // 투사체 방향설정
 
         animatorController.FirstAttackPattern1(false);
     }

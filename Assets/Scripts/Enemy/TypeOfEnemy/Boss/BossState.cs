@@ -5,8 +5,13 @@ using UnityEngine;
 public abstract class BossState
 {
     protected BossEnemy boss;
-    protected Transform player;
-    public BossState(BossEnemy boss) { this.boss = boss; }
+    protected GameObject projectilePrefab;
+    public BossState(BossEnemy boss)
+    {
+        this.boss = boss;
+        projectilePrefab = boss.projectilePrefab;
+    }
+
     public abstract void UpdateState();
     public abstract void Attack();
 }

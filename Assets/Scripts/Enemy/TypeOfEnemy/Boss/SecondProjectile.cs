@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SecondProjetile : MonoBehaviour
+public class SecondProjectile : MonoBehaviour
 {
     [SerializeField] private float speed = 10f; // 투사체 속도
     [SerializeField] private int damage = 40; // 투사체 데미지
-    private float slowDownRate = 50f;
+    [SerializeField] private float slowDownRate = 100f;
     private Vector3 direction;
     private Animator animator;
      private bool isSlowingDown = false;
@@ -14,6 +14,11 @@ public class SecondProjetile : MonoBehaviour
     private void Awake()
     {
       animator = GetComponent<Animator>();  
+    }
+
+    private void Start()
+    {
+        Invoke("DestroyProjectile", 5f); // 10초 후 자동 삭제
     }
 
     public void SetDirection(Vector3 newDirection) // 투사체 방향 설정
@@ -39,10 +44,6 @@ public class SecondProjetile : MonoBehaviour
             PlayDestroyAnimation();
             isSlowingDown = true;
         }
-        else if (collision.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void PlayDestroyAnimation()
@@ -55,5 +56,10 @@ public class SecondProjetile : MonoBehaviour
     {
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject); // 애니메이션이 끝난 후 오브젝트 파괴
+    }
+
+    private void DestroyProjectile()
+    {
+        Destroy(gameObject);
     }
 }

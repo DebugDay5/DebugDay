@@ -17,7 +17,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     [SerializeField] protected float speed;
     [SerializeField] protected float attackPower;
     [SerializeField] protected int gold;
-    protected Transform player; // 플레이어 추적
+    public Transform player; // 플레이어 추적
     protected AnimationHandler animationHandler;
     
     public float HP { get => hp; set => hp = value; }
