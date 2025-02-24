@@ -9,6 +9,7 @@ public class BossFirstPhase : BossState
     {
         animatorController = boss.GetComponent<BossAnimatorController>();
     }
+
     public override void UpdateState()
     {
         // AI 업데이트 로직
@@ -36,7 +37,8 @@ public class BossFirstPhase : BossState
         Debug.Log("Attack1: 2초 후 범위 공격");
         animatorController.FirstAttackPattern1(true);
 
-        yield return new WaitForSeconds(2.2f); // 공격 지연 시간
+        float animationLength = animatorController.GetAnimationLength("Attack1");
+        yield return new WaitForSeconds(animationLength);
 
         // AttackPattern1 실행 로직
 
@@ -48,7 +50,8 @@ public class BossFirstPhase : BossState
         Debug.Log("Attack2: Boss 주변 범위 공격");
         animatorController.FirstAttackPattern2(true);
 
-        yield return new WaitForSeconds(0.5f); // 애니메이션 지속 시간 고려
+        float animationLength = animatorController.GetAnimationLength("Attack2");
+        yield return new WaitForSeconds(animationLength);
 
         // AttackPattern2 실행 로직
 
@@ -60,7 +63,8 @@ public class BossFirstPhase : BossState
         Debug.Log("Attack3: 근접 공격");
         animatorController.FirstAttackPattern3(true);
 
-        yield return new WaitForSeconds(0.5f); // 애니메이션 지속 시간 고려
+        float animationLength = animatorController.GetAnimationLength("Attack3");
+        yield return new WaitForSeconds(animationLength);
 
         // AttackPattern3 실행 로직
 
