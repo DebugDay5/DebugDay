@@ -25,16 +25,28 @@ public class PlayerManager : MonoBehaviour
         get { return moveSpeed; }
     }
 
-    [SerializeField] private float attackSpeed = 3f;  //공격속도
+    [SerializeField] private float attackSpeed = 1f;  //공격속도
     public float AttackSpeed
     {
         get { return attackSpeed; }
     }
     
-    [SerializeField] private float shotSpeed = 3f;     //발사체의 속도
+    [SerializeField] private float shotSpeed = 6f;     //발사체의 속도
     public float ShotSpeed
     {
         get { return shotSpeed; }
+    }
+
+    [SerializeField] private int numOfOneShot = 1; //동시 발사 개수
+    public int NumOfOneShot
+    {
+        get { return numOfOneShot; }
+    }
+
+    [SerializeField] private int numOfShooting = 1; //연속 발사
+    public int NumOfShooting
+    {
+        get { return numOfShooting; }
     }
 
     [SerializeField] private float damage = 1f;     //아이템 공격력 곱하기 or 그냥 공격력

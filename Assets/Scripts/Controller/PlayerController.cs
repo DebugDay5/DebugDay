@@ -9,20 +9,23 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    [SerializeField] private Transform shootingPosition;
 
     private Vector2 moveDirection; //이동 방향
     private Vector2 lookDirection;  //발사 방향
 
     public GameObject projectile;//테스트용
 
-    private float ShootTime = 2f;//테스트용
-    private float currentShoot = 2f;//테스트용
-
+    private float shootTime; //남은 발사 시간
+    private int shootNum; //발사 횟수
+    private bool isShooting = false;
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
+        
 
         moveDirection = Vector2.zero;
         lookDirection = Vector2.zero;
@@ -32,6 +35,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         playerManager = PlayerManager.Instance;
+        shootTime = playerManager.AttackSpeed;
+        shootNum = playerManager.NumOfShooting;
     }
 
     // Update is called once per frame
@@ -68,23 +73,53 @@ public class PlayerController : MonoBehaviour
 
         lookDirection = target.transform.position - transform.position;
         lookDirection = lookDirection.normalized;
-
         float rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+
+        if( shootingPosition != null)
+        {
+            shootingPosition.rotation = Quaternion.Euler(0, 0, rotZ);
+        }
+
         bool isLeft = Mathf.Abs(rotZ) > 90f;
         _spriteRenderer.flipX = isLeft;
     }
 
+    
     private void Shoot() //테스트용
     {
         if(projectile == null) return;
-        currentShoot -= Time.deltaTime;
-        if (currentShoot < 0)
+        if (isShooting) return;
+
+        shootTime -= Time.deltaTime;
+        if (shootTime < 0)
+        {
+            isShooting = true;
+
+            //StartCoroutine("MakeProjectile",playerManager.NumOfShooting);
+            MakeProjectile();
+        }
+    }
+
+    private void MakeProjectile()
+    {
+        if(shootNum == 0)
+        {
+            isShooting = false;
+            shootTime = playerManager.AttackSpeed;
+            shootNum = playerManager.NumOfShooting;
+            return;
+        }
+
+        for (int i = 0; i < playerManager.NumOfOneShot; i++)
         {
             GameObject obj = Instantiate(projectile, transform.position, Quaternion.Euler(0f, 0f, 0f));
             obj.transform.right = lookDirection;
             Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
             objRigid.velocity = lookDirection * playerManager.ShotSpeed;
-            currentShoot = ShootTime;
         }
+
+        shootNum--;
+        Invoke("MakeProjectile", 0.1f);
     }
+    
 }
