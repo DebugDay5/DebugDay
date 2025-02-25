@@ -32,7 +32,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         EnemyManager.Instance?.AddEnemy(this);
-        player = GameObject.FindGameObjectWithTag("Player").transform; // player에 Player Tag 할당
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
     
     public virtual void TakeDamage(float damage)
@@ -53,4 +53,17 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     }
     
     public abstract void Attack(); // abstract를 사용하여 각 Enemy마다 공격 방식 정의
+
+    protected void FlipSprite()
+    {
+        Vector3 currentScale = transform.localScale; // 현재 스케일 저장
+        if (player.position.x > transform.position.x)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), currentScale.y, currentScale.z); // x축 방향을 양수로 설정
+        }
+        else
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z); // x축 방향을 음수로 설정
+        }
+    }
 }

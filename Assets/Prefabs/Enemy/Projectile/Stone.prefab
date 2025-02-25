@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6372354091316431309}
   - component: {fileID: 1440468379185502349}
   - component: {fileID: 4824762378423854176}
+  - component: {fileID: 4944216292688398734}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.27, y: 1.89, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +65,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -96,7 +97,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!212 &1440468379185502349
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,3 +172,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4944216292688398734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531590617150256382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40975d936291c4e2796fad21aea64d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

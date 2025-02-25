@@ -140,7 +140,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5958820567718922445}
   - {fileID: 5738876727761586780}
@@ -248,8 +248,9 @@ MonoBehaviour:
   attackCooldown: 3
   firstPhaseAnimator: {fileID: 9100000, guid: 43ffd0e7451a14a43824ed9ef1c9391f, type: 2}
   secondPhaseAnimator: {fileID: 9100000, guid: 3900555431d4043bc98c3cdadb3b4ff4, type: 2}
-  projectilePrefab: {fileID: 1416141274379433541, guid: 0756e8daa7f3c47a2b107b864dd7376f,
+  firstProjectilePrefab: {fileID: 1416141274379433541, guid: 0756e8daa7f3c47a2b107b864dd7376f,
     type: 3}
+  stone: {fileID: 8531590617150256382, guid: a7be11ee33bdc4e12ae7e708dc837fe9, type: 3}
   attackPoint: {fileID: 7998165053421847135}
 --- !u!212 &985642943893558156
 SpriteRenderer:
@@ -291,7 +292,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 4628221225906215552, guid: 6946cd59d8c7e234f851a23d8ce98454,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -469,7 +470,7 @@ Transform:
   m_GameObject: {fileID: 8193786454644936640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.018, y: -0.143, z: 0}
+  m_LocalPosition: {x: 0, y: -0.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -37,46 +37,65 @@ public class BossSecondPhase : BossState
 
     private IEnumerator AttackPattern1()
     {
-        Debug.Log("SecondPhase Attack1: 랜덤한 5곳에 범위 공격");
+        Debug.Log("랜덤한 5곳에 범위 공격");
         animatorController.SecondAttackPattern1(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack1");
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(animationLength * 0.5f);
 
-        // AttackPattern1 로직
+        SpawnRandomStones(5);
+
+        yield return new WaitForSeconds(animationLength * 0.5f);
 
         animatorController.SecondAttackPattern1(false);
     }
 
     private IEnumerator AttackPattern2()
     {
-        Debug.Log("SecondPhase Attack2: Boss 주변 범위 공격");
+        Debug.Log("Boss 주변 범위 공격");
         animatorController.SecondAttackPattern2(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack2");
         yield return new WaitForSeconds(animationLength);
 
-        // AttackPattern2 로직
+        float attackRadius = 4f;
+        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRadius);
+
+        foreach (Collider2D player in attackPlayers)
+        {
+            if (player.CompareTag("Player"))
+            {
+                // player.GetComponent<Player>().TakeDamage(50);
+            }
+        }
 
         animatorController.SecondAttackPattern2(false);
     }
 
     private IEnumerator AttackPattern3()
     {
-        Debug.Log("SecondPhase Attack3: 투사체 발사");
+        Debug.Log("투사체 발사");
         animatorController.SecondAttackPattern3(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack3");
-        yield return new WaitForSeconds(animationLength);
 
-        // AttackPattern3 로직
+        yield return new WaitForSeconds(animationLength * 0.5f);
+
+        GameObject projectile = Object.Instantiate(firstProjectilePrefab, boss.attackPoint.position, Quaternion.identity); // 투사체 생성
+        FirstProjectile firstProjectile = projectile.GetComponent<FirstProjectile>(); // Projectile 스크립트 참조
+        firstProjectile.GetComponent<FirstProjectile>().SetDirection((boss.player.position - boss.attackPoint.position).normalized); // 투사체 방향 설정
+        
+        firstProjectile.speed += 5;
+        firstProjectile.damage += 10;
+
+        yield return new WaitForSeconds(animationLength * 0.5f);
 
         animatorController.SecondAttackPattern3(false);
     }
 
     private IEnumerator Heal()
     {
-        Debug.Log("SecondPhase: Boss 체력 5% 회복");
+        Debug.Log("체력 5% 회복");
         animatorController.SecondHeal(true);
 
         float animationLength = animatorController.GetAnimationLength("Heal");
@@ -85,5 +104,20 @@ public class BossSecondPhase : BossState
         boss.HP += boss.HP * 0.05f;
         
         animatorController.SecondHeal(false);
+    }
+
+    private void SpawnRandomStones(int spawnStoneCount)
+    {
+        float minX = -2f, maxX = 2f;
+        float minY = -7f, maxY = 3f;
+
+        for (int i = 0; i < spawnStoneCount; i++)
+        {
+            float randomX = Random.Range(minX, maxX);
+            float randomY = Random.Range(minY, maxY);
+            Vector2 spawnPosition = new Vector2(randomX, randomY);
+
+            GameObject spawnStone = Object.Instantiate(stone, spawnPosition, Quaternion.identity); // 스톤 생성
+        }
     }
 }

@@ -12,7 +12,8 @@ public class BossEnemy : BaseEnemy
     private bool isArmorBroken = false; // BreakArmor 실행 여부
     private BossState currentState; // 현재 페이즈
     private BossAnimatorController animatorController;
-    public GameObject projectilePrefab;
+    public GameObject firstProjectilePrefab;
+    public GameObject stone;
     public Transform attackPoint;
 
     protected override void Awake()
@@ -30,6 +31,7 @@ public class BossEnemy : BaseEnemy
 
     private void Update()
     {
+        FlipSprite();
         currentState.UpdateState(); // 추후 추가
         PhaseTransition(); // 체력이 50% 이하일 시 2페이즈
         CheckLowHealthPhase(); // 체력이 10% 이하일 때 BreakArmor 실행
