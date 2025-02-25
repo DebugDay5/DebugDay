@@ -13,36 +13,62 @@ public class PlayerManager : MonoBehaviour
         set { hp = Mathf.Clamp(value, 0f, maxhp); } 
     }
 
-    private float maxhp = 100f;
+    [SerializeField] private float maxhp = 100f;
     public float MaxHp { 
         get { return maxhp; } 
         set { maxhp = value; } 
     }
 
-    private float moveSpeed = 5f;    //이동속도
+    [SerializeField] private float moveSpeed = 5f;    //이동속도
     public float MoveSpeed
     {
         get { return moveSpeed; }
     }
 
-    private float attackSpeed = 3f;  //공격속도
+    [SerializeField] private float attackSpeed = 1f;  //공격속도
     public float AttackSpeed
     {
         get { return attackSpeed; }
     }
+    
+    [SerializeField] private float shotSpeed = 6f;     //발사체의 속도
+    public float ShotSpeed
+    {
+        get { return shotSpeed; }
+    }
 
-    private float damage = 1f;
+    [SerializeField] private int numOfOneShot = 1; //동시 발사 개수
+    public int NumOfOneShot
+    {
+        get { return numOfOneShot; }
+    }
 
-    private int gold = 100;
+    [SerializeField] private int numOfShooting = 1; //연속 발사
+    public int NumOfShooting
+    {
+        get { return numOfShooting; }
+    }
 
+    [SerializeField] private float damage = 1f;     //아이템 공격력 곱하기 or 그냥 공격력
+    public float Damage { get { return damage; } }
+
+    [SerializeField] private float defense = 0f;
+    public float Defense { get { return defense; } }
+
+    [SerializeField] private int gold = 100;
+    public int Gold { get { return gold; } }
+
+    private const int maxLv = 20; //최대레벨
     private int level = 1;
+    
     private int exp = 0;
 
-    private float defense = 0f;
+    private int[] expGuage = new int[maxLv]; //레벨 업 경험치 통
 
-    private float critRate = 0f;     //크리 확률
-    private float critDamage = 1f;   //크리 데미지
-
+    [SerializeField] private float critRate = 0f;     //크리 확률
+    public float CritRate { get { return critRate; } }
+    [SerializeField] private float critDamage = 1f;   //크리 데미지
+    public float CritDamage { get { return critDamage; } }
 
     public GameObject[] target; //발사할 적
 
@@ -62,7 +88,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    public GameObject GetTarget()
+    public GameObject GetTarget()   //가까운 적 찾기
     {
         if (target.Length == 0) return null; //적이 없다면
 
