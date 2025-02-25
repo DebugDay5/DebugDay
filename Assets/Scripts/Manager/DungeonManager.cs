@@ -24,15 +24,17 @@ public class DungeonManager : MonoBehaviour
 
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
     public Animator canvasAnim; //페이드인 아웃 기능
-
     public Transform player;
+
+    private HashSet<int> usedNormalIndices = new HashSet<int>(); // 한 번 등장한 맵의 인덱스 저장
+    private HashSet<int> usedHardIndices = new HashSet<int>();
+    private HashSet<int> usedBossIndices = new HashSet<int>();
 
     public void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject); //  씬 전환 시 object 유지
         }
         else
         {
@@ -60,53 +62,40 @@ public class DungeonManager : MonoBehaviour
         switch (currentStage)
         {
             case 0:  // 노멀 맵 로드
-                if (normalDungeon.Count > 0)
-                {
-
-                    int normalIndex = Random.Range(0, normalDungeon.Count);
-                    currentDungeon = Instantiate(normalDungeon[normalIndex]);
-                }
-                else
-                {
-                    Debug.LogError("노멀맵 프리팹 리스트 비어있음");
-                }
+                currentDungeon = Instantiate(GetUniqueDungeon(normalDungeon, usedNormalIndices));
                 break;
             case 1: // 하드 맵 로드
-                if (hardDungeon.Count > 0)
-                {
-                    int hardIndex = Random.Range(0, hardDungeon.Count);
-                    currentDungeon = Instantiate(hardDungeon[hardIndex]);
-                }
-                else
-                {
-                    Debug.LogError("하드맵 프리팹 리스트 비어있음");
-                }
+                currentDungeon = Instantiate(GetUniqueDungeon(hardDungeon, usedHardIndices));
                 break;
-            //case 2: // 엔젤 맵 로드
-            //    if (angelDungeon != null)
-            //    {
-            //        int angelIndex = 0;
-            //        currentDungeon = Instantiate(angelDungeon[0]);
-            //    }
-            //    else
-            //    {
-            //        Debug.LogError("하드맵 프리팹 리스트 비어있음");
-            //    }
-            //    break;
-            case 2: // 보스 맵 로드
-                if (bossDungeon.Count > 0)
-                {
-                    int bossIndex = Random.Range(0, bossDungeon.Count);
-                    currentDungeon = Instantiate(bossDungeon[bossIndex]);
-                }
-                else
-                {
-                    Debug.LogError("보스맵 프리팹 리스트 비어있음");
-                }
-                break;
-            default:
+            case 2:  // 보스 맵 로드
+                currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedHardIndices));
                 break;
         }
+    }
+
+    private GameObject GetUniqueDungeon(List<GameObject> dungeonList, HashSet<int> usedIndices)
+    {
+        if (dungeonList.Count == 0)
+        {
+            Debug.LogError("던전 프리팹 리스트 비어있음");
+            return null;
+        }
+
+        if (usedIndices.Count >= dungeonList.Count)
+        {
+            usedIndices.Clear();  // 모든 맵이 사용되었으면 초기화
+        }
+
+        int index;
+        do
+        {
+            index = Random.Range(0, dungeonList.Count);  // 랜덤 인덱스 생성
+        }   
+        while (usedIndices.Contains(index));   // 랜덤으로 뽑은 인덱스가 기존 인덱스에 있었다면 다시 뽑아라
+        usedIndices.Add(index);  // 그게 아니라면 인덱스를 usedIndices에 추가
+
+        return dungeonList[index];  // 해당 던전 프리팹 반환
+
     }
 
     public void StageCheker()
@@ -146,10 +135,6 @@ public class DungeonManager : MonoBehaviour
         canvasAnim.SetTrigger("In");  // 페이드 인
     }
 
-    //캐릭터가 부닥치면 어두워짐
-    //어두워진틈을타 캐릭터가 이동됨
-    //맵도 바뀜
-    //그리고 다시 밝아지면 오 맵이 바궈엇군
 }
 
 
