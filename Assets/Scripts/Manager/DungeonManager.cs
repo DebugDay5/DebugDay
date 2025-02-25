@@ -32,7 +32,7 @@ public class DungeonManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); //  씬 전환 시 object 유지
+            //DontDestroyOnLoad(gameObject); //  씬 전환 시 object 유지
         }
         else
         {

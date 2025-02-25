@@ -383,104 +383,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &786458047
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1025527431899130146, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_Name
-      value: 01NormalMap
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3483122262929287302, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3861647796335240492, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3861647796335240492, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3861647796335240492, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1869315837
-      objectReference: {fileID: 0}
-    - target: {fileID: 5392678600990496506, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5392678600990496506, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5392678600990496506, guid: b7d6061a33b2d8348884b842da845f91,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1869315837
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b7d6061a33b2d8348884b842da845f91, type: 3}
 --- !u!1 &912309318
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5628018140777945007}
   - component: {fileID: 5628018140777945006}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +694,7 @@ GameObject:
   - component: {fileID: 5628018141265681021}
   - component: {fileID: 4616719886051846225}
   - component: {fileID: 5628018141265681024}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -953,4 +855,3 @@ SceneRoots:
   - {fileID: 582683650}
   - {fileID: 912309321}
   - {fileID: 1902171084}
-  - {fileID: 786458047}
