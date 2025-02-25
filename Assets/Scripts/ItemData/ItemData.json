@@ -1,0 +1,170 @@
+[
+    {
+      "itemId": 10001,
+      "itemName": "일반 활",
+      "itemRarity": "common",
+      "itemType": "weapon",
+      "itemStatCode": [ 1 ],
+      "itemStat1": 10,
+      "itemSellPrice": 500,
+      "iconPath": "weapon_1"
+    },
+    {
+      "itemId": 10002,
+      "itemName": "일반 갑옷",
+      "itemRarity": "common",
+      "itemType": "armor",
+      "itemStatCode": [ 3 ],
+      "itemStat1": 10,
+      "itemSellPrice": 500,
+      "iconPath": "armor_1"
+    },
+    {
+      "itemId": 10003,
+      "itemName": "수수한 목걸이",
+      "itemRarity": "common",
+      "itemType": "neckless",
+      "itemStatCode": [ 2 ],
+      "itemStat1": 100,
+      "itemSellPrice": 500,
+      "iconPath": "neckless_1"
+    },
+    {
+      "itemId": 10004,
+      "itemName": "수수한 반지",
+      "itemRarity": "common",
+      "itemType": "ring",
+      "itemStatCode": [ 4 ],
+      "itemStat1": 5,
+      "itemSellPrice": 500,
+      "iconPath": "ring_1"
+    },
+    {
+      "itemId": 20001,
+      "itemName": "사냥꾼의 활",
+      "itemRarity": "rare",
+      "itemType": "weapon",
+      "itemStatCode": [ 1 ],
+      "itemStat1": 30,
+      "itemSellPrice": 1500,
+      "iconPath": "weapon_2"
+    },
+    {
+      "itemId": 20002,
+      "itemName": "강철 갑옷",
+      "itemRarity": "rare",
+      "itemType": "armor",
+      "itemStatCode": [ 3 ],
+      "itemStat1": 30,
+      "itemSellPrice": 1500,
+      "iconPath": "armor_2"
+    },
+    {
+      "itemId": 20003,
+      "itemName": "화려한 목걸이",
+      "itemRarity": "rare",
+      "itemType": "neckless",
+      "itemStatCode": [ 2 ],
+      "itemStat1": 300,
+      "itemSellPrice": 1500,
+      "iconPath": "neckless_2"
+    },
+    {
+      "itemId": 20004,
+      "itemName": "화려한 반지",
+      "itemRarity": "rare",
+      "itemType": "ring",
+      "itemStatCode": [ 4 ],
+      "itemStat1": 15,
+      "itemSellPrice": 1500,
+      "iconPath": "ring_2"
+    },
+    {
+      "itemId": 30001,
+      "itemName": "정교한 활",
+      "itemRarity": "unique",
+      "itemType": "weapon",
+      "itemStatCode": [ 1, 5 ],
+      "itemStat1": 40,
+      "itemStat2": 30,
+      "itemSellPrice": 5000,
+      "iconPath": "weapon_3"
+    },
+    {
+      "itemId": 30002,
+      "itemName": "선봉장의 갑옷",
+      "itemRarity": "unique",
+      "itemType": "armor",
+      "itemStatCode": [ 2, 3 ],
+      "itemStat1": 300,
+      "itemStat2": 40,
+      "itemSellPrice": 5000,
+      "iconPath": "armor_3"
+    },
+    {
+      "itemId": 30003,
+      "itemName": "요정의 목걸이",
+      "itemRarity": "unique",
+      "itemType": "neckless",
+      "itemStatCode": [ 1, 2 ],
+      "itemStat1": 30,
+      "itemStat2": 400,
+      "itemSellPrice": 5000,
+      "iconPath": "neckless_3"
+    },
+    {
+      "itemId": 30004,
+      "itemName": "마력의 반지",
+      "itemRarity": "unique",
+      "itemType": "ring",
+      "itemStatCode": [ 4, 5 ],
+      "itemStat1": 40,
+      "itemStat2": 30,
+      "itemSellPrice": 5000,
+      "iconPath": "ring_3"
+    },
+    {
+      "itemId": 40001,
+      "itemName": "그림자 활",
+      "itemRarity": "legendary",
+      "itemType": "weapon",
+      "itemStatCode": [ 1, 5 ],
+      "itemStat1": 80,
+      "itemStat2": 50,
+      "itemSellPrice": 30000,
+      "iconPath": "weapon_4"
+    },
+    {
+      "itemId": 40002,
+      "itemName": "용제의 공포",
+      "itemRarity": "legendary",
+      "itemType": "armor",
+      "itemStatCode": [ 2, 3 ],
+      "itemStat1": 500,
+      "itemStat2": 80,
+      "itemSellPrice": 30000,
+      "iconPath": "armor_4"
+    },
+    {
+      "itemId": 40003,
+      "itemName": "노블 페어리",
+      "itemRarity": "legendary",
+      "itemType": "neckless",
+      "itemStatCode": [ 1, 2 ],
+      "itemStat1": 50,
+      "itemStat2": 800,
+      "itemSellPrice": 30000,
+      "iconPath": "neckless_4"
+    },
+    {
+      "itemId": 40004,
+      "itemName": "넘치는 마력",
+      "itemRarity": "legendary",
+      "itemType": "ring",
+      "itemStatCode": [ 4, 5 ],
+      "itemStat1": 80,
+      "itemStat2": 50,
+      "itemSellPrice": 30000,
+      "iconPath": "ring_4"
+    }
+]
