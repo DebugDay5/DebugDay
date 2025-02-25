@@ -26,9 +26,9 @@ public class BossAnimatorController : MonoBehaviour
         animator.SetBool("IsAttack3", isAttack);
     }
 
-    public void SetTransitionTrigger(string IsPhaseTransition)
+    public void PhaseTransition(bool isPhaseTransition)
     {
-        animator.SetTrigger(IsPhaseTransition);
+        animator.SetBool("IsPhaseTransition",isPhaseTransition);
     }
 
     public void SecondAttackPattern1(bool isAttack)
@@ -49,5 +49,27 @@ public class BossAnimatorController : MonoBehaviour
     public void SecondHeal(bool isHeal)
     {
         animator.SetBool("IsHeal", isHeal);
+    }
+    public void SecondBreakArmor(bool isBreakArmor)
+    {
+        animator.SetBool("IsBreakArmor", isBreakArmor);
+    }
+    public void SecondLast(bool isLast)
+    {
+        animator.SetBool("IsLast", isLast);
+    }
+
+    public float GetAnimationLength(string animationName)
+    {
+        RuntimeAnimatorController ac = GetComponent<Animator>().runtimeAnimatorController;
+
+        foreach (AnimationClip clip in ac.animationClips)
+        {
+            if (clip.name == animationName)
+            {
+                return clip.length;
+            }
+        }
+        return 0.5f;
     }
 }

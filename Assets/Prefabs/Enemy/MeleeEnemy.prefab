@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4390296903768089459}
   - component: {fileID: 6665411913234640054}
   - component: {fileID: 2718544722766167645}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: SpriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 1576031485842391493, guid: 0a210a6ac82f1214a89ccd8911af22c7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8732353018777888684}
   - component: {fileID: 8150720697602763947}
   - component: {fileID: 7498898529884316605}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: MeleeEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -159,6 +159,7 @@ MonoBehaviour:
   speed: 1.5
   attackPower: 10
   gold: 5
+  player: {fileID: 0}
   attackRange: 1
   attackCooldown: 2
 --- !u!114 &8732353018777888684
@@ -199,7 +200,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!60 &7498898529884316605
 PolygonCollider2D:
   m_ObjectHideFlags: 0
