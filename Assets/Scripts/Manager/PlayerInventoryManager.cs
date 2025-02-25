@@ -43,7 +43,7 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
         Debug.Log("테스트용 아이템 추가됨");
     }
 
-    public bool AddItem(Item item)
+    public bool AddItem(Item item)  // 아이템 획득
     {
         if (ownedItems.Count >= MAX_INVENTORY_SIZE)
         {

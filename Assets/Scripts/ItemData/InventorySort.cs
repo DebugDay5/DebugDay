@@ -63,7 +63,7 @@ public class InventorySort : MonoBehaviour      // 인벤토리 화면에서 장착 부위별
     private void UpdateSortButtonText()
     {
         if (sortButtonText != null)
-            sortButtonText.text = (currentSortMode == SortMode.Type) ? "Sorted By Type" : "Sorted By Rarity";
+            sortButtonText.text = (currentSortMode == SortMode.Type) ? "Type" : "Rarity";
     }
 
     public void SortByType(List<Item> items)
