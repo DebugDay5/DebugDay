@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 3672657877842412708}
   - component: {fileID: 1931253868465015150}
   m_Layer: 0
-  m_Name: 02NormalMap_Small
+  m_Name: 06Hardap_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
