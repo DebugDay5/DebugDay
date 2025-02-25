@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43d0e90be505244fb8a9e9d683405a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonSO: {fileID: 11400000, guid: 6358ef05e6af7ba4d995f702d1d61417, type: 2}
+  dungeonSO: {fileID: 11400000, guid: 29e98277774bb53419ffaae95ba78ed4, type: 2}
   playerController: {fileID: 0}
   cameraController: {fileID: 0}
 --- !u!1 &2642791923880000604
