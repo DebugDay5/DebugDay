@@ -12,11 +12,13 @@ public class InventoryManager : MonoBehaviour   // 인벤토리 화면 관리
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void RefreshInventory()
     {
         List<Item> items = PlayerInventoryManager.Instance.GetOwnedItems();
+        InventorySort.Instance.SortByRarity(items);
 
         // 기존 슬롯 삭제
         foreach (Transform child in inventorySlotGrid)
@@ -34,16 +36,14 @@ public class InventoryManager : MonoBehaviour   // 인벤토리 화면 관리
     public void OnSortByTypeButtonClicked()
     {
         List<Item> items = PlayerInventoryManager.Instance.GetOwnedItems();
-        InventorySort inventorySort = GetComponent<InventorySort>();
-        inventorySort.SortByType(items);
+        InventorySort.Instance.SortByType(items);
         inventoryUI.RefreshInventory(items);
     }
 
     public void OnSortByRarityButtonClicked()
     {
         List<Item> items = PlayerInventoryManager.Instance.GetOwnedItems();
-        InventorySort inventorySort = GetComponent<InventorySort>();
-        inventorySort.SortByRarity(items);
+        InventorySort.Instance.SortByRarity(items);
         inventoryUI.RefreshInventory(items);
     }
 }

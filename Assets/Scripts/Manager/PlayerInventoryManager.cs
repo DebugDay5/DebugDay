@@ -9,18 +9,19 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
     public static PlayerInventoryManager Instance;
     private List<Item> ownedItems = new List<Item>();
     private string savePath;
-    private const int MAX_INVERTORY_SIZE = 100;
+    private const int MAX_INVENTORY_SIZE = 100;
 
     void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
         savePath = Path.Combine(Application.persistentDataPath, "PlayerInventory.json");
         LoadInventory();
     }
 
     public bool AddItem(Item item)
     {
-        if (ownedItems.Count >= MAX_INVERTORY_SIZE)
+        if (ownedItems.Count >= MAX_INVENTORY_SIZE)
         {
             Debug.Log("ÀÎº¥Åä¸®°¡ °¡µæ Â÷ ´õ ÀÌ»ó ¾ÆÀÌÅÛÀ» È¹µæÇÒ ¼ö ¾øÀ½");
             return false;
@@ -45,17 +46,19 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
 
     private void LoadInventory()
     {
-        if (File.Exists(savePath))
+        if (!File.Exists(savePath))
         {
-            string json = File.ReadAllText(savePath);
-            PlayerInventoryData data = JsonUtility.FromJson<PlayerInventoryData>(json);
-            ownedItems.Clear();
-            foreach (int itemId in data.ownedItemIds)
-            {
-                Item item = ItemManager.Instance.GetItemById(itemId);
-                if (item != null)
-                    ownedItems.Add(item);
-            }
+            CreateDefaultInventoryFile();
+            return;
+        }
+        string json = File.ReadAllText(savePath);
+        PlayerInventoryData data = JsonUtility.FromJson<PlayerInventoryData>(json);
+        ownedItems.Clear();
+        foreach (int itemId in data.ownedItemIds)
+        {
+            Item item = ItemManager.Instance.GetItemById(itemId);
+            if (item != null)
+                ownedItems.Add(item);
         }
     }
 
@@ -77,19 +80,10 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
 
     private void SortInventory()
     {
-        ownedItems.Sort((a, b) => CompareRarity(b.rarity, a.rarity));
+        InventorySort.Instance.SortByRarity(ownedItems);
     }
 
-    private int CompareRarity(string rarityA, string rarityB)
-    {
-        Dictionary<string, int> rarityOrder = new Dictionary<string, int>
-        {
-            { "common", 1}, { "rare", 2}, { "unique", 3}, { "legendary", 4}
-        };
-        return rarityOrder[rarityA].CompareTo(rarityOrder[rarityB]);
-    }
-
-    public List<Item> GetOwnedItems() => ownedItems;
+    public List<Item> GetOwnedItems() => new List<Item>(ownedItems);
 }
 
 [System.Serializable]

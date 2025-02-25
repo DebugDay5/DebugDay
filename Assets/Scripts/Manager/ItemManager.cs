@@ -12,8 +12,18 @@ public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        savePath = Path.Combine(Application.dataPath, "Scripts/Data/ItemData.json");
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        savePath = Path.Combine(Application.persistentDataPath, "ItemData.json");
         LoadItemsFromJson();
     }
 
@@ -28,6 +38,12 @@ public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터
         string json = File.ReadAllText(savePath);
         ItemList itemList = JsonUtility.FromJson<ItemList>(json);
 
+        if (itemList == null || itemList.items == null)
+        {
+            Debug.LogError("LoadItemsFronJson에서 오류 발생 - 데이터 오류");
+            return;
+        }
+
         foreach (ItemData data in itemList.items)
             itemDatabase.Add(new Item(data));
         
@@ -36,7 +52,10 @@ public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터
 
     public Item GetItemById(int id)
     {
-        return itemDatabase.Find(item => item.id == id);
+        Item item = itemDatabase.Find(i => i.id == id);
+        if (item == null)
+            Debug.Log($"ID : {id} 에 해당하는 아이템을 찾을 수 없음");
+        return item;
     }
 
     public List<Item> GetItemsByRarity(string rarity)

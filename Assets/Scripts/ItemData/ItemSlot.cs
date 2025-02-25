@@ -16,12 +16,30 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
     public Button enhanceButton;
 
     private Item itemData;
+    private InventoryUI inventoryUI;
+
+    public void Start()
+    {
+        if (inventoryUI == null)
+            inventoryUI = FindObjectOfType<InventoryUI>();
+        if (itemInfoPanel == null && inventoryUI != null)
+            itemInfoPanel = inventoryUI.itemInfoPanel;
+        if (closePanel == null && inventoryUI != null)
+            closePanel = inventoryUI.closePanel;
+    }
 
     public void Setup(Item item)
     {
         itemData = item;
-        itemIcon.sprite = item.icon;
-        itemIcon.enabled = true;
+
+        if (item.icon != null)
+        {
+            itemIcon.sprite = item.icon;
+            itemIcon.enabled = true;
+        }
+        else
+            itemIcon.enabled = false;
+
         itemInfoPanel.SetActive(false);
         closePanel.SetActive(false);
     }
@@ -35,10 +53,14 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             itemInfoPanel.SetActive(true);
             closePanel.SetActive(true);
 
-            itemInfoPanel.transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            RectTransform infoPanelRect = itemInfoPanel.GetComponent<RectTransform>();
+            infoPanelRect.anchoredPosition = Vector2.zero;
 
             itemName.text = itemData.name;
             itemStats.text = GetStatInfo();
+
+            equipButton.onClick.RemoveAllListeners();
+            enhanceButton.onClick.RemoveAllListeners(); // Áßº¹ ¹æÁö
             equipButton.onClick.AddListener(() => EquipItem());
             enhanceButton.onClick.AddListener(() => EnhanceItem());
         }
@@ -52,6 +74,11 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     private string GetStatInfo()
     {
+        if (ItemStatManager.Instance == null)
+        {
+            Debug.LogError("ItemStatManagerÀÇ ÀÎ½ºÅÏ½º°¡ NULL");
+            return "";
+        }
         string statInfo = "";
         foreach (var stat in itemData.stats)
         {
@@ -72,5 +99,4 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         Debug.Log($"{itemData.name} °­È­ÇÔ");
         itemInfoPanel.SetActive(false);
     }
-
 }

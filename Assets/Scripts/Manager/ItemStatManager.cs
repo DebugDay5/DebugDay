@@ -13,8 +13,17 @@ public class ItemStatManager : MonoBehaviour    // StatData.json, 아이템 스탯 관
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
-        savePath = Path.Combine(Application.dataPath, "Scripts/Data/StatData.json");
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        savePath = Path.Combine(Application.persistentDataPath, "StatData.json");
         LoadStatData();
     }
 
@@ -29,6 +38,12 @@ public class ItemStatManager : MonoBehaviour    // StatData.json, 아이템 스탯 관
         string json = File.ReadAllText(savePath);
         ItemStatList statList = JsonUtility.FromJson<ItemStatList>(json);
 
+        if (statList == null || statList.stats == null)
+        {
+            Debug.LogError("LoadStatData에서 오류발생 - 데이터 오류");
+            return;
+        }
+
         foreach (var stat in statList.stats)
             statDictionary[stat.statCode] = stat.statName;
 
@@ -37,7 +52,7 @@ public class ItemStatManager : MonoBehaviour    // StatData.json, 아이템 스탯 관
 
     public string GetStatName(int statCode)
     {
-        return statDictionary.ContainsKey(statCode) ? statDictionary[statCode] : "????";
+        return statDictionary.TryGetValue(statCode, out string statName) ? statName : "????";
     }
 }
 
