@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPlayerBounds: {x: -2.45, y: 0}
   maxPlayerBounds: {x: 2.45, y: 14}
-  minCameraBounds: 3.7
-  maxCameraBounds: 5.4
+  minCameraBounds: 2
+  maxCameraBounds: 5.7
