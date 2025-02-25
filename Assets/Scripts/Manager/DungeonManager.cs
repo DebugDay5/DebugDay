@@ -23,6 +23,7 @@ public class DungeonManager : MonoBehaviour
     public int toBossNum = 5;  // passedNum값 안에 들어갈 숫자
 
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
+    public Animator canvasAnim; //페이드인 아웃 기능
 
     public Transform player;
 
@@ -133,10 +134,22 @@ public class DungeonManager : MonoBehaviour
     public void AdvanceToNextStage()   // 스테이지가 증가될 때 발동되는 메서드
     {
         StageCheker();
-        ResetPosition();
-        LoadCurrentDungeon();
+        StartCoroutine(NextStage());
     }
 
+    IEnumerator NextStage()
+    {
+        canvasAnim.SetTrigger("Out");   // 페이드 아웃
+        yield return new WaitForSeconds(0.3f);
+        ResetPosition();  // 플레이어 위치 0,0,0으로 리셋
+        LoadCurrentDungeon();  // 새로운 던전 진입
+        canvasAnim.SetTrigger("In");  // 페이드 인
+    }
+
+    //캐릭터가 부닥치면 어두워짐
+    //어두워진틈을타 캐릭터가 이동됨
+    //맵도 바뀜
+    //그리고 다시 밝아지면 오 맵이 바궈엇군
 }
 
 
