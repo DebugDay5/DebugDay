@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     private bool isShooting = false;
     float rotZ;
 
-
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -132,6 +131,8 @@ public class PlayerController : MonoBehaviour
             obj.transform.right = lookDirection;
             
             Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
+            obj.GetComponent<ProjectileController>().Init(playerManager.Damage, playerManager.CritRate, playerManager.CritDamage, true);
+
             objRigid.velocity = lookDirection * playerManager.ShotSpeed;
         }
 

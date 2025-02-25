@@ -50,9 +50,13 @@ public class PlayerManager : MonoBehaviour
     }
 
     [SerializeField] private float damage = 1f;     //아이템 공격력 곱하기 or 그냥 공격력
+    public float Damage { get { return damage; } }
+
     [SerializeField] private float defense = 0f;
+    public float Defense { get { return defense; } }
 
     [SerializeField] private int gold = 100;
+    public int Gold { get { return gold; } }
 
     private const int maxLv = 20; //최대레벨
     private int level = 1;
@@ -62,7 +66,9 @@ public class PlayerManager : MonoBehaviour
     private int[] expGuage = new int[maxLv]; //레벨 업 경험치 통
 
     [SerializeField] private float critRate = 0f;     //크리 확률
+    public float CritRate { get { return critRate; } }
     [SerializeField] private float critDamage = 1f;   //크리 데미지
+    public float CritDamage { get { return critDamage; } }
 
     public GameObject[] target; //발사할 적
 
