@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     public GameObject target; //테스트용
-
+    private float damage;
     
     void Start()
     {
@@ -20,7 +20,7 @@ public class ProjectileController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("충돌!");
+        //Debug.Log("충돌!");
         if(other.CompareTag("Enemy"))
             Destroy(this.gameObject);
     }

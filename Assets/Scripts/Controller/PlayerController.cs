@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     [SerializeField] private Transform shootingPosition;
+    [SerializeField] private Transform pivot;
 
     private Vector2 moveDirection; //이동 방향
     private Vector2 lookDirection;  //발사 방향
@@ -19,7 +20,9 @@ public class PlayerController : MonoBehaviour
     private float shootTime; //남은 발사 시간
     private int shootNum; //발사 횟수
     private bool isShooting = false;
-    
+    float rotZ;
+
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -73,11 +76,11 @@ public class PlayerController : MonoBehaviour
 
         lookDirection = target.transform.position - transform.position;
         lookDirection = lookDirection.normalized;
-        float rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
 
-        if( shootingPosition != null)
+        if(pivot != null)
         {
-            shootingPosition.rotation = Quaternion.Euler(0, 0, rotZ);
+            pivot.rotation = Quaternion.Euler(0, 0, rotZ);
         }
 
         bool isLeft = Mathf.Abs(rotZ) > 90f;
@@ -110,10 +113,24 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        /*
         for (int i = 0; i < playerManager.NumOfOneShot; i++)
         {
-            GameObject obj = Instantiate(projectile, transform.position, Quaternion.Euler(0f, 0f, 0f));
+            GameObject obj = Instantiate(projectile, shootingPosition.position, Quaternion.Euler(0f, 0f, 0f));
             obj.transform.right = lookDirection;
+            Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
+            objRigid.velocity = lookDirection * playerManager.ShotSpeed;
+        }
+        */
+
+        for(int i = -(playerManager.NumOfOneShot/2); i <= (playerManager.NumOfOneShot/2); i++)
+        {
+            if (i == 0 && playerManager.NumOfOneShot % 2 == 0)
+                continue;
+            Vector3 addictionPosition = Quaternion.Euler(0, 0, rotZ) * new Vector3(0, 0.1f * i, 0);
+            GameObject obj = Instantiate(projectile, shootingPosition.position + addictionPosition, Quaternion.Euler(0f, 0f, 0f));
+            obj.transform.right = lookDirection;
+            
             Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
             objRigid.velocity = lookDirection * playerManager.ShotSpeed;
         }
