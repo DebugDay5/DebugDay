@@ -35,4 +35,18 @@ public class AnimationHandler : MonoBehaviour
     {
         animator.SetBool(IsDie, true);
     }
+
+    public float GetAnimationLength(string animationName)
+    {
+        RuntimeAnimatorController ac = GetComponent<Animator>().runtimeAnimatorController;
+
+        foreach (AnimationClip clip in ac.animationClips)
+        {
+            if (clip.name == animationName)
+            {
+                return clip.length;
+            }
+        }
+        return 0.5f;
+    }
 }

@@ -34,14 +34,17 @@ public class BossFirstPhase : BossState
 
     private IEnumerator AttackPattern1()
     {
-        Debug.Log("Attack1: 2초 후 범위 공격");
+        Debug.Log("Attack1: Player를 향한 투사체");
         animatorController.FirstAttackPattern1(true);
 
         float animationLength = animatorController.GetAnimationLength("Attack1");
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(animationLength * 0.8f);
 
-        // AttackPattern1 실행 로직
+        GameObject projectile = Object.Instantiate(firstProjectilePrefab, boss.attackPoint.position, Quaternion.identity); // 투사체 생성
+        FirstProjectile firstProjectile = projectile.GetComponent<FirstProjectile>(); // Projectile 스크립트 참조
+        firstProjectile.GetComponent<FirstProjectile>().SetDirection((boss.player.position - boss.attackPoint.position).normalized); // 투사체 방향 설정
 
+        yield return new WaitForSeconds(animationLength * 0.2f);
         animatorController.FirstAttackPattern1(false);
     }
 
@@ -53,7 +56,16 @@ public class BossFirstPhase : BossState
         float animationLength = animatorController.GetAnimationLength("Attack2");
         yield return new WaitForSeconds(animationLength);
 
-        // AttackPattern2 실행 로직
+        float attackRadius = 4f;
+        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRadius);
+
+        foreach (Collider2D player in attackPlayers)
+        {
+            if (player.CompareTag("Player"))
+            {
+                // player.GetComponent<Player>().TakeDamage(30);
+            }
+        }
 
         animatorController.FirstAttackPattern2(false);
     }
@@ -66,7 +78,16 @@ public class BossFirstPhase : BossState
         float animationLength = animatorController.GetAnimationLength("Attack3");
         yield return new WaitForSeconds(animationLength);
 
-        // AttackPattern3 실행 로직
+        float attackRadius = 2f;
+        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRadius);
+
+        foreach (Collider2D player in attackPlayers)
+        {
+            if (player.CompareTag("Player"))
+            {
+                // player.GetComponent<Player>().TakeDamage(50);
+            }
+        }
 
         animatorController.FirstAttackPattern3(false);
     }

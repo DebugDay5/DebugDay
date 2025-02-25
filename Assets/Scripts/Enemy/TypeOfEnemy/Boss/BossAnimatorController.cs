@@ -70,6 +70,6 @@ public class BossAnimatorController : MonoBehaviour
                 return clip.length;
             }
         }
-        return 0.5f; // 기본값
+        return 0.5f;
     }
 }

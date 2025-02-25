@@ -4,9 +4,6 @@ using UnityEngine;
 public class BossEnemy : BaseEnemy
 {
     [SerializeField] private float attackCooldown = 5f;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private float passiveHealthDecayRate = 5f; // 페이즈 테스트 코드
-    
     [SerializeField] private RuntimeAnimatorController firstPhaseAnimator;
     [SerializeField] private RuntimeAnimatorController secondPhaseAnimator;
 
@@ -15,6 +12,9 @@ public class BossEnemy : BaseEnemy
     private bool isArmorBroken = false; // BreakArmor 실행 여부
     private BossState currentState; // 현재 페이즈
     private BossAnimatorController animatorController;
+    public GameObject firstProjectilePrefab;
+    public GameObject stone;
+    public Transform attackPoint;
 
     protected override void Awake()
     {
@@ -27,11 +27,11 @@ public class BossEnemy : BaseEnemy
     {
         base.Start();
         StartCoroutine(BossAttackPattern()); // 보스 공격 패턴
-        StartCoroutine(PassiveHealthDecay()); // 페이즈 테스트 코드
     }
 
     private void Update()
     {
+        FlipSprite();
         currentState.UpdateState(); // 추후 추가
         PhaseTransition(); // 체력이 50% 이하일 시 2페이즈
         CheckLowHealthPhase(); // 체력이 10% 이하일 때 BreakArmor 실행
@@ -48,15 +48,6 @@ public class BossEnemy : BaseEnemy
         {
             yield return new WaitForSeconds(attackCooldown);
             currentState.Attack();
-        }
-    }
-
-    private IEnumerator PassiveHealthDecay() // 페이즈 테스트 코드
-    {
-        while (HP > 0)
-        {
-            HP -= passiveHealthDecayRate * Time.deltaTime;
-            yield return null;
         }
     }
 

@@ -54,16 +54,4 @@ public class RangeEnemy : BaseEnemy
         animationHandler.Attack(false);
         isAttacking = true;
     }
-
-    private void FlipSprite()
-    {
-        if (player.position.x > transform.position.x)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-    }
 }

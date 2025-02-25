@@ -58,16 +58,4 @@ public class MeleeEnemy : BaseEnemy
         animationHandler.Attack(false); // 애니메이션 중지
         isAttacking = true; // 쿨타임이 끝나면 공격 가능 상태로 변경
     }
-
-    private void FlipSprite()
-    {
-        if (player.position.x > transform.position.x)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-    }
 }

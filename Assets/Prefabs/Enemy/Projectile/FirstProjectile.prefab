@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 604841111702111523}
   - component: {fileID: 4456268041074628934}
   m_Layer: 0
-  m_Name: SecondProjectile
+  m_Name: FirstProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -204667208538979991, guid: 51d8c575a1071dc4c84794e1264c83d6,
+  m_Sprite: {fileID: -7333765376082900085, guid: f634159c416818d4cbaf0e2d7171fc09,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -145,7 +145,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -160,15 +160,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.023148766, y: 0.045655902}
-      - {x: -0.10521863, y: 0.028483834}
-      - {x: -0.12, y: 0.015218615}
-      - {x: -0.10282795, y: 0.003906858}
-      - {x: -0.01848384, y: -0.010874527}
-      - {x: 0.014861137, y: -0.014460551}
-      - {x: 0.1032652, y: -0.010874527}
-      - {x: 0.11043726, y: 0.011749055}
-      - {x: 0.095655896, y: 0.046851233}
+    - - {x: 0.021161025, y: 0.062928826}
+      - {x: -0.03, y: 0.06469662}
+      - {x: -0.047625437, y: 0.047625437}
+      - {x: -0.05381272, y: 0.0035355885}
+      - {x: -0.02237456, y: -0.051161025}
+      - {x: 0.027348308, y: -0.053812716}
+      - {x: 0.040277127, y: -0.015857724}
+      - {x: 0.037625436, y: 0.033535585}
   m_UseDelaunayMesh: 0
 --- !u!95 &604841111702111523
 Animator:
