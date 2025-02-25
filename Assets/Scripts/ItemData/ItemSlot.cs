@@ -61,8 +61,8 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
             equipButton.onClick.RemoveAllListeners();
             enhanceButton.onClick.RemoveAllListeners(); // Áßº¹ ¹æÁö
-            equipButton.onClick.AddListener(() => EquipItem());
-            enhanceButton.onClick.AddListener(() => EnhanceItem());
+            equipButton.onClick.AddListener(EquipItem);
+            enhanceButton.onClick.AddListener(EnhanceItem);
         }
     }
 
@@ -74,7 +74,8 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     private string GetStatInfo()
     {
-        if (ItemStatManager.Instance == null)
+        var statManager = ItemStatManager.Instance;
+        if (statManager == null)
         {
             Debug.LogError("ItemStatManagerÀÇ ÀÎ½ºÅÏ½º°¡ NULL");
             return "";
@@ -82,7 +83,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         string statInfo = "";
         foreach (var stat in itemData.stats)
         {
-            string statName = ItemStatManager.Instance.GetStatName(stat.Key);
+            string statName = statManager.GetStatName(stat.Key);
             statInfo += $"{statName}: {stat.Value}\n";
         }
         return statInfo;
@@ -90,8 +91,20 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     private void EquipItem()    // ÀåÂø¹öÆ°
     {
-        Debug.Log($"{itemData.name} ÀåÂøÇÔ");
-        itemInfoPanel.SetActive(false);
+        var inventoryManager = PlayerInventoryManager.Instance;
+        if (inventoryManager == null) return;
+
+        string itemType = itemData.type;
+
+        if (inventoryManager.IsEquipped(itemType))
+        {
+            EquipSlot.Instance.UnequipItem();
+        }
+
+        inventoryManager.EquipItem(itemType, itemData);
+        Debug.Log($"{itemData.name} ÀåÂøµÊ");
+
+        EquipSlot.Instance.UpdateSlot(itemData);
     }
 
     private void EnhanceItem()  // °­È­¹öÆ°
