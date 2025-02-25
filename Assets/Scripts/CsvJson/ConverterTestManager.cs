@@ -6,6 +6,17 @@ using UnityEngine;
 
 public class ConverterTestManager : MonoBehaviour
 {
+    /// <summary>
+    /// ***Converter 사용 전 주의사항***
+    /// 1. 입력한 string, 클래스명, Recources하위의 csv 데이터 이름이 동일해야합니다.
+    /// 2. Recources파일 하위에 csv데이터가 존재해야합니다.
+    /// 3. csv 데이터를 파싱해서 사용할 클래스 조건
+    ///     (1) 클래스여야합니다.
+    ///     (2) ICsvParsable 인터페이스를 구현해야합니다.
+    ///     (3) 매개변수가 없는 생성자를 가지고 있어야 합니다.
+    ///     : ICsvParsable 인터페이스와 사용예시는 CsvConverter클래스를 참고해주세요
+    /// </summary>
+
     [Header("===클래스 이름을 작성해주세요===")]
     public string[] className;
     public Dictionary<string, string> jsonResults = new Dictionary<string, string>();
