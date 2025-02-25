@@ -1,18 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("===Panel===")]
+    [SerializeField] private GameObject profilePanel;   // 프로필 패널
+    [SerializeField] private GameObject storePanel;     // 상점 패널
+    [SerializeField] private GameObject inventoryPanel; // 인벤토리 패널
+    [SerializeField] private GameObject lobbyPanel;     // 로비 패널
+    [SerializeField] private GameObject nowOnPanel;     // 현재 켜져있는 panel
+
+    [Header("===Button===")]
+    [SerializeField] private Button profileButton;      // 프로필 버튼
+    [SerializeField] private Button lobbyButton;        // 로비 버튼
+    [SerializeField] private Button inventoryButton;    // 인벤토리 버튼
+    [SerializeField] private Button gameStartButton;    // 게임시작 버튼
+
+    private void Awake()
     {
-        
+        // 현재 panel을 lobby로
+        nowOnPanel = lobbyPanel;
+
+        // 프로필버튼 이벤트 
+        profileButton.onClick.AddListener(() => OnOffPanel(profilePanel)) ;
+        // 로비 버튼 이벤트 
+        lobbyButton.onClick.AddListener(()=> OnOffPanel(lobbyPanel)) ;
+        // 인벤토리 버튼 이벤트
+        inventoryButton.onClick.AddListener(() => OnOffPanel(inventoryPanel));
+        // 게임시작 버튼 이벤트 => 던전 씬 load
+        gameStartButton.onClick.AddListener( ()=> SceneManager.Instance.ChangeDungeonScene() );
     }
 
-    // Update is called once per frame
-    void Update()
+    // 현재 panel을 Off, 들어온패널 On
+    private void OnOffPanel(GameObject panel) 
     {
-        
+        if (nowOnPanel == panel)
+            return;
+
+        // 현재 panel 끄기
+        nowOnPanel.SetActive(false);
+
+        nowOnPanel = panel;
+
+        nowOnPanel.SetActive(true);
     }
+
 }
