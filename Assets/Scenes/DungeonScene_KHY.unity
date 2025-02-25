@@ -355,13 +355,9 @@ MonoBehaviour:
   - {fileID: 1025527431899130146, guid: 98638af9bff8eeb489ecbdd6c1b75f29, type: 3}
   - {fileID: 1025527431899130146, guid: 3009e5a409ce54e4caa5fb87217b8044, type: 3}
   - {fileID: 1025527431899130146, guid: 973db8b029062d44d99a312fc101ac0d, type: 3}
-  - {fileID: 1025527431899130146, guid: 3009e5a409ce54e4caa5fb87217b8044, type: 3}
+  - {fileID: 1025527431899130146, guid: 8d01b42ea2826a04f8eb9b5baa5dc579, type: 3}
   hardDungeon:
-  - {fileID: 1025527431899130146, guid: 988115fe3cf62f944a1c7bbff781d05a, type: 3}
-  - {fileID: 1025527431899130146, guid: 8701a6a2606746c4aabb37566ce8dc5b, type: 3}
-  - {fileID: 1025527431899130146, guid: 66edece74ddd9354ca1f9b8778e23c45, type: 3}
-  - {fileID: 1025527431899130146, guid: e614641bdc0212340894d8773f50af38, type: 3}
-  - {fileID: 1025527431899130146, guid: 4f335ecc449b3c242bf0832b52f97ba8, type: 3}
+  - {fileID: 1025527431899130146, guid: 22fbd8b1ea74e7e4d9fa5b52dea7de40, type: 3}
   bossDungeon:
   - {fileID: 1025527431899130146, guid: e6ce143376b2ece4baec61df490065f4, type: 3}
   passedNum: 0

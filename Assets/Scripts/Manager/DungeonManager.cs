@@ -19,7 +19,6 @@ public class DungeonManager : MonoBehaviour
 
     public int passedNum = 0;  // 통과한 방의 수를 check하는 넘버
     public int toHardNum = 3;  // passedNum값 안에 들어갈 숫자
-    // public int toAngelNum = 5;  // passedNum값 안에 들어갈 숫자
     public int toBossNum = 5;  // passedNum값 안에 들어갈 숫자
 
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -104,10 +103,6 @@ public class DungeonManager : MonoBehaviour
         {
             currentStage = 1; 
         }
-        //else if (passedNum == toAngelNum)
-        //{
-        //    currentStage = 2;
-        //}
         else if (passedNum == toBossNum)  // 5번 통과하면 boss stage로 넘어감
         {
             currentStage = 2; 

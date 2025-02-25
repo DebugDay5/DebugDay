@@ -15,4 +15,4 @@ MonoBehaviour:
   minPlayerBounds: {x: -2.45, y: 0}
   maxPlayerBounds: {x: 2.45, y: 14}
   minCameraBounds: 2.4
-  maxCameraBounds: 5.7
+  maxCameraBounds: 7.5
