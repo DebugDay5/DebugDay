@@ -8,11 +8,19 @@ public class InventoryManager : MonoBehaviour   // 인벤토리 화면 관리
     public InventoryUI inventoryUI;
     public Transform inventorySlotGrid;
     public GameObject itemSlotPrefab;
+    public GameObject inventoryPanel;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+    public void OpenInventory()
+    {
+        inventoryPanel.SetActive(true);  // 인벤토리 UI 활성화
+
+        List<Item> playerItems = PlayerInventoryManager.Instance.GetOwnedItems(); // 플레이어 아이템 가져오기
+        inventoryUI.RefreshInventory(playerItems); // 인벤토리 UI 갱신
     }
 
     public void RefreshInventory()

@@ -3603,6 +3603,7 @@ MonoBehaviour:
   inventorySlotGrid: {fileID: 848725923}
   itemSlotPrefab: {fileID: 7069392121815880168, guid: 98bee33ee287480458d838dc810843ca,
     type: 3}
+  inventoryPanel: {fileID: 694924094}
 --- !u!114 &694924097
 MonoBehaviour:
   m_ObjectHideFlags: 0
