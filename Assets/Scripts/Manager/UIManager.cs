@@ -29,8 +29,8 @@ public class UIManager : MonoBehaviour
         lobbyButton.onClick.AddListener(()=> OnOffPanel(lobbyPanel)) ;
         // 인벤토리 버튼 이벤트
         inventoryButton.onClick.AddListener(() => OnOffPanel(inventoryPanel));
-        // 게임시작 버튼 이벤트 
-        //gameStartButton.onClick.AddListener();
+        // 게임시작 버튼 이벤트 => 던전 씬 load
+        gameStartButton.onClick.AddListener( ()=> SceneManager.Instance.ChangeDungeonScene() );
     }
 
     // 현재 panel을 Off, 들어온패널 On
@@ -47,8 +47,4 @@ public class UIManager : MonoBehaviour
         nowOnPanel.SetActive(true);
     }
 
-    private void ChangeScene() 
-    {
-    
-    }
 }
