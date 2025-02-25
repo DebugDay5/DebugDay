@@ -6,7 +6,6 @@
       "itemType": "weapon",
       "itemStatCode": [ 1 ],
       "itemStat1": 10,
-      "itemStat2": null,
       "itemSellPrice": 500,
       "iconPath": "weapon_1"
     },
@@ -17,7 +16,6 @@
       "itemType": "armor",
       "itemStatCode": [ 3 ],
       "itemStat1": 10,
-      "itemStat2": null,
       "itemSellPrice": 500,
       "iconPath": "armor_1"
     },
@@ -28,7 +26,6 @@
       "itemType": "neckless",
       "itemStatCode": [ 2 ],
       "itemStat1": 100,
-      "itemStat2": null,
       "itemSellPrice": 500,
       "iconPath": "neckless_1"
     },
@@ -39,7 +36,6 @@
       "itemType": "ring",
       "itemStatCode": [ 4 ],
       "itemStat1": 5,
-      "itemStat2": null,
       "itemSellPrice": 500,
       "iconPath": "ring_1"
     },
@@ -50,7 +46,6 @@
       "itemType": "weapon",
       "itemStatCode": [ 1 ],
       "itemStat1": 30,
-      "itemStat2": null,
       "itemSellPrice": 1500,
       "iconPath": "weapon_2"
     },
@@ -61,7 +56,6 @@
       "itemType": "armor",
       "itemStatCode": [ 3 ],
       "itemStat1": 30,
-      "itemStat2": null,
       "itemSellPrice": 1500,
       "iconPath": "armor_2"
     },
@@ -72,7 +66,6 @@
       "itemType": "neckless",
       "itemStatCode": [ 2 ],
       "itemStat1": 300,
-      "itemStat2": null,
       "itemSellPrice": 1500,
       "iconPath": "neckless_2"
     },
@@ -83,7 +76,6 @@
       "itemType": "ring",
       "itemStatCode": [ 4 ],
       "itemStat1": 15,
-      "itemStat2": null,
       "itemSellPrice": 1500,
       "iconPath": "ring_2"
     },
@@ -133,7 +125,7 @@
     },
     {
       "itemId": 40001,
-      "itemName": "그림자 길잡이",
+      "itemName": "그림자 활",
       "itemRarity": "legendary",
       "itemType": "weapon",
       "itemStatCode": [ 1, 5 ],

@@ -42,7 +42,13 @@ public class InventorySort : MonoBehaviour      // 인벤토리 화면에서 장착 부위별
 
     private void ApplySort()
     {
-        List<Item> items = PlayerInventoryManager.Instance.GetOwnedItems();
+        List<Item> items = PlayerInventoryManager.Instance?.GetOwnedItems();
+
+        if (items == null || items.Count == 0)
+        {
+            Debug.LogWarning("정렬할 아이템이 없습니다");
+            return;
+        }
 
         if (currentSortMode == SortMode.Type)
             SortByType(items);
@@ -57,7 +63,7 @@ public class InventorySort : MonoBehaviour      // 인벤토리 화면에서 장착 부위별
     private void UpdateSortButtonText()
     {
         if (sortButtonText != null)
-            sortButtonText.text = (currentSortMode == SortMode.Type) ? "정렬 : 타입" : "정렬 : 희귀도";
+            sortButtonText.text = (currentSortMode == SortMode.Type) ? "Sorted By Type" : "Sorted By Rarity";
     }
 
     public void SortByType(List<Item> items)

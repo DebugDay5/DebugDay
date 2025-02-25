@@ -18,6 +18,30 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
         savePath = Path.Combine(Application.persistentDataPath, "PlayerInventory.json");
         LoadInventory();
     }
+    void Start()
+    {
+        Debug.Log("PlayerInventoryManager Start() 실행됨");
+        if (ownedItems.Count == 0) AddTestItems();
+    }
+
+    public void AddTestItems()      // 인벤시스템 테스트용 아이템
+    {
+        Debug.Log("테스트용 아이템 추가");
+
+        List<Item> testItems = new List<Item>
+        {
+            new Item(new ItemData { itemId = 10001, itemName = "일반 활", itemRarity = "common", itemType = "weapon", itemStatCode = new int[]{1}, itemStat1 = 10, itemSellPrice = 500, iconPath = "weapon_1" }),
+            new Item(new ItemData { itemId = 10002, itemName = "일반 갑옷", itemRarity = "common", itemType = "armor", itemStatCode = new int[]{3}, itemStat1 = 10, itemSellPrice = 500, iconPath = "armor_1" }),
+            new Item(new ItemData { itemId = 10003, itemName = "수수한 목걸이", itemRarity = "common", itemType = "neckless", itemStatCode = new int[]{2}, itemStat1 = 100, itemSellPrice = 500, iconPath = "neckless_1" }),
+            new Item(new ItemData { itemId = 10004, itemName = "수수한 반지", itemRarity = "common", itemType = "ring", itemStatCode = new int[]{4}, itemStat1 = 5, itemSellPrice = 500, iconPath = "ring_1" }),
+            new Item(new ItemData { itemId = 30001, itemName = "정교한 활", itemRarity = "unique", itemType = "weapon", itemStatCode = new int[]{1, 5}, itemStat1 = 40, itemStat2 = 30, itemSellPrice = 5000, iconPath = "weapon_3" })
+        };
+
+        foreach (var item in testItems)
+            AddItem(item);
+
+        Debug.Log("테스트용 아이템 추가됨");
+    }
 
     public bool AddItem(Item item)
     {
