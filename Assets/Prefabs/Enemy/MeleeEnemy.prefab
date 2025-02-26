@@ -161,8 +161,8 @@ MonoBehaviour:
   gold: 5
   player: {fileID: 0}
   playerController: {fileID: 0}
-  attackRange: 0.5
-  attackCooldown: 2
+  attackRange: 1
+  attackCooldown: 3
 --- !u!114 &8732353018777888684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 7
 --- !u!60 &7498898529884316605
 PolygonCollider2D:

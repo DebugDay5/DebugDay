@@ -17,10 +17,10 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     [SerializeField] protected float speed;
     [SerializeField] protected float damage;
     [SerializeField] protected int gold;
-    [HideInInspector] public Transform player; // 플레이어 추적
+    [HideInInspector] public Transform player;
     [HideInInspector] public PlayerController playerController;
     protected AnimationHandler animationHandler;
-    
+
     public float HP { get => hp; set => hp = value; }
     public float Speed { get => speed; set => speed = value; }
     public float Damage { get => damage; set => damage = value; }
@@ -29,13 +29,38 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
         animationHandler = GetComponent<AnimationHandler>();
     }
-    
+
     protected virtual void Start()
     {
-        EnemyManager.Instance?.AddEnemy(this);
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        StartCoroutine(FindPlayer()); // 플레이어 자동 검색 시작
     }
-    
+
+    private IEnumerator FindPlayer()
+    {
+        while (true)
+        {
+            if (!IsPlayerAvailable())
+            {
+                GameObject playerObject = GameObject.FindWithTag("Player");
+                if (playerObject != null)
+                {
+                    player = playerObject.transform;
+                }
+            }
+            yield return new WaitForSeconds(1f); // 1초마다 확인
+        }
+    }
+
+    protected bool IsPlayerAvailable()
+    {
+        return player != null && player.gameObject != null;
+    }
+
+    protected virtual void Update()
+    {
+        if (!IsPlayerAvailable()) return; // 플레이어가 없으면 동작 중지
+    }
+
     public virtual void TakeDamage(float damage)
     {
         HP -= PlayerManager.Instance.Damage;
@@ -45,14 +70,14 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
             Die();
         }
     }
-    
+
     protected void Die()
     {
         animationHandler?.Die();
         EnemyManager.Instance?.RemoveEnemy(this);
-        Destroy(gameObject, 4f);
+        Destroy(gameObject);
     }
-    
+
     public abstract void Attack(); // abstract를 사용하여 각 Enemy마다 공격 방식 정의
 
     protected void FlipSprite()

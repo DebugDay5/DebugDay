@@ -63,7 +63,8 @@ public class BossSecondPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // playerController.TakeDamage(30f);
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                playerController.TakeDamage(30f);
             }
         }
 

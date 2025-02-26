@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
         if (isDestroyed || !collision.CompareTag("Player")) return;
 
         PlayerController playerController = collision.GetComponent<PlayerController>();
-        // playerController.TakeDamage(damage);
+        playerController.TakeDamage(damage);
 
         isDestroyed = true;
         speed = 0f;
@@ -52,7 +52,7 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            DestroyProjectile(); // 애니메이션이 없으면 즉시 삭제
+            DestroyProjectile();
         }
     }
 

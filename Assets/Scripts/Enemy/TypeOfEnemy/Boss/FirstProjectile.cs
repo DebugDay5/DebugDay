@@ -39,7 +39,7 @@ public class FirstProjectile : MonoBehaviour
         if (isDestroyed || !collision.CompareTag("Player")) return;
 
         PlayerController playerController = collision.GetComponent<PlayerController>();
-        // playerController.TakeDamage(damage);
+        playerController.TakeDamage(damage);
 
         isDestroyed = true;
         speed = 0f;
