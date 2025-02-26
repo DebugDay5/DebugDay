@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GateCollider : MonoBehaviour
 {
-    // Enemy를 몇 마리 이상 죽였을 때 GateCollider 활성화 -> DungeonManaager에서 관리
+
+    //public void OpenGate()
+    //{
+    //    gameObject.SetActive(true);
+    //}
 
     private void OnTriggerEnter2D(Collider2D other)
     {

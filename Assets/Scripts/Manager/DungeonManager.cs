@@ -8,22 +8,24 @@ public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager Instance { get; private set; }
 
+    // private int totalEnemies = 0;  // 총 몬스터 수
+    // private int defeatedEnemies = 0; // 처치된 몬스터 수
+
     public GameObject startDungeon;
     public List<GameObject> normalDungeon;  // 노멀맵 프리팹 리스트
     public List<GameObject> hardDungeon;  // 하드맵 프리팹 리스트
-    // public List<GameObject> angelDungeon;  //  버프하는 엔젤npc가 있는 맵 (이후에 시간 되면 추가)
     public List<GameObject> bossDungeon;  //  던전 프리팹 리스트
-
     private GameObject currentDungeon;  // 현재 활성화된 던전
+
     private int currentStage = 0;  // 현재 스테이지 번호
 
     public int passedNum = 0;  // 통과한 방의 수를 check하는 넘버
     public int toHardNum = 3;  // passedNum값 안에 들어갈 숫자
     public int toBossNum = 5;  // passedNum값 안에 들어갈 숫자
 
+    public Transform player;
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
     public Animator canvasAnim; //페이드인 아웃 기능
-    public Transform player;
 
     private HashSet<int> usedNormalIndices = new HashSet<int>(); // 한 번 등장한 맵의 인덱스 저장
     private HashSet<int> usedHardIndices = new HashSet<int>();
@@ -43,8 +45,33 @@ public class DungeonManager : MonoBehaviour
         currentDungeon = Instantiate(startDungeon); 
         currentStage = 0;  // 현재 스테이지 번호 초기화
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버를 초기화
-        // 핸드폰 화면 꺼놨다가 다시 했을 때 이어하기 되는 기능을 하려면 이 부분이 세이브가 되어야.
-}
+                        // 핸드폰 화면 꺼놨다가 다시 했을 때 이어하기 되는 기능을 하려면 이 부분이 세이브가 되어야.
+    }
+
+    //public void EnemyDefeated()
+    //{
+    //    defeatedEnemies++;
+    //    if (defeatedEnemies >= totalEnemies)
+    //    {
+    //        GateCollider.Instance.OpenGate();  // 게이트 열기
+    //    }
+    //}
+
+
+    //  ** 관우님께
+    //  BaseEnemy 스크립트 Die() 파트에 아래 예시와 같은 식을 추가하여
+    //  DungeonManager EnemyDefeated 함수에 몬스터가 처치되었음을 알리는 신호를 보내주시면
+    //  주석처리한 스크립트들이 원활히 가동될 것 같습니다. 
+    //      if (DungeonManager.Instance != null)
+    //      {
+    //          DungeonManager.Instance.EnemyDefeated();
+    //      }
+
+
+    // public void SetTotalEnemies (int count)
+    // {
+    //    SetTotalEnemies = count;
+    // }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용
     {
@@ -70,6 +97,9 @@ public class DungeonManager : MonoBehaviour
                 currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedHardIndices));
                 break;
         }
+
+        SetTotalEnemies(FindObjectOfType<Enemy>().Length);  // 던전 로드 후 몬스터 수 설정
+
     }
 
     private GameObject GetUniqueDungeon(List<GameObject> dungeonList, HashSet<int> usedIndices)
