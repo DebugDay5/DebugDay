@@ -13,7 +13,8 @@ public enum PlayerSound
 public enum BGM 
 { 
     Lobby,
-    Dungeon
+    DungeonRoom,
+    BossRoom
 }
 
 public enum DungeonSound 
@@ -51,9 +52,6 @@ public class SoundManager : MonoBehaviour
     [Header("===Dungeon Sound===")]
     [SerializeField] AudioClip[] dungeonSound;
 
-    [Header("===Enemy Move Sound==")]
-    [SerializeField] AudioClip[] enemyMoveClip;
-
     /// <summary>
     /// 사용방법
     /// 1. 프리팹에 AudioSource컴포넌트를 할당한다
@@ -90,6 +88,16 @@ public class SoundManager : MonoBehaviour
         try
         {
             audioSource.PlayOneShot(dungeonSound[(int)sound]);
+        }
+        catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
+    }
+
+    // 사운드가 본인 Manager에서 사용하고 있다면
+    public void PlaySounds(AudioSource audioSource, AudioClip sound) 
+    {
+        try
+        {
+            audioSource.PlayOneShot(sound);
         }
         catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
     }
