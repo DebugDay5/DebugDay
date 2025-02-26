@@ -98,7 +98,7 @@ public class DungeonManager : MonoBehaviour
                 break;
             case 1: // ÇÏµå ¸Ê ·Îµå
                 currentDungeon = Instantiate(GetUniqueDungeon(hardDungeon, usedHardIndices));
-                colorGrading.postExposure.value = 1.0f;  // ÇÏµå¸ÊºÎÅÍ ¹è°æ ºÓÀº»ö
+                colorGrading.postExposure.value = 1.0f;  // ÇÏµå¸Ê ¹è°æ ºÓÀº»ö
                 colorGrading.colorFilter.value = new Color(1f,0.3f,0.3f,0);
                 break;
             case 2:  // º¸½º ¸Ê ·Îµå
