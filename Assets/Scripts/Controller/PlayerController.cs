@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
     float rotZ;
 
     private bool isInvincible = false;
+    GameObject target;
+
+    public Vector2 minBounds;  // 이동 가능한 최소 x,y값
+    public Vector2 maxBounds;  // 이동 가능한 최대 x,y값
 
     private void Awake()
     {
@@ -78,18 +82,32 @@ public class PlayerController : MonoBehaviour
         }
 
         _rigidbody.velocity = moveDirection;
+
+        Vector3 pos = transform.position;
+
+        pos.x = Mathf.Clamp(pos.x, minBounds.x, maxBounds.x);
+        pos.y = Mathf.Clamp(pos.y, minBounds.y, maxBounds.y);
+
+        transform.position = pos;
     }
 
     private void LookTarget()
     {
-        GameObject target = playerManager.GetTarget();
-        if (target == null) return;
+        if (_animator.GetBool("IsMove")) //이동시 이동방향으로
+        {
+            lookDirection = _rigidbody.velocity.normalized;
+        }
+        else //멈췄을 경우 타겟방향 및 공격
+        {
+            target = playerManager.GetTarget();
+            if (target == null) return;
 
-        lookDirection = target.transform.position - transform.position;
-        lookDirection = lookDirection.normalized;
+            lookDirection = target.transform.position - transform.position;
+            lookDirection = lookDirection.normalized;
+        }
         rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
 
-        if(pivot != null)
+        if (pivot != null)
         {
             pivot.rotation = Quaternion.Euler(0, 0, rotZ);
         }
@@ -101,7 +119,9 @@ public class PlayerController : MonoBehaviour
     
     private void Shoot()
     {
-        if(projectile == null) return;
+        
+        if (target == null) return;
+        if (projectile == null) return;
         if (isShooting) return;
         
         shootTime -= Time.deltaTime;
@@ -177,5 +197,13 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    
+
+    public void UpdateBounds()
+    {
+        if (DungeonManager.Instance != null && DungeonManager.Instance.currentDungeonData != null)
+        {
+            minBounds = DungeonManager.Instance.currentDungeonData.minPlayerBounds;
+            maxBounds = DungeonManager.Instance.currentDungeonData.maxPlayerBounds;
+        }
+    }
 }

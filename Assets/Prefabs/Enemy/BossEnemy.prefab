@@ -245,6 +245,7 @@ MonoBehaviour:
   damage: 0
   gold: 100
   player: {fileID: 0}
+  playerController: {fileID: 0}
   attackCooldown: 3
   firstPhaseAnimator: {fileID: 9100000, guid: 43ffd0e7451a14a43824ed9ef1c9391f, type: 2}
   secondPhaseAnimator: {fileID: 9100000, guid: 3900555431d4043bc98c3cdadb3b4ff4, type: 2}

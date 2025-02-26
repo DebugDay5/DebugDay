@@ -10,6 +10,7 @@ public class BossEnemy : BaseEnemy
     private bool isSecondPhase = false; // 2페이즈
     private bool isTransitioning = false; // IsPhaseTransition이 한 번만 실행되게 하는 코드
     private bool isArmorBroken = false; // BreakArmor 실행 여부
+    private bool isDead = false; // 보스 사망 여부 추가
     private BossState currentState; // 현재 페이즈
     private BossAnimatorController animatorController;
     public GameObject firstProjectilePrefab;
@@ -31,6 +32,7 @@ public class BossEnemy : BaseEnemy
 
     private void Update()
     {
+        if (isDead) return;
         FlipSprite();
         currentState.UpdateState(); // 추후 추가
         PhaseTransition(); // 체력이 50% 이하일 시 2페이즈
@@ -39,6 +41,7 @@ public class BossEnemy : BaseEnemy
 
     public override void Attack()
     {
+        if (isDead) return;
         currentState.Attack(); // 현재 페이즈의 공격
     }
 
@@ -46,6 +49,7 @@ public class BossEnemy : BaseEnemy
     {
         while (HP > 0)
         {
+            if (isTransitioning) yield break;
             yield return new WaitForSeconds(attackCooldown);
             currentState.Attack();
         }
@@ -55,6 +59,8 @@ public class BossEnemy : BaseEnemy
     {
         if (HP <= 1000 * 0.5f && !isSecondPhase && !isTransitioning)
         {
+            isTransitioning = true;
+            StopCoroutine(BossAttackPattern());
             StartCoroutine(TransitionToSecondPhase());
         }
     }
@@ -65,14 +71,15 @@ public class BossEnemy : BaseEnemy
         animatorController.PhaseTransition(true);
 
         float animationLength = animatorController.GetAnimationLength("PhaseTransition");
-        yield return new WaitForSeconds(animationLength); // 애니메이션의 정확한 길이
+        yield return new WaitForSeconds(animationLength);
 
         animatorController.PhaseTransition(false);
         isSecondPhase = true;
+        isTransitioning = false;
         
         GetComponent<Animator>().runtimeAnimatorController = secondPhaseAnimator;
-
         currentState = new BossSecondPhase(this);
+        StartCoroutine(BossAttackPattern());
     }
 
     private void CheckLowHealthPhase() // 체력이 10% 이하일 때 BreakArmor 실행
@@ -80,6 +87,11 @@ public class BossEnemy : BaseEnemy
         if (HP <= 1000 * 0.1f && isSecondPhase && !isArmorBroken)
         {
             StartCoroutine(ExecuteBreakArmorAndLast());
+        }
+        
+        if (HP <= 0 && !isDead)
+        {
+            StartCoroutine(BossDie());
         }
     }
 
@@ -108,5 +120,20 @@ public class BossEnemy : BaseEnemy
         yield return new WaitForSeconds(animationLength);
 
         animatorController.SecondLast(false);
+    }
+
+        private IEnumerator BossDie() // 보스 사망 애니메이션 실행
+    {
+        isDead = true; // 보스 사망 상태 설정
+        animatorController.BossDie(true);
+
+        float animationLength = animatorController.GetAnimationLength("BossDie");
+        yield return new WaitForSeconds(animationLength);
+
+        animatorController.BossDie(false);
+        
+        isDead = true;
+
+        Destroy(gameObject);
     }
 }

@@ -114,15 +114,23 @@ public class PlayerManager : MonoBehaviour
         exp = 0;
     }
 
+    public void SetTarget(GameObject[] target)
+    {
+        this.target = target;
+    }
+
     public GameObject GetTarget()   //가까운 적 찾기
     {
         if (target.Length == 0) return null; //적이 없다면
-
+        
         GameObject go = target[0];
         float min = Mathf.Infinity;
 
         foreach (var t in target)
         {
+            if(t == null)
+                continue;
+
             float distance = (t.transform.position - transform.position).sqrMagnitude;
             if (distance < min)
             {
@@ -130,6 +138,7 @@ public class PlayerManager : MonoBehaviour
                 go = t;
             }
         }
+        if (go == null) return null;
 
         return go;
     }

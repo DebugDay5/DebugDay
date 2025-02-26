@@ -50,13 +50,20 @@ public class BossAnimatorController : MonoBehaviour
     {
         animator.SetBool("IsHeal", isHeal);
     }
+
     public void SecondBreakArmor(bool isBreakArmor)
     {
         animator.SetBool("IsBreakArmor", isBreakArmor);
     }
+
     public void SecondLast(bool isLast)
     {
         animator.SetBool("IsLast", isLast);
+    }
+    
+    public void BossDie(bool isDie)
+    {
+        animator.SetBool("IsDie", isDie);
     }
 
     public float GetAnimationLength(string animationName)
