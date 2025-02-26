@@ -5,12 +5,13 @@ using System.Data;
 using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager Instance { get; private set; }
+
     public List<BaseEnemy> enemies = new List<BaseEnemy>();  // 모든 적 리스트
-    public bool isDungeonCleared = false;  // 던전 클리어 여부
 
     public GameObject startDungeon;
     public List<GameObject> normalDungeon;  // 노멀맵 프리팹 리스트
@@ -20,10 +21,10 @@ public class DungeonManager : MonoBehaviour
 
     private int currentStage = 0;  // 현재 스테이지 번호
     public int passedNum = 0;  // 통과한 방의 수를 check하는 넘버
-    public int toHardNum = 1;  // passedNum값 안에 들어갈 숫자
-    public int toBossNum = 1;  // passedNum값 안에 들어갈 숫자
+    public int toHardNum = 2;  // 2번 맵을 깨면 hard스테이지로 넘어간다는 뜻
+    public int toBossNum = 4;  // 4번 맵을 깨면 Boss스테이지로 넘어간다는 듯
 
-    public Transform player;
+    public Transform player;  // 플레이어 사망 여부 체크
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
     public Animator canvasAnim; //페이드인 아웃 기능
     public GateCollider currentGate;
@@ -34,6 +35,13 @@ public class DungeonManager : MonoBehaviour
 
     public PostProcessVolume postProcessVolume;
     private ColorGrading colorGrading;
+
+    public GameObject winLosePanel;  // 승패 화면 패널
+    public Text winLoseText;  // 승패 텍스트
+    public Button homeButton;  // 홈으로 가는 버튼
+
+    public bool isDungeonCleared = false;  // 던전 클리어 여부
+    private bool isBossDungeonCleared = false;   // 보스 던전 클리어 여부
 
     public void Awake()
     {
@@ -46,12 +54,18 @@ public class DungeonManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        currentDungeon = Instantiate(startDungeon); 
+        currentDungeon = Instantiate(startDungeon);
+        
         currentStage = 0;  // 현재 스테이지 번호 초기화
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버를 초기화
+
         postProcessVolume.profile.TryGetSettings(out colorGrading);   
         colorGrading.postExposure.value = 0f;  // 배경색상 초기화
         colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
+
+        winLosePanel.SetActive(false); // 승패 화면을 숨김
+        winLoseText.gameObject.SetActive(false);  // Text 숨김
+        homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
     }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -61,10 +75,16 @@ public class DungeonManager : MonoBehaviour
 
     private void Update()
     {
-        if(!isDungeonCleared)
+        if(!isDungeonCleared)  // 던전이 클리어되지 않았으면 던전 클리어 체크
         {
-            CheckDungeonClear(); // 던전이 클리어되지 않았으면 던전 클리어 체크
+            CheckDungeonClear(); 
         }
+
+        if (player == null)   // 플레이어 사망하면 패배 처리
+        {
+            OnDungeonFail();  
+        }
+
     }
 
     public void AddEnemy(BaseEnemy enemy) 
@@ -150,23 +170,41 @@ public class DungeonManager : MonoBehaviour
         currentGate.OpenGate();  // 던전 클리어 후 게이트를 연다
         
         passedNum++;  // 통과한 횟수 증가
-        StageChecker(); // 스테이지 전환 여부 확인
+        StageChecker(); 
 
-        //// 보스 던전을 클리어하면 홈 버튼 표시
-        //if (currentStage == 2)  // 보스 스테이지일 경우
-        //{
-        //    UIManager.Instance.ShowHomeButton(); // 홈 버튼을 표시
-        //}
+        if (currentStage == 2)  // 보스방까지 깨면 승패ui를 켜라.
+        {
+            isBossDungeonCleared = true;
+            ShowWinLoseUI(true); 
+        }
 
+    }
+
+    public void OnDungeonFail()
+    {
+        Debug.Log("Dungeon Failed!");
+        ShowWinLoseUI(false);
+    }
+
+    public void ShowWinLoseUI(bool isWin)
+    {
+        winLosePanel.SetActive(true);
+        winLoseText.text = isWin ? "용사는(은) 던전을 정복했다!" : "죽음은 새로운 기회";
+        homeButton.gameObject.SetActive(true);
+    }
+
+    public void OnHomeButtonPressed()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
     public void StageChecker()
     {
-        if (passedNum == toHardNum)  // 3번 통과하면 hard stage로 넘어감
+        if (passedNum == toHardNum)  // 2번 통과하면 hard stage로 넘어감
         {
             currentStage = 1; 
         }
-        else if (passedNum == toBossNum)  // 5번 통과하면 boss stage로 넘어감
+        else if (passedNum == toBossNum)  // 4번 통과하면 boss stage로 넘어감
         {
             currentStage = 2; 
         }
