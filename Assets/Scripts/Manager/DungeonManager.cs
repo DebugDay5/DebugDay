@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class DungeonManager : MonoBehaviour
 
     private int currentStage = 0;  // 현재 스테이지 번호
     public int passedNum = 0;  // 통과한 방의 수를 check하는 넘버
-    public int toHardNum = 3;  // passedNum값 안에 들어갈 숫자
-    public int toBossNum = 5;  // passedNum값 안에 들어갈 숫자
+    public int toHardNum = 1;  // passedNum값 안에 들어갈 숫자
+    public int toBossNum = 1;  // passedNum값 안에 들어갈 숫자
 
     public Transform player;
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -31,6 +32,8 @@ public class DungeonManager : MonoBehaviour
     private HashSet<int> usedHardIndices = new HashSet<int>();
     private HashSet<int> usedBossIndices = new HashSet<int>();
 
+    public PostProcessVolume postProcessVolume;
+    private ColorGrading colorGrading;
 
     public void Awake()
     {
@@ -46,7 +49,9 @@ public class DungeonManager : MonoBehaviour
         currentDungeon = Instantiate(startDungeon); 
         currentStage = 0;  // 현재 스테이지 번호 초기화
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버를 초기화
-
+        postProcessVolume.profile.TryGetSettings(out colorGrading);   
+        colorGrading.postExposure.value = 0f;  // 배경색상 초기화
+        colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
     }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -93,9 +98,13 @@ public class DungeonManager : MonoBehaviour
                 break;
             case 1: // 하드 맵 로드
                 currentDungeon = Instantiate(GetUniqueDungeon(hardDungeon, usedHardIndices));
+                colorGrading.postExposure.value = 1.0f;  // 하드맵부터 배경 붉은색
+                colorGrading.colorFilter.value = new Color(1f,0.3f,0.3f,0);
                 break;
             case 2:  // 보스 맵 로드
                 currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedBossIndices));
+                colorGrading.postExposure.value = 6.93f;  // 보스맵 배경 파란색
+                colorGrading.colorFilter.value = new Color(0.0055f, 0.0105f, 0.0943f, 0);
                 break;
         }
 
