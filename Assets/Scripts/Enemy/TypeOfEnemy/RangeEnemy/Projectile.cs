@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] public float speed = 10f; // 투사체 속도
-    [SerializeField] public float damage = 15; // 투사체 데미지
+    [SerializeField] public float damage = 15f; // 투사체 데미지
     private Vector3 direction;
     private Animator animator;
     private bool isDestroyed;
@@ -38,7 +38,8 @@ public class Projectile : MonoBehaviour
     {
         if (isDestroyed || !collision.CompareTag("Player")) return;
 
-        // PlayerManager.Instance.Hp -= damage;
+        PlayerController playerController = collision.GetComponent<PlayerController>();
+        // playerController.TakeDamage(damage);
 
         isDestroyed = true;
         speed = 0f;

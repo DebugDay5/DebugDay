@@ -18,6 +18,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     [SerializeField] protected float damage;
     [SerializeField] protected int gold;
     [HideInInspector] public Transform player; // 플레이어 추적
+    [HideInInspector] public PlayerController playerController;
     protected AnimationHandler animationHandler;
     
     public float HP { get => hp; set => hp = value; }
