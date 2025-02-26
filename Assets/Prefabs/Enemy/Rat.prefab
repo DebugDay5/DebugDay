@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab5524363e3f44d3bb14d6c85c12b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  player: {fileID: 0}
   hp: 30
   speed: 3
   damage: 2
   gold: 2
-  player: {fileID: 0}
-  playerController: {fileID: 0}
+  enemyHPBarPrefab: {fileID: 390627517609146257, guid: 94b47abbc8d9241beb142e6fc579c888,
+    type: 3}
   attackRange: 0.4
   attackCooldown: 1
 --- !u!114 &5448418343911914311

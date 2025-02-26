@@ -13,12 +13,18 @@ public interface IEnemy
 
 public abstract class BaseEnemy : MonoBehaviour, IEnemy
 {
+    [HideInInspector] public PlayerController playerController;
+    [HideInInspector] public Transform player;
+
     [SerializeField] protected float hp;
     [SerializeField] protected float speed;
     [SerializeField] protected float damage;
     [SerializeField] protected int gold;
-    [HideInInspector] public Transform player;
-    [HideInInspector] public PlayerController playerController;
+
+    [SerializeField] private GameObject enemyHPBarPrefab;
+    private EnemyHPBar enemyHPBar;
+    private float maxHP;
+
     protected AnimationHandler animationHandler;
 
     public float HP { get => hp; set => hp = value; }
@@ -33,6 +39,14 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         StartCoroutine(FindPlayer()); // 플레이어 자동 검색 시작
+        maxHP = hp;
+
+        if (enemyHPBarPrefab != null)
+        {
+            GameObject hpBarObj = Instantiate(enemyHPBarPrefab, transform);
+            enemyHPBar = hpBarObj.GetComponentInChildren<EnemyHPBar>();
+            enemyHPBar.Initialize(transform);
+        }
     }
 
     private IEnumerator FindPlayer()
@@ -47,7 +61,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
                     player = playerObject.transform;
                 }
             }
-            yield return new WaitForSeconds(1f); // 1초마다 확인
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -65,6 +79,12 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
         HP -= PlayerManager.Instance.Damage;
         animationHandler?.Hit();
+
+        if (enemyHPBar != null)
+        {
+            enemyHPBar.UpdateHP(HP, maxHP);
+        }
+
         if (HP <= 0)
         {
             Die();
