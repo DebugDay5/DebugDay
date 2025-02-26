@@ -357,15 +357,16 @@ MonoBehaviour:
   - {fileID: 1025527431899130146, guid: 973db8b029062d44d99a312fc101ac0d, type: 3}
   - {fileID: 1025527431899130146, guid: 8d01b42ea2826a04f8eb9b5baa5dc579, type: 3}
   hardDungeon:
-  - {fileID: 1025527431899130146, guid: 22fbd8b1ea74e7e4d9fa5b52dea7de40, type: 3}
+  - {fileID: 1025527431899130146, guid: 698bd3b0cf545ca43b09f893634098fc, type: 3}
+  - {fileID: 1025527431899130146, guid: 03adb3f5e5308634e9999775d13c4521, type: 3}
   bossDungeon:
-  - {fileID: 1025527431899130146, guid: e6ce143376b2ece4baec61df490065f4, type: 3}
+  - {fileID: 1025527431899130146, guid: 698bd3b0cf545ca43b09f893634098fc, type: 3}
   passedNum: 0
   toHardNum: 3
   toBossNum: 6
+  player: {fileID: 5628018141265681010}
   currentDungeonData: {fileID: 0}
   canvasAnim: {fileID: 1902171080}
-  player: {fileID: 5628018141265681010}
 --- !u!4 &582683650
 Transform:
   m_ObjectHideFlags: 0

@@ -80,6 +80,7 @@ public class DungeonManager : MonoBehaviour
 
     public void LoadCurrentDungeon()   // 현재 스테이지에 따라 맵을 로드하는 매서드
     {
+
         if(currentDungeon != null)  
         {
             Destroy(currentDungeon);
@@ -98,7 +99,7 @@ public class DungeonManager : MonoBehaviour
                 break;
         }
 
-        SetTotalEnemies(FindObjectOfType<Enemy>().Length);  // 던전 로드 후 몬스터 수 설정
+        // SetTotalEnemies(FindObjectOfType<Enemy>().Length);  // 던전 로드 후 몬스터 수 설정
 
     }
 
