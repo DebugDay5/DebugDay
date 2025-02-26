@@ -40,6 +40,9 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
         else
             itemIcon.enabled = false;
 
+        if (itemInfoPanel == null)
+            Debug.LogError("ItemSlot.cs : itemInfoPanel이 할당되지 않음 - 발생위치 Setup(Item item)");
+
         itemInfoPanel.SetActive(false);
         closePanel.SetActive(false);
     }
