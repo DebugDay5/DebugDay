@@ -143,11 +143,11 @@ public class DungeonManager : MonoBehaviour
         passedNum++;  // 통과한 횟수 증가
         StageChecker(); // 스테이지 전환 여부 확인
 
-        // 보스 던전을 클리어하면 홈 버튼 표시
-        if (currentStage == 2)  // 보스 스테이지일 경우
-        {
-            UIManager.Instance.ShowHomeButton(); // 홈 버튼을 표시
-        }
+        //// 보스 던전을 클리어하면 홈 버튼 표시
+        //if (currentStage == 2)  // 보스 스테이지일 경우
+        //{
+        //    UIManager.Instance.ShowHomeButton(); // 홈 버튼을 표시
+        //}
 
     }
 
