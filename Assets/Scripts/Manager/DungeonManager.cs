@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
@@ -41,7 +38,10 @@ public class DungeonManager : MonoBehaviour
     public Button homeButton;  // 홈으로 가는 버튼
 
     public bool isDungeonCleared = false;  // 던전 클리어 여부
-    private bool isBossDungeonCleared = false;   // 보스 던전 클리어 여부
+    [SerializeField]
+    public bool isBossDungeonCleared = false;   // 보스 던전 클리어 여부
+    private bool isGameOver = false;
+    
 
     public void Awake()
     {
@@ -64,7 +64,7 @@ public class DungeonManager : MonoBehaviour
         colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
 
         winLosePanel.SetActive(false); // 승패 화면을 숨김
-        winLoseText.gameObject.SetActive(false);  // Text 숨김
+        winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
         homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
     }
 
@@ -75,16 +75,23 @@ public class DungeonManager : MonoBehaviour
 
     private void Update()
     {
-        if(!isDungeonCleared)  // 던전이 클리어되지 않았으면 던전 클리어 체크
+        if (!isDungeonCleared)  // 던전 클리어 여부 체크
         {
-            CheckDungeonClear(); 
+            CheckDungeonClear();
         }
 
-        if (player == null)   // 플레이어 사망하면 패배 처리
+        if (player == null || !player.gameObject.activeInHierarchy)
         {
-            OnDungeonFail();  
+            Debug.Log("플레이어 죽으면 ui 실행");
+            isGameOver = true;
+            ShowWinLoseUI(false);
         }
 
+        if (isGameOver)
+        {
+            Debug.Log("플레이어 사망 - ui 작동");
+            ShowWinLoseUI(false);
+        }
     }
 
     public void AddEnemy(BaseEnemy enemy) 
@@ -172,25 +179,45 @@ public class DungeonManager : MonoBehaviour
         passedNum++;  // 통과한 횟수 증가
         StageChecker(); 
 
-        if (currentStage == 2)  // 보스방까지 깨면 승패ui를 켜라.
+        if (currentStage == 3)  // 보스방까지 깨면 승패ui를 켜라.
         {
             isBossDungeonCleared = true;
             ShowWinLoseUI(true); 
         }
 
-    }
-
-    public void OnDungeonFail()
-    {
-        Debug.Log("Dungeon Failed!");
-        ShowWinLoseUI(false);
+        if (player == null)
+        {
+            Debug.Log("플레이어 사망 - UI 실행");
+            isGameOver = true;
+            ShowWinLoseUI(false);  // ui 실행
+        }
     }
 
     public void ShowWinLoseUI(bool isWin)
     {
-        winLosePanel.SetActive(true);
-        winLoseText.text = isWin ? "용사는(은) 던전을 정복했다!" : "죽음은 새로운 기회";
-        homeButton.gameObject.SetActive(true);
+        Debug.Log("ShowWinLoseUI 실행됨, isWin:  " + isWin);
+
+        if (winLosePanel != null)
+        {
+            Debug.Log("WinLoseUIPanel 정상적으로 연결됨");
+            winLosePanel.SetActive(true);
+            winLoseText.gameObject.SetActive(true);
+            homeButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("WinLoseUIPanel 연결 안 됨. Inspector 확인");
+        }
+
+        if (isBossDungeonCleared)   // 보스 던전 클리어 여부 체크
+        {
+            winLoseText.text = "You Win! 용사는(은) 던전을 정복했다!";
+        }
+        else  // 기본적으로는 isWin값에 따라 텍스트 표시
+        {
+            winLoseText.text = isWin ? "You Win! 용사는(은) 던전을 정복했다!" : "You Lose! 죽음은 새로운 기회. 부활하시겠습니까?";
+        }
+
     }
 
     public void OnHomeButtonPressed()
@@ -207,6 +234,10 @@ public class DungeonManager : MonoBehaviour
         else if (passedNum == toBossNum)  // 4번 통과하면 boss stage로 넘어감
         {
             currentStage = 2; 
+        }
+        else if (currentStage == 2  && !CompareTag("Monster"))  // 보스 스테이지 클리어 체크
+        {
+            currentStage = 3;  // 보스 스테이지 클리어 후 다른 화면으로 이동
         }
 
     }
