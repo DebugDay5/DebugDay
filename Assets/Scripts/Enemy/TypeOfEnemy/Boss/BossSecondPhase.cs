@@ -65,7 +65,7 @@ public class BossSecondPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // player.GetComponent<Player>().TakeDamage(50);
+                // PlayerManager.Instance.Hp -= 30;
             }
         }
 

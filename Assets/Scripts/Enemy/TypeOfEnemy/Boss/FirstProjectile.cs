@@ -38,7 +38,7 @@ public class FirstProjectile : MonoBehaviour
     {
         if (isDestroyed || !collision.CompareTag("Player")) return;
 
-        // collision.GetComponent<Player>().TakeDamage(damage); // 플레이어에게 데미지 입힘
+        // PlayerManager.Instance.Hp -= damage;
 
         isDestroyed = true;
         speed = 0f;
