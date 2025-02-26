@@ -57,14 +57,14 @@ public class SoundManager : MonoBehaviour
     /// 1. 프리팹에 AudioSource컴포넌트를 할당한다
     /// 2. AudioSource 변수를 만든 후, Awake/Start에서 Audio GetComponent 
     /// 3. SoundManager.Instance.PlayPlayerSound(오디오소스, enum);
+    /// 
+    /// play : source에 미리 clip이 할당되어있어야 함, 재생중인 소리 중지 시킨 후 재생
+    /// PlayOnShot : 재생시킬 clip 매개변수로, 재생중지 하지 않고 같이 재생
     /// </summary>
 
     // 플레이어 사운드
     public void PlaySounds(AudioSource audioSource , PlayerSound sound) 
     {
-        // play : source에 미리 clip이 할당되어있어야 함, 재생중인 소리 중지 시킨 후 재생
-
-        // PlayOnShot : 재생시킬 clip 매개변수로, 재생중지 하지 않고 같이 재생
         try
         {
             audioSource.PlayOneShot(playerClip[(int)sound]);
