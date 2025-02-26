@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform shootingPosition;
     [SerializeField] private Transform pivot;
 
-    private Vector2 moveDirection; //�̵� ����
-    private Vector2 lookDirection;  //�߻� ����
+    private Vector2 moveDirection; //이동 방향
+    private Vector2 lookDirection;  //발사 방향
 
-    public GameObject projectile;//�׽�Ʈ��
+    public GameObject projectile;//발사체
 
-    private float shootTime; //���� �߻� �ð�
-    private int shootNum; //�߻� Ƚ��
+    private float shootTime; //공속
+    private int shootNum; //발사 횟수
     private bool isShooting = false;
     private bool isMoving = false;
     private bool isDead = false;
@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
     public GameObject HealthBar;
     public TextMeshProUGUI healthBarText;
 
-    public Vector2 minBounds;  // �̵� ������ �ּ� x,y��
-    public Vector2 maxBounds;  // �̵� ������ �ִ� x,y��
+    public Vector2 minBounds;  
+    public Vector2 maxBounds;  
 
     private void Awake()
     {
@@ -100,11 +100,11 @@ public class PlayerController : MonoBehaviour
 
     private void LookTarget()
     {
-        if (_animator.GetBool("IsMove")) //�̵��� �̵���������
+        if (_animator.GetBool("IsMove")) 
         {
             lookDirection = _rigidbody.velocity.normalized;
         }
-        else //������ ��� Ÿ�ٹ��� �� ����
+        else 
         {
             target = playerManager.GetTarget();
             if (target == null) return;
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (isInvincible) return; //�ǰ� ����
+        if (isInvincible) return; //무적 시간
         
         playerManager.Hp -= damage;
         HealthBar.GetComponent<Slider>().value = playerManager.Hp / playerManager.MaxHp;
@@ -187,13 +187,13 @@ public class PlayerController : MonoBehaviour
         {
             playerManager.PlayerDead();
             isDead = true;
-            Invoke("DeletePlayer", 1f); //1�� �� ����
+            Invoke("DeletePlayer", 3f); //3초뒤 삭제 
             return;
         }
 
         isInvincible = true;
         _animator.SetBool("IsInvincible", true);
-        Invoke("InvincibleChange", 0.5f); //0.5�ʵ� ���� ����
+        Invoke("InvincibleChange", 0.5f); //0.5초 무적
     }
 
     private void InvincibleChange()
