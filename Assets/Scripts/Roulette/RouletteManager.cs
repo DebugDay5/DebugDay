@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum AblityState 
@@ -32,10 +33,19 @@ public class Ability
         this.abilityEffect += ac2;
         this.abilityEffect += ac3;
     }
+    public void InvokeAction() 
+    {
+        abilityEffect.Invoke();
+    }
 }
 
 public class RouletteManager : MonoBehaviour
 {
+    // 싱글톤 
+    private static RouletteManager instance;
+
+    public static RouletteManager Instance { get => instance; }
+
     private Dictionary<AblityState, List<Ability>> stateToAbility;
     [SerializeField] private Ability[] selectAbility;
     [SerializeField] private AblityState[] selectAbilityState;
@@ -44,7 +54,20 @@ public class RouletteManager : MonoBehaviour
     private float EpicRate = 0.35f;
     private float LegendaryRate = 0.05f;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        // 이미 인스턴스가 존재하고 현재 오브젝트가 아니라면
+        if (instance != null && instance != this)
+        {
+            // 중복된 인스턴스 제거
+            Destroy(gameObject);
+            return;
+        }
+
+        // 인스턴스가 없으면 현재 인스턴스 설정
+        instance = this;
+    }
+
     void Start()
     {
         // 어빌리티 티어별 클래스 작성 
@@ -157,5 +180,16 @@ public class RouletteManager : MonoBehaviour
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.AttackSpeed),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
         #endregion
+    }
+
+    // 카드 선택 시 
+    public void SelectCard(int idx) 
+    {
+        // 인덱스에 맞는 Action실행
+        try
+        {
+            selectAbility[idx].InvokeAction();
+        }
+        catch (Exception e) { Debug.Log(e); }
     }
 }
