@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Stone : MonoBehaviour
 {
+    [SerializeField] public int damage = 40;
     private Animator animator;
 
     private void Awake()
@@ -24,7 +25,8 @@ public class Stone : MonoBehaviour
     {
         if (player.CompareTag("Player"))
         {
-            // player.GetComponent<Player>().TakeDamage(30);
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            // playerController.TakeDamage(damage);
         }
     }
 

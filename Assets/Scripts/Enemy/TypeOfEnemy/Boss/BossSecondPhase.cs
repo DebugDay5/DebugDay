@@ -35,9 +35,8 @@ public class BossSecondPhase : BossState
         }
     }
 
-    private IEnumerator AttackPattern1()
+    private IEnumerator AttackPattern1() // 랜덤한 5곳에 범위 공격
     {
-        Debug.Log("랜덤한 5곳에 범위 공격");
         animatorController.SecondAttackPattern1(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack1");
@@ -50,9 +49,8 @@ public class BossSecondPhase : BossState
         animatorController.SecondAttackPattern1(false);
     }
 
-    private IEnumerator AttackPattern2()
+    private IEnumerator AttackPattern2() // Boss 주변 범위 공격
     {
-        Debug.Log("Boss 주변 범위 공격");
         animatorController.SecondAttackPattern2(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack2");
@@ -65,16 +63,15 @@ public class BossSecondPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // player.GetComponent<Player>().TakeDamage(50);
+                // playerController.TakeDamage(30f);
             }
         }
 
         animatorController.SecondAttackPattern2(false);
     }
 
-    private IEnumerator AttackPattern3()
+    private IEnumerator AttackPattern3() // 투사체 발사
     {
-        Debug.Log("투사체 발사");
         animatorController.SecondAttackPattern3(true);
 
         float animationLength = animatorController.GetAnimationLength("SecondAttack3");
@@ -93,9 +90,8 @@ public class BossSecondPhase : BossState
         animatorController.SecondAttackPattern3(false);
     }
 
-    private IEnumerator Heal()
+    private IEnumerator Heal() // 체력 5% 회복
     {
-        Debug.Log("체력 5% 회복");
         animatorController.SecondHeal(true);
 
         float animationLength = animatorController.GetAnimationLength("Heal");
@@ -117,7 +113,7 @@ public class BossSecondPhase : BossState
             float randomY = Random.Range(minY, maxY);
             Vector2 spawnPosition = new Vector2(randomX, randomY);
 
-            GameObject spawnStone = Object.Instantiate(stone, spawnPosition, Quaternion.identity); // 스톤 생성
+            Object.Instantiate(stone, spawnPosition, Quaternion.identity); // 스톤 생성
         }
     }
 }

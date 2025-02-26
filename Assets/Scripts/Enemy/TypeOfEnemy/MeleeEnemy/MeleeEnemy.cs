@@ -14,7 +14,7 @@ public class MeleeEnemy : BaseEnemy
         base.Awake();
         hp = 100;
         speed = 1.5f;
-        attackPower = 10;
+        damage = 10;
         gold = 5;
     }
 
@@ -43,11 +43,12 @@ public class MeleeEnemy : BaseEnemy
             lastAttackTime = Time.time; // 쿨타임 계산
 
             animationHandler.Attack(true); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
-            // GetComponent<Player>().TakeDamage(attackPower); // Player에게 데미지를 입힘
+            
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            // playerController.TakeDamage(damage);
 
             isAttacking = false; // 공격 후에는 공격 불가능 상태로 변경
 
-            // 애니메이션이 끝난 후 false로 설정
             StartCoroutine(AttackDelay(0.7f));
         }
     }

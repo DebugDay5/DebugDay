@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5958820567718922445}
   - component: {fileID: 183264321437359712}
   - component: {fileID: 2302839449592720988}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: BossFirstPhase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 985642943893558156}
   - component: {fileID: 8018504685707410435}
   - component: {fileID: 1568228352141779044}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: BossEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1000
   speed: 0
-  attackPower: 0
+  damage: 0
   gold: 100
   player: {fileID: 0}
   attackCooldown: 3
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 5738876727761586780}
   - component: {fileID: 3801466852006440989}
   - component: {fileID: 1199190923913160488}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: BossSecondPhase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7998165053421847135}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

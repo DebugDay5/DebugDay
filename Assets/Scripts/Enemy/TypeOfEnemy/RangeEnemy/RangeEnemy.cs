@@ -15,7 +15,7 @@ public class RangeEnemy : BaseEnemy
         base.Awake();
         hp = 70;
         speed = 0.5f;
-        attackPower = 0;
+        damage = 0; // 지워도 됨
         gold = 5;
     }
     

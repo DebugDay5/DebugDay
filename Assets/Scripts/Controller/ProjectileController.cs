@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     public GameObject target; //테스트용
-    private float damage = 1f;
+    private float damage = 10f; //발사체 기본 데미지
     public float Damage
     {
         get { return damage; }
@@ -25,9 +25,21 @@ public class ProjectileController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    /*
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+
+        Vector2 incoming = GetComponent<Rigidbody2D>().velocity; //들어오는 벡터
+        Vector2 normal = collision.contacts[0].normal; //법선벡터
+        Vector2 reflect = Vector2.Reflect(incoming, normal); //반사 벡터
+        GetComponent<Rigidbody2D>().velocity = reflect;
+
+    }
+     *///미완성
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("충돌!");
         
         if (other.CompareTag("Enemy"))
         {
@@ -50,7 +62,7 @@ public class ProjectileController : MonoBehaviour
 
     public void Init(float damage, float critRate, float critDamage, bool isPiercing)
     {
-        this.damage = damage;
+        this.damage = this.damage * damage; //발사체 데미지 * 캐릭 배율
         this.critRate = critRate;
         this.critDamage = critDamage;
         this.isPiercing = isPiercing;
