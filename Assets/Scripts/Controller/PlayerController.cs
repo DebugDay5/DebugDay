@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,6 +29,9 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
     GameObject target;
 
+    public GameObject HealthBar;
+    public TextMeshProUGUI healthBarText;
+
     public Vector2 minBounds;  // 이동 가능한 최소 x,y값
     public Vector2 maxBounds;  // 이동 가능한 최대 x,y값
 
@@ -47,8 +52,12 @@ public class PlayerController : MonoBehaviour
         playerManager = PlayerManager.Instance;
         shootTime = playerManager.AttackSpeed;
         shootNum = playerManager.NumOfShooting;
+        healthBarText.text = playerManager.Hp.ToString();
     }
 
+
+    float hitTime = 10f;
+    float curr = 10f;
     // Update is called once per frame
     private void Update()
     {
@@ -57,6 +66,12 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
+        curr -= Time.deltaTime;
+        if(curr < 0f)
+        {
+            TakeDamage(10f);
+            curr = hitTime;
+        }
     }
 
     private void FixedUpdate()
@@ -89,6 +104,8 @@ public class PlayerController : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, minBounds.y, maxBounds.y);
 
         transform.position = pos;
+
+        HealthBar.transform.position = pos + new Vector3(0f, 0.6f, 0f);
     }
 
     private void LookTarget()
@@ -173,6 +190,8 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return; //피격 무적
         
         playerManager.Hp -= damage;
+        HealthBar.GetComponent<Slider>().value = playerManager.Hp / playerManager.MaxHp;
+        healthBarText.text = playerManager.Hp.ToString();
 
         if (playerManager.Hp <= 0f)
         {
