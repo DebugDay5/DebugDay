@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/DungeonScene_KHY.unity
+    path: Assets/Scenes/DungeonScene.unity
     guid: 076c8ea4c81851342868c8e21abe2373
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
