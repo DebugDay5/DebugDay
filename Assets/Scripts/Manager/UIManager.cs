@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button lobbyButton;        // 로비 버튼
     [SerializeField] private Button inventoryButton;    // 인벤토리 버튼
     [SerializeField] private Button gameStartButton;    // 게임시작 버튼
+    [SerializeField] private Button storeButton;        // store button
 
     private void Awake()
     {
