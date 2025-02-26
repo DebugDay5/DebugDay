@@ -26,7 +26,7 @@ public class Stone : MonoBehaviour
         if (player.CompareTag("Player"))
         {
             PlayerController playerController = player.GetComponent<PlayerController>();
-            // playerController.TakeDamage(damage);
+            playerController.TakeDamage(damage);
         }
     }
 

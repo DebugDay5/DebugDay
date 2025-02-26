@@ -33,9 +33,10 @@ public class BossEnemy : BaseEnemy
 
     private void Update()
     {
+        if (!IsPlayerAvailable()) return;
+        
         if (isDead) return;
         FlipSprite();
-        currentState.UpdateState(); // 추후 추가
         PhaseTransition(); // 체력이 50% 이하일 시 2페이즈
         CheckLowHealthPhase(); // 체력이 10% 이하일 때 BreakArmor 실행
     }

@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class Rat : BaseEnemy
 {
-    [SerializeField] private float attackRange = 2f; // 공격 범위
-    [SerializeField] private float attackCooldown = 2.0f; // 공격 속도
+    [SerializeField] private float attackRange = 0.4f; // 공격 범위
+    [SerializeField] private float attackCooldown = 1.0f; // 공격 속도
     private float lastAttackTime; // 공격 시간
     private bool isAttacking = true;
 
     protected override void Awake()
     {
         base.Awake();
-        hp = 100;
-        speed = 1.5f;
-        damage = 10;
-        gold = 5;
+        hp = 30;
+        speed = 3f;
+        damage = 2;
+        gold = 2;
     }
 
     private void Update()
     {
+        if (!IsPlayerAvailable()) return;
+        
         float distance = Vector3.Distance(transform.position, player.position); // 상호 간 거리 계산
 
         FlipSprite(); // 스프라이트 방향 전환
@@ -45,7 +47,7 @@ public class Rat : BaseEnemy
             animationHandler.Attack(true); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
             
             PlayerController playerController = player.GetComponent<PlayerController>();
-            // playerController.TakeDamage(damage);
+            playerController.TakeDamage(damage);
 
             isAttacking = false; // 공격 후에는 공격 불가능 상태로 변경
 

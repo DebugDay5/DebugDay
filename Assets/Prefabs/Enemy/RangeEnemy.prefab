@@ -156,10 +156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 70
-  speed: 1
+  speed: 2
   damage: 0
   gold: 5
   player: {fileID: 0}
+  playerController: {fileID: 0}
   attackRange: 5
   attackCooldown: 2
   projectilePrefab: {fileID: 3728256965279023165, guid: 1b87c22798673401bbc63dd2ad47a5de,
@@ -201,7 +202,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 7
 --- !u!60 &262588863368749098
 PolygonCollider2D:

@@ -14,13 +14,15 @@ public class RangeEnemy : BaseEnemy
     {
         base.Awake();
         hp = 70;
-        speed = 0.5f;
+        speed = 2f;
         damage = 0; // 지워도 됨
         gold = 5;
     }
     
     private void Update()
     {
+        if (!IsPlayerAvailable()) return;
+
         float distance = Vector3.Distance(transform.position, player.position);
 
         FlipSprite();

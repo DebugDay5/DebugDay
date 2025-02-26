@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MeleeEnemy : BaseEnemy
 {
-    [SerializeField] private float attackRange = 2f; // 공격 범위
-    [SerializeField] private float attackCooldown = 2.0f; // 공격 속도
+    [SerializeField] private float attackRange = 1f; // 공격 범위
+    [SerializeField] private float attackCooldown = 3.0f; // 공격 속도
     private float lastAttackTime; // 공격 시간
     private bool isAttacking = true;
 
@@ -20,6 +20,8 @@ public class MeleeEnemy : BaseEnemy
 
     private void Update()
     {
+        if (!IsPlayerAvailable()) return;
+
         float distance = Vector3.Distance(transform.position, player.position); // 상호 간 거리 계산
 
         FlipSprite(); // 스프라이트 방향 전환
@@ -45,7 +47,7 @@ public class MeleeEnemy : BaseEnemy
             animationHandler.Attack(true); // 공격 애니메이션을 호출하고 OnAttackComplete 콜백
             
             PlayerController playerController = player.GetComponent<PlayerController>();
-            // playerController.TakeDamage(damage);
+            playerController.TakeDamage(damage);
 
             isAttacking = false; // 공격 후에는 공격 불가능 상태로 변경
 

@@ -32,7 +32,7 @@ public class BossFirstPhase : BossState
         }
     }
 
-    private IEnumerator AttackPattern1() // Attack1: Player를 향한 투사체"
+    private IEnumerator AttackPattern1() // 투사체 발사
     {
         animatorController.FirstAttackPattern1(true);
 
@@ -54,14 +54,15 @@ public class BossFirstPhase : BossState
         float animationLength = animatorController.GetAnimationLength("Attack2");
         yield return new WaitForSeconds(animationLength);
 
-        float attackRadius = 4f;
-        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRadius);
+        float attackRange = 4f;
+        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRange);
 
         foreach (Collider2D player in attackPlayers)
         {
             if (player.CompareTag("Player"))
             {
-                // playerController.TakeDamage(30f);
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                playerController.TakeDamage(30f);
             }
         }
 
@@ -75,14 +76,15 @@ public class BossFirstPhase : BossState
         float animationLength = animatorController.GetAnimationLength("Attack3");
         yield return new WaitForSeconds(animationLength);
 
-        float attackRadius = 2f;
-        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRadius);
+        float attackRange = 2f;
+        Collider2D[] attackPlayers = Physics2D.OverlapCircleAll(boss.transform.position, attackRange);
 
         foreach (Collider2D player in attackPlayers)
         {
             if (player.CompareTag("Player"))
             {
-                // playerController.TakeDamage(50f);
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                playerController.TakeDamage(50f);
             }
         }
 
