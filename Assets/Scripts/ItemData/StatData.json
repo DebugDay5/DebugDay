@@ -1,7 +1,0 @@
-[
-    { "StatCode": 1, "StatName": "공격력" },
-    { "StatCode": 2, "StatName": "생명력" },
-    { "StatCode": 3, "StatName": "방어력" },
-    { "StatCode": 4, "StatName": "치명타율" },
-    { "StatCode": 5, "StatName": "치명타 피해량" }
-]

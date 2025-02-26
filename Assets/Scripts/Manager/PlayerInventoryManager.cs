@@ -8,6 +8,7 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
 {
     public static PlayerInventoryManager Instance;
     private List<Item> ownedItems = new List<Item>();
+    private Dictionary<string, Item> equippedItems = new Dictionary<string, Item>();
     private string savePath;
     private const int MAX_INVENTORY_SIZE = 100;
 
@@ -67,6 +68,24 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
             Debug.Log($"{item.name} 제거 완료. 저장됨");
         }
     }
+
+    public void EquipItem(string itemType, Item item)
+    {
+        if (equippedItems.ContainsKey(itemType))
+            equippedItems[itemType] = item;
+        else
+            equippedItems.Add(itemType, item);
+    }
+
+    public void UnequipItem(string itemType)
+    {
+        if (equippedItems.ContainsKey(itemType))
+            equippedItems.Remove(itemType);
+    }
+
+    public bool IsEquipped(string itemType) => equippedItems.ContainsKey(itemType);
+
+    public Item GetEquippedItem(string itemType) => equippedItems.TryGetValue(itemType, out var item) ? item : null;
 
     private void LoadInventory()
     {
