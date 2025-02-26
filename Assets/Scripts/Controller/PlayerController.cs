@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
     GameObject target;
 
+    public Vector2 minBounds;  // 이동 가능한 최소 x,y값
+    public Vector2 maxBounds;  // 이동 가능한 최대 x,y값
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -79,6 +82,13 @@ public class PlayerController : MonoBehaviour
         }
 
         _rigidbody.velocity = moveDirection;
+
+        Vector3 pos = transform.position;
+
+        pos.x = Mathf.Clamp(pos.x, minBounds.x, maxBounds.x);
+        pos.y = Mathf.Clamp(pos.y, minBounds.y, maxBounds.y);
+
+        transform.position = pos;
     }
 
     private void LookTarget()
@@ -187,5 +197,13 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    
+
+    public void UpdateBounds()
+    {
+        if (DungeonManager.Instance != null && DungeonManager.Instance.currentDungeonData != null)
+        {
+            minBounds = DungeonManager.Instance.currentDungeonData.minPlayerBounds;
+            maxBounds = DungeonManager.Instance.currentDungeonData.maxPlayerBounds;
+        }
+    }
 }
