@@ -360,8 +360,10 @@ MonoBehaviour:
   - {fileID: 1025527431899130146, guid: 698bd3b0cf545ca43b09f893634098fc, type: 3}
   - {fileID: 1025527431899130146, guid: 03adb3f5e5308634e9999775d13c4521, type: 3}
   - {fileID: 1025527431899130146, guid: 1a151ee9f712b0a4aa9d6410e0c40de5, type: 3}
+  - {fileID: 1025527431899130146, guid: 1dfcd17c59f76374ea98ec6712bf1d03, type: 3}
+  - {fileID: 1025527431899130146, guid: ee5723dead3ae604687864f25e0efce7, type: 3}
   bossDungeon:
-  - {fileID: 1025527431899130146, guid: 698bd3b0cf545ca43b09f893634098fc, type: 3}
+  - {fileID: 1025527431899130146, guid: 5dfb9f4225f4eb64a9a3749fadc679d7, type: 3}
   passedNum: 0
   toHardNum: 3
   toBossNum: 6

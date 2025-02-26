@@ -95,7 +95,7 @@ public class DungeonManager : MonoBehaviour
                 currentDungeon = Instantiate(GetUniqueDungeon(hardDungeon, usedHardIndices));
                 break;
             case 2:  // º¸½º ¸Ê ·Îµå
-                currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedHardIndices));
+                currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedBossIndices));
                 break;
         }
 
