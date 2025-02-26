@@ -348,6 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b07f2c8f78d43a3b68f793bfb44eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
+  isDungeonCleared: 0
   startDungeon: {fileID: 1511692404678661361, guid: 17b4e304610ade0408b74455e8e69e61,
     type: 3}
   normalDungeon:
@@ -364,12 +366,14 @@ MonoBehaviour:
   - {fileID: 1025527431899130146, guid: ee5723dead3ae604687864f25e0efce7, type: 3}
   bossDungeon:
   - {fileID: 1025527431899130146, guid: 5dfb9f4225f4eb64a9a3749fadc679d7, type: 3}
+  currentDungeon: {fileID: 0}
   passedNum: 0
   toHardNum: 3
   toBossNum: 6
   player: {fileID: 1880078673}
   currentDungeonData: {fileID: 11400000, guid: 5a2a4db3d25380e4f818943794d0f42b, type: 2}
   canvasAnim: {fileID: 1902171080}
+  currentGate: {fileID: 0}
 --- !u!4 &582683650
 Transform:
   m_ObjectHideFlags: 0

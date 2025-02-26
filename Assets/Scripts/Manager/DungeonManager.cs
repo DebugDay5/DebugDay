@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -7,14 +8,14 @@ using UnityEngine;
 public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager Instance { get; private set; }
-    private List<BaseEnemy> enemies = new List<BaseEnemy>();  // 모든 적 리스트
-    private bool isDungeonCleared = false;  // 던전 클리어 여부
+    public List<BaseEnemy> enemies = new List<BaseEnemy>();  // 모든 적 리스트
+    public bool isDungeonCleared = false;  // 던전 클리어 여부
 
     public GameObject startDungeon;
     public List<GameObject> normalDungeon;  // 노멀맵 프리팹 리스트
     public List<GameObject> hardDungeon;  // 하드맵 프리팹 리스트
     public List<GameObject> bossDungeon;  //  던전 프리팹 리스트
-    private GameObject currentDungeon;  // 현재 활성화된 던전
+    public GameObject currentDungeon;  // 현재 활성화된 던전
 
     private int currentStage = 0;  // 현재 스테이지 번호
     public int passedNum = 0;  // 통과한 방의 수를 check하는 넘버
@@ -24,10 +25,12 @@ public class DungeonManager : MonoBehaviour
     public Transform player;
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
     public Animator canvasAnim; //페이드인 아웃 기능
+    public GateCollider currentGate;
 
     private HashSet<int> usedNormalIndices = new HashSet<int>(); // 한 번 등장한 맵의 인덱스 저장
     private HashSet<int> usedHardIndices = new HashSet<int>();
     private HashSet<int> usedBossIndices = new HashSet<int>();
+
 
     public void Awake()
     {
@@ -114,7 +117,7 @@ public class DungeonManager : MonoBehaviour
         int index;
         do
         {
-            index = Random.Range(0, dungeonList.Count);  // 랜덤 인덱스 생성
+            index = UnityEngine.Random.Range(0, dungeonList.Count);  // 랜덤 인덱스 생성
         }   
         while (usedIndices.Contains(index));   // 랜덤으로 뽑은 인덱스가 기존 인덱스에 있었다면 다시 뽑아라
         usedIndices.Add(index);  // 그게 아니라면 인덱스를 usedIndices에 추가
@@ -135,7 +138,8 @@ public class DungeonManager : MonoBehaviour
     private void OnDungeonClear()
     {
         Debug.Log("Dungeon Cleared!");
-        GateCollider.Instance.OpenGate();  // 던전 클리어 후 게이트를 연다
+        currentGate.OpenGate();  // 던전 클리어 후 게이트를 연다
+        
         passedNum++;  // 통과한 횟수 증가
         StageChecker(); // 스테이지 전환 여부 확인
 
