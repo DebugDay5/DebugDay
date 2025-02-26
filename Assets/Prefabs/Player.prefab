@@ -250,8 +250,7 @@ MonoBehaviour:
   gold: 100
   critRate: 0
   critDamage: 1
-  target:
-  - {fileID: 0}
+  target: []
 --- !u!114 &4234845051448464262
 MonoBehaviour:
   m_ObjectHideFlags: 0

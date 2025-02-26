@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private float shootTime; //남은 발사 시간
     private int shootNum; //발사 횟수
     private bool isShooting = false;
+    private bool isMoving = false;
     float rotZ;
 
     private bool isInvincible = false;
@@ -63,9 +64,15 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = moveDirection * playerManager.MoveSpeed;
         if (moveDirection != Vector2.zero)
+        {
             _animator.SetBool("IsMove", true);
+            isMoving = true;
+        }
         else
+        {
+            isMoving = false;
             _animator.SetBool("IsMove", false);
+        }
 
         _rigidbody.velocity = moveDirection;
     }
@@ -93,8 +100,15 @@ public class PlayerController : MonoBehaviour
     {
         if(projectile == null) return;
         if (isShooting) return;
-
+        
         shootTime -= Time.deltaTime;
+        if (isMoving)
+        {
+            if (shootTime < 0.1f)
+                shootTime = 0.1f;
+            
+            return;
+        }
         if (shootTime < 0)
         {
             isShooting = true;

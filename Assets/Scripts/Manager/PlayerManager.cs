@@ -72,9 +72,16 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject[] target; //발사할 적
 
+    private PlayerInventoryManager inventory;
+
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        inventory = PlayerInventoryManager.Instance;
     }
 
     private void Init() //만약 던전 입장 시 마다 초기화를 해줘야 되는 경우
