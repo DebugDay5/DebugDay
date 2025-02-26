@@ -9,7 +9,6 @@ public class InventoryUI : MonoBehaviour    //인벤토리 화면 UI
     public GameObject itemSlotPrefab;
 
     public GameObject itemInfoPanel;
-    public GameObject closePanel;
 
     public void RefreshInventory(List<Item> items)
     {
@@ -19,7 +18,12 @@ public class InventoryUI : MonoBehaviour    //인벤토리 화면 UI
         foreach (Item item in items)
         {
             GameObject slot = Instantiate(itemSlotPrefab, inventorySlotGrid);
-            slot.GetComponent<ItemSlot>().Setup(item);
+            Debug.Log($"인벤토리에 아이템 추가됨: {item.name}");
+            ItemSlot itemSlot = slot.GetComponent<ItemSlot>();
+
+            itemSlot.itemInfoPanel = itemInfoPanel;
+
+            itemSlot.Setup(item);
         }
     }
 }

@@ -1,0 +1,24 @@
+{
+  "stats": [
+    {
+      "statCode": 1,
+      "statName": "공격력"
+    },
+    {
+      "statCode": 2,
+      "statName": "생명력"
+    },
+    {
+      "statCode": 3,
+      "statName": "방어력"
+    },
+    {
+      "statCode": 4,
+      "statName": "치명타율"
+    },
+    {
+      "statCode": 5,
+      "statName": "치명타 피해량"
+    }
+  ]
+}

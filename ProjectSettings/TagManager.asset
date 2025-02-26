@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - weapon
+  - armor
+  - neckless
+  - ring
   layers:
   - Default
   - TransparentFX
