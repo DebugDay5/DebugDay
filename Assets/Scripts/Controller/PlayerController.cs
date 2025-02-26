@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform shootingPosition;
     [SerializeField] private Transform pivot;
 
-    private Vector2 moveDirection; //¿Ãµø πÊ«‚
-    private Vector2 lookDirection;  //πﬂªÁ πÊ«‚
+    private Vector2 moveDirection; //Ïù¥Îèô Î∞©Ìñ•
+    private Vector2 lookDirection;  //Î∞úÏÇ¨ Î∞©Ìñ•
 
-    public GameObject projectile;//≈◊Ω∫∆ÆøÎ
+    public GameObject projectile;//Î∞úÏÇ¨Ï≤¥
 
-    private float shootTime; //≥≤¿∫ πﬂªÁ Ω√∞£
-    private int shootNum; //πﬂªÁ »Ωºˆ
+    private float shootTime; //Í≥µÏÜç
+    private int shootNum; //Î∞úÏÇ¨ ÌöüÏàò
     private bool isShooting = false;
     private bool isMoving = false;
     private bool isDead = false;
@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
     public GameObject HealthBar;
     public TextMeshProUGUI healthBarText;
 
-    public Vector2 minBounds;  // ¿Ãµø ∞°¥…«— √÷º“ x,y∞™
-    public Vector2 maxBounds;  // ¿Ãµø ∞°¥…«— √÷¥Î x,y∞™
+    public Vector2 minBounds;  
+    public Vector2 maxBounds;  
 
     private void Awake()
     {
@@ -55,9 +55,6 @@ public class PlayerController : MonoBehaviour
         healthBarText.text = playerManager.Hp.ToString();
     }
 
-
-    float hitTime = 10f;
-    float curr = 10f;
     // Update is called once per frame
     private void Update()
     {
@@ -65,13 +62,6 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         moveDirection = new Vector2(horizontal, vertical).normalized;
-
-        curr -= Time.deltaTime;
-        if(curr < 0f)
-        {
-            TakeDamage(10f);
-            curr = hitTime;
-        }
     }
 
     private void FixedUpdate()
@@ -110,11 +100,11 @@ public class PlayerController : MonoBehaviour
 
     private void LookTarget()
     {
-        if (_animator.GetBool("IsMove")) //¿ÃµøΩ√ ¿ÃµøπÊ«‚¿∏∑Œ
+        if (_animator.GetBool("IsMove")) 
         {
             lookDirection = _rigidbody.velocity.normalized;
         }
-        else //∏ÿ√Ë¿ª ∞ÊøÏ ≈∏∞ŸπÊ«‚ π◊ ∞¯∞›
+        else 
         {
             target = playerManager.GetTarget();
             if (target == null) return;
@@ -187,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (isInvincible) return; //««∞› π´¿˚
+        if (isInvincible) return; //Î¨¥Ï†Å ÏãúÍ∞Ñ
         
         playerManager.Hp -= damage;
         HealthBar.GetComponent<Slider>().value = playerManager.Hp / playerManager.MaxHp;
@@ -197,13 +187,13 @@ public class PlayerController : MonoBehaviour
         {
             playerManager.PlayerDead();
             isDead = true;
-            Invoke("DeletePlayer", 1f); //1√  µ⁄ ªË¡¶
+            Invoke("DeletePlayer", 3f); //3Ï¥àÎí§ ÏÇ≠Ï†ú 
             return;
         }
 
         isInvincible = true;
         _animator.SetBool("IsInvincible", true);
-        Invoke("InvincibleChange", 0.5f); //0.5√ µ⁄ π´¿˚ «ÿ¡¶
+        Invoke("InvincibleChange", 0.5f); //0.5Ï¥à Î¨¥Ï†Å
     }
 
     private void InvincibleChange()
