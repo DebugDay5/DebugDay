@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static PlayerManager;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,6 +21,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button gameStartButton;    // 게임시작 버튼
     [SerializeField] private Button storeButton;        // store button
 
+    [Header("===Text===")]
+    [SerializeField] private TextMeshProUGUI goldText;
+
     private void Awake()
     {
         // 현재 panel을 lobby로
@@ -35,6 +40,11 @@ public class UIManager : MonoBehaviour
         // 게임시작 버튼 이벤트 => 던전 씬 load
         gameStartButton.onClick.AddListener( ()=> SceneManager.Instance.ChangeDungeonScene() );
 
+    }
+
+    private void Start()
+    {
+        //goldText.text = PlayerManager.Instance.Gold.ToString();
     }
 
     // 현재 panel을 Off, 들어온패널 On
