@@ -7,7 +7,7 @@ public class DungeonChanger : MonoBehaviour
 {
     public DungeonSO dungeonSO;
 
-    public TopDownCharacterController playerController;
+    public PlayerController playerController;
     public TestCamera_KHY cameraController;
 
     public void ChangeDungeon()
@@ -20,7 +20,7 @@ public class DungeonChanger : MonoBehaviour
 
     private void Awake()
     {
-        playerController = GameObject.Find("TestPlayer").GetComponent<TopDownCharacterController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         cameraController = Camera.main.GetComponent<TestCamera_KHY>();
     }
     private void Start()
