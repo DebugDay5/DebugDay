@@ -30,18 +30,26 @@ public class UIManager : MonoBehaviour
         lobbyButton.onClick.AddListener(()=> OnOffPanel(lobbyPanel)) ;
         // 인벤토리 버튼 이벤트
         inventoryButton.onClick.AddListener(() => OnOffPanel(inventoryPanel));
+        // 상점 버튼 이벤트
+        storeButton.onClick.AddListener(() => OnOffPanel(storePanel));
         // 게임시작 버튼 이벤트 => 던전 씬 load
         gameStartButton.onClick.AddListener( ()=> SceneManager.Instance.ChangeDungeonScene() );
+
     }
 
     // 현재 panel을 Off, 들어온패널 On
     private void OnOffPanel(GameObject panel) 
     {
+        Debug.Log( panel.name + "버튼클릭 ");
+
         if (nowOnPanel == panel)
-            return;
+        {
+            nowOnPanel.SetActive(false);
+        }
 
         // 현재 panel 끄기
-        nowOnPanel.SetActive(false);
+        if(panel.name == "LobbyPanel")
+            nowOnPanel.SetActive(false);
 
         nowOnPanel = panel;
 
