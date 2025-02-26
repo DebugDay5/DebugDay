@@ -55,6 +55,10 @@ public class RouletteManager : MonoBehaviour
     private float EpicRate = 0.35f;
     private float LegendaryRate = 0.05f;
 
+    [Header("===UI===")]
+    [SerializeField] private RouletteUi rouletteUi; 
+    [SerializeField] private GameObject roulettPanel;
+
     private void Awake()
     {
         // 이미 인스턴스가 존재하고 현재 오브젝트가 아니라면
@@ -83,7 +87,8 @@ public class RouletteManager : MonoBehaviour
         // 값 초기화 
         SettingAbility();
 
-        RandomAbility();
+        // 테스트
+        StartRulette();
     }
 
     private void RandomAbility() 
@@ -192,5 +197,25 @@ public class RouletteManager : MonoBehaviour
             selectAbility[idx].InvokeAction();
         }
         catch (Exception e) { Debug.Log(e); }
+
+        // ui 끄기
+        OnOffPanel(roulettPanel , false);
+    }
+
+    public void StartRulette() 
+    {
+        // 0. Ui 켜기
+        OnOffPanel(roulettPanel, true);
+
+        // 1. 랜덤으로 고르기 
+        RandomAbility();
+
+        // 2. 고른카드 넘기기
+        rouletteUi.RoulettON(selectAbility , selectAbilityState);
+    }
+
+    public void OnOffPanel(GameObject panel , bool flag) 
+    { 
+        panel.SetActive(flag);
     }
 }
