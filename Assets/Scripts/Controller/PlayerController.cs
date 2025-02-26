@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private bool isShooting = false;
     float rotZ;
 
+    private bool isInvincible = false;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
     {
         Movement(moveDirection);
         LookTarget();
-        Shoot();//테스트용
+        Shoot();
     }
 
     private void Movement(Vector2 moveDirection)
@@ -87,7 +89,7 @@ public class PlayerController : MonoBehaviour
     }
 
     
-    private void Shoot() //테스트용
+    private void Shoot()
     {
         if(projectile == null) return;
         if (isShooting) return;
@@ -97,7 +99,6 @@ public class PlayerController : MonoBehaviour
         {
             isShooting = true;
 
-            //StartCoroutine("MakeProjectile",playerManager.NumOfShooting);
             MakeProjectile();
         }
     }
@@ -112,16 +113,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        /*
-        for (int i = 0; i < playerManager.NumOfOneShot; i++)
-        {
-            GameObject obj = Instantiate(projectile, shootingPosition.position, Quaternion.Euler(0f, 0f, 0f));
-            obj.transform.right = lookDirection;
-            Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
-            objRigid.velocity = lookDirection * playerManager.ShotSpeed;
-        }
-        */
-
         for(int i = -(playerManager.NumOfOneShot/2); i <= (playerManager.NumOfOneShot/2); i++)
         {
             if (i == 0 && playerManager.NumOfOneShot % 2 == 0)
@@ -131,13 +122,36 @@ public class PlayerController : MonoBehaviour
             obj.transform.right = lookDirection;
             
             Rigidbody2D objRigid = obj.GetComponent<Rigidbody2D>();
-            obj.GetComponent<ProjectileController>().Init(playerManager.Damage, playerManager.CritRate, playerManager.CritDamage, true);
+            obj.GetComponent<ProjectileController>().Init(playerManager.Damage, playerManager.CritRate, playerManager.CritDamage, false);
 
             objRigid.velocity = lookDirection * playerManager.ShotSpeed;
         }
 
         shootNum--;
         Invoke("MakeProjectile", 0.1f);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (isInvincible) return; //피격 무적
+        
+        playerManager.Hp -= damage;
+
+        if (playerManager.Hp <= 0)
+        {
+            playerManager.PlayerDead();
+            return;
+        }
+
+        isInvincible = true;
+        _animator.SetBool("isInvincible", true);
+        Invoke("InvincibleChange", 0.5f); //0.5초뒤 무적 해제
+    }
+
+    private void InvincibleChange()
+    {
+        _animator.SetBool("isInvincible", false);
+        isInvincible = false;
     }
     
 }

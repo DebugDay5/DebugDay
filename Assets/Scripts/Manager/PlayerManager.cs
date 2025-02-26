@@ -107,4 +107,9 @@ public class PlayerManager : MonoBehaviour
 
         return go;
     }
+
+    public void PlayerDead()    //플레이어 사망시 실행
+    {
+
+    }
 }

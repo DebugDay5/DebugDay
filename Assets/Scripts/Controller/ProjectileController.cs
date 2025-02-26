@@ -25,9 +25,21 @@ public class ProjectileController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    /*
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+
+        Vector2 incoming = GetComponent<Rigidbody2D>().velocity; //들어오는 벡터
+        Vector2 normal = collision.contacts[0].normal; //법선벡터
+        Vector2 reflect = Vector2.Reflect(incoming, normal); //반사 벡터
+        GetComponent<Rigidbody2D>().velocity = reflect;
+
+    }
+     *///미완성
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("충돌!");
         
         if (other.CompareTag("Enemy"))
         {
