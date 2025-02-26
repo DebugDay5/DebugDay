@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 {
-    public static EquipSlot Instance;
+    public string itemType; // 각 장착슬롯에 장착가능한 아이템타입
 
     public Image itemIcon;
     public GameObject itemInfoPanel; // 아이템 정보 패널 (UI)
@@ -19,22 +19,23 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
     private Item equippedItem;  // 현재 장착된 아이템
 
-    public void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-    }
-
     public void Setup(Item item)
     {
-        equippedItem = item;
-        itemIcon.sprite = item.icon;
-        itemIcon.enabled = true;
+        UpdateSlot(item);
+    }
+
+    public void UpdateSlot(Item newItem)
+    {
+        equippedItem = newItem;
+        if (equippedItem != null)
+        {
+            itemIcon.sprite = equippedItem.icon;
+            itemIcon.enabled = true;
+        }
+        else
+        {
+            itemIcon.enabled = false;
+        }
     }
 
     public void OnClick()
@@ -85,8 +86,7 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
         Debug.Log($"{equippedItem.name} 장착 해제");
 
         inventoryManager.AddItem(equippedItem); // 장착 해제한 아이템은 인벤토리로 이동
-
-        inventoryManager.UnequipItem(equippedItem.type);
+        inventoryManager.UnequipItem(itemType);
 
         equippedItem = null;
         itemIcon.enabled = false;
@@ -97,12 +97,5 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
     {
         Debug.Log($"{equippedItem.name} 강화");
         CloseItemInfoPanel();
-    }
-
-    public void UpdateSlot(Item newItem)
-    {
-        equippedItem = newItem;
-        itemIcon.sprite = newItem.icon;
-        itemIcon.enabled = true;
     }
 }
