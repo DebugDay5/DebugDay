@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public enum PlayerStat
+    {
+        Damage = 1,
+        MaxHP,
+        Defence,
+        CritRate,
+        CritDamage,
+        MoveSpeed,
+        AttackSpeed,
+        ShotSpeed,
+        NumOfOneShot,
+        NumOfShooting
+    }
+
     private static PlayerManager instance;
     public static PlayerManager Instance { get => instance; }
 
-    private float hp = 100f;
+    [SerializeField] private float hp = 100f;
     public float Hp { 
         get { return hp; } 
         set { hp = Mathf.Clamp(value, 0f, maxhp); } 
@@ -67,12 +81,10 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private float critRate = 0f;     //크리 확률
     public float CritRate { get { return critRate; } }
-    [SerializeField] private float critDamage = 1f;   //크리 데미지
+    [SerializeField] private float critDamage = 1.5f;   //크리 데미지
     public float CritDamage { get { return critDamage; } }
 
-    public GameObject[] target; //발사할 적
-
-    private PlayerInventoryManager inventory;
+    public GameObject[] target; //발사할 적 //던전매니저에서 몸 소환할 때 추가
 
     private void Awake()
     {
@@ -81,18 +93,25 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        inventory = PlayerInventoryManager.Instance;
+
     }
 
-    private void Init() //만약 던전 입장 시 마다 초기화를 해줘야 되는 경우
+    private void Init() //스탯 초기화를 해줘야 되는 경우
     {
+        damage = 1f; 
+        maxhp = 100f;
         hp = maxhp;
+        defense = 0f;
+        critDamage = 1.5f;
+        critRate = 0f;
+        moveSpeed = 5f;
+        attackSpeed = 1f;
+        shotSpeed = 6f;
+        numOfShooting = 1;
+        numOfOneShot = 1;
 
-    }
-
-    private void UpdateStat() //스탯이 변경되는 경우 //파라미터 미정
-    {
-
+        level = 1;
+        exp = 0;
     }
 
     public GameObject GetTarget()   //가까운 적 찾기
@@ -117,6 +136,45 @@ public class PlayerManager : MonoBehaviour
 
     public void PlayerDead()    //플레이어 사망시 실행
     {
-
+        //미구현
     }
+
+    public void UpdateStat(float change, PlayerStat stat) //스탯 증가
+    {
+        int num = (int)stat;
+        switch (num)
+        {
+            case 1:
+                damage += change;
+                break;
+            case 2:
+                MaxHp += change;
+                break;
+            case 3:
+                defense += change;
+                break;
+            case 4:
+                critRate += change;
+                break;
+            case 5:
+                critDamage += change;
+                break;
+            case 6:
+                moveSpeed += change;
+                break;
+            case 7:
+                attackSpeed += change;
+                break;
+            case 8:
+                shotSpeed += change;
+                break;
+            case 9:
+                numOfOneShot += (int)change;
+                break;
+            case 10:
+                numOfShooting += (int)change;
+                break;
+        }
+    }
+
 }

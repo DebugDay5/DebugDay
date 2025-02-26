@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private int shootNum; //발사 횟수
     private bool isShooting = false;
     private bool isMoving = false;
+    private bool isDead = false;
     float rotZ;
 
     private bool isInvincible = false;
@@ -51,10 +52,12 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         moveDirection = new Vector2(horizontal, vertical).normalized;
+
     }
 
     private void FixedUpdate()
     {
+        if(isDead) return;
         Movement(moveDirection);
         LookTarget();
         Shoot();
@@ -151,21 +154,28 @@ public class PlayerController : MonoBehaviour
         
         playerManager.Hp -= damage;
 
-        if (playerManager.Hp <= 0)
+        if (playerManager.Hp <= 0f)
         {
             playerManager.PlayerDead();
+            isDead = true;
+            Invoke("DeletePlayer", 1f); //1초 뒤 삭제
             return;
         }
 
         isInvincible = true;
-        _animator.SetBool("isInvincible", true);
+        _animator.SetBool("IsInvincible", true);
         Invoke("InvincibleChange", 0.5f); //0.5초뒤 무적 해제
     }
 
     private void InvincibleChange()
     {
-        _animator.SetBool("isInvincible", false);
+        _animator.SetBool("IsInvincible", false);
         isInvincible = false;
+    }
+
+    private void DeletePlayer()
+    {
+        Destroy(gameObject);
     }
     
 }
