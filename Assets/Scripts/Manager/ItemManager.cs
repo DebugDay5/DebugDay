@@ -67,6 +67,52 @@ public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터
     {
         return itemDatabase.FindAll(item => item.type == type);
     }
+
+    public Item GetRandomItemByRarity(string rarity)
+    {
+        int minId = 0, maxId = 0;
+
+        switch (rarity)
+        {
+            case "common":
+                {
+                    minId = 10000;
+                    maxId = 19999;
+                    break;
+                }
+            case "rare":
+                {
+                    minId = 20000;
+                    maxId = 29999;
+                    break;
+                }
+            case "unique":
+                {
+                    minId = 30000;
+                    maxId = 39999;
+                    break;
+                }
+            case "legendary":
+                {
+                    minId = 40000;
+                    maxId = 49999;
+                    break;
+                }
+            default:
+                Debug.LogWarning($"잘못된 희귀도: {rarity}");
+                return null;
+        }
+
+        List<Item> items = itemDatabase.FindAll(item => item.id >= minId && item.id <= maxId);
+
+        if (items.Count == 0)
+        {
+            Debug.LogWarning($"'{rarity}' 등급의 아이템은 존재하지 않습니다.");
+            return null;
+        }
+
+        return items[Random.Range(0, items.Count)];
+    }
 }
 
 [System.Serializable]

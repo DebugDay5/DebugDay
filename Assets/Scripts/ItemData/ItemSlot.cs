@@ -92,19 +92,20 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
     private void EquipItem()    // 장착버튼
     {
         var inventoryManager = PlayerInventoryManager.Instance;
+        var equipslot = EquipSlot.Instance;
         if (inventoryManager == null) return;
 
         string itemType = itemData.type;
 
         if (inventoryManager.IsEquipped(itemType))
         {
-            EquipSlot.Instance.UnequipItem();
+            equipslot.UnequipItem();
         }
 
         inventoryManager.EquipItem(itemType, itemData);
         Debug.Log($"{itemData.name} 장착됨");
 
-        EquipSlot.Instance.UpdateSlot(itemData);
+        equipslot.UpdateSlot(itemData);
     }
 
     private void EnhanceItem()  // 강화버튼
