@@ -16,7 +16,7 @@ public class Stone : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.Play("StoneAnimation"); // 애니메이션 한 번만 재생
+            animator.Play("SecondStone"); // 애니메이션 한 번만 재생
             StartCoroutine(WaitForAnimation());
         }
     }
