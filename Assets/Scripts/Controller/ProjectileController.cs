@@ -47,10 +47,8 @@ public class ProjectileController : MonoBehaviour
             {
                 damage *= critDamage;
             }
-
-            /*
-            * 몬스터에게 데미지...
-            */
+            BaseEnemy enemy = other.GetComponent<BaseEnemy>();
+            enemy.TakeDamage(damage);
 
             if (!isPiercing)
                 Destroy(this.gameObject);

@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     float rotZ;
 
     private bool isInvincible = false;
+    GameObject target;
 
     private void Awake()
     {
@@ -82,14 +83,21 @@ public class PlayerController : MonoBehaviour
 
     private void LookTarget()
     {
-        GameObject target = playerManager.GetTarget();
-        if (target == null) return;
+        if (_animator.GetBool("IsMove")) //이동시 이동방향으로
+        {
+            lookDirection = _rigidbody.velocity.normalized;
+        }
+        else //멈췄을 경우 타겟방향 및 공격
+        {
+            target = playerManager.GetTarget();
+            if (target == null) return;
 
-        lookDirection = target.transform.position - transform.position;
-        lookDirection = lookDirection.normalized;
+            lookDirection = target.transform.position - transform.position;
+            lookDirection = lookDirection.normalized;
+        }
         rotZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
 
-        if(pivot != null)
+        if (pivot != null)
         {
             pivot.rotation = Quaternion.Euler(0, 0, rotZ);
         }
@@ -101,7 +109,9 @@ public class PlayerController : MonoBehaviour
     
     private void Shoot()
     {
-        if(projectile == null) return;
+        
+        if (target == null) return;
+        if (projectile == null) return;
         if (isShooting) return;
         
         shootTime -= Time.deltaTime;
