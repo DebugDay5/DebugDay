@@ -38,8 +38,22 @@ public class StoreUI : MonoBehaviour
         Debug.Log("StoreUI.cs의 Awake() 실행됨");
     }
 
+    private IEnumerator WaitForPlayerManager()
+    {
+        while (PlayerManager.Instance == null)
+        {
+            Debug.LogWarning("PlayerManager를 찾을 수 없음. 대기 중...");
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Debug.Log("PlayerManager 발견됨!");
+        UpdateGoldUI();
+    }
+
     private void Start()
     {
+        WaitForPlayerManager();
+
         itemManager = ItemManager.Instance;
         inventoryManager = PlayerInventoryManager.Instance;
 
