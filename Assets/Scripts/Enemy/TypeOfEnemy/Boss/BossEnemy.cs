@@ -7,9 +7,10 @@ public class BossEnemy : BaseEnemy
     [SerializeField] private RuntimeAnimatorController firstPhaseAnimator;
     [SerializeField] private RuntimeAnimatorController secondPhaseAnimator;
 
+    private bool isTransitioning = false;
     private bool isSecondPhase = false; // 2페이즈
-    private bool isTransitioning = false; // IsPhaseTransition이 한 번만 실행되게 하는 코드
     private bool isArmorBroken = false; // BreakArmor 실행 여부
+    private bool canAttack = true;
     private bool isDead = false; // 보스 사망 여부 추가
     private BossState currentState; // 현재 페이즈
     private BossAnimatorController animatorController;
@@ -49,9 +50,9 @@ public class BossEnemy : BaseEnemy
     {
         while (HP > 0)
         {
-            if (isTransitioning) yield break;
+            if (isTransitioning || isArmorBroken || !canAttack) yield break;
             yield return new WaitForSeconds(attackCooldown);
-            currentState.Attack();
+            if (!isArmorBroken && canAttack) currentState.Attack();
         }
     }
 
@@ -86,6 +87,7 @@ public class BossEnemy : BaseEnemy
     {
         if (HP <= 1000 * 0.1f && isSecondPhase && !isArmorBroken)
         {
+            canAttack = false;
             StartCoroutine(ExecuteBreakArmorAndLast());
         }
         
@@ -118,8 +120,6 @@ public class BossEnemy : BaseEnemy
 
         float animationLength = animatorController.GetAnimationLength("Last");
         yield return new WaitForSeconds(animationLength);
-
-        animatorController.SecondLast(false);
     }
 
         private IEnumerator BossDie() // 보스 사망 애니메이션 실행
@@ -129,8 +129,6 @@ public class BossEnemy : BaseEnemy
 
         float animationLength = animatorController.GetAnimationLength("BossDie");
         yield return new WaitForSeconds(animationLength);
-
-        animatorController.BossDie(false);
         
         isDead = true;
 

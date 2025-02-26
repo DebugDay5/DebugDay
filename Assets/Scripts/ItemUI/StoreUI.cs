@@ -23,7 +23,8 @@ public class StoreUI : MonoBehaviour
 
     private ItemManager itemManager;
     private PlayerInventoryManager inventoryManager;
-    private int playerGold = 10000; // 플레이어의 소지골드 가져오게 되면 이거 지워야됨
+
+    private int PlayerGold => PlayerManager.Instance.Gold;
 
     private void Awake()
     {
@@ -57,7 +58,7 @@ public class StoreUI : MonoBehaviour
 
     private void UpdateGoldUI()
     {
-        goldText.text = $"GOLD {playerGold}";
+        goldText.text = $"GOLD {PlayerGold}";
     }
 
     public void PullItemHighOne() => PullItem("high", 1);
@@ -70,16 +71,14 @@ public class StoreUI : MonoBehaviour
         int cost = (gachaType == "high") ? 2000 : 500;
         cost *= count;
 
-        if (playerGold < cost)
+        if (PlayerGold < cost)
         {
             Debug.Log("골드가 부족합니다.");
             return;
         }
 
-        playerGold -= cost;
+        ReducePlayerGold(cost);
         UpdateGoldUI();
-
-        
 
         List<Item> obtainedItems = new List<Item>();
         for (int i = 0; i < count; i++)
@@ -118,5 +117,10 @@ public class StoreUI : MonoBehaviour
             lowGachaImage.sprite = item.icon;
 
         Debug.Log($"획득한 아이템 : {item.name} ({item.rarity})");
+    }
+
+    private void ReducePlayerGold(int amount)
+    {
+        typeof(PlayerManager).GetProperty("Gold")?.SetValue(PlayerManager.Instance, PlayerGold - amount);   // reflection
     }
 }

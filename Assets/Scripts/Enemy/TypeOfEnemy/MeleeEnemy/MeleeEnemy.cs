@@ -9,7 +9,7 @@ public class MeleeEnemy : BaseEnemy
     private float lastAttackTime; // 공격 시간
     private bool isAttacking = true;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         hp = 100;
