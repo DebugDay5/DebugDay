@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemy : BaseEnemy
+public class Crab : BaseEnemy
 {
     [SerializeField] private float attackRange = 2f; // 공격 범위
     [SerializeField] private float attackCooldown = 2.0f; // 공격 속도

@@ -32,9 +32,8 @@ public class BossFirstPhase : BossState
         }
     }
 
-    private IEnumerator AttackPattern1()
+    private IEnumerator AttackPattern1() // Attack1: Player를 향한 투사체"
     {
-        Debug.Log("Attack1: Player를 향한 투사체");
         animatorController.FirstAttackPattern1(true);
 
         float animationLength = animatorController.GetAnimationLength("Attack1");
@@ -48,9 +47,8 @@ public class BossFirstPhase : BossState
         animatorController.FirstAttackPattern1(false);
     }
 
-    private IEnumerator AttackPattern2()
+    private IEnumerator AttackPattern2() // Attack2: Boss 주변 범위 공격
     {
-        Debug.Log("Attack2: Boss 주변 범위 공격");
         animatorController.FirstAttackPattern2(true);
 
         float animationLength = animatorController.GetAnimationLength("Attack2");
@@ -63,16 +61,15 @@ public class BossFirstPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // PlayerManager.Instance.Hp -= 30;
+                // playerController.TakeDamage(30f);
             }
         }
 
         animatorController.FirstAttackPattern2(false);
     }
 
-    private IEnumerator AttackPattern3()
+    private IEnumerator AttackPattern3() // Attack3: 근접 공격
     {
-        Debug.Log("Attack3: 근접 공격");
         animatorController.FirstAttackPattern3(true);
 
         float animationLength = animatorController.GetAnimationLength("Attack3");
@@ -85,7 +82,7 @@ public class BossFirstPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // PlayerManager.Instance.Hp -= 50;
+                // playerController.TakeDamage(50f);
             }
         }
 
