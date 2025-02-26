@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
     {
         if (isDestroyed || !collision.CompareTag("Player")) return;
 
-        // collision.GetComponent<Player>().TakeDamage(damage);
+        // PlayerManager.Instance.Hp -= damage;
 
         isDestroyed = true;
         speed = 0f;

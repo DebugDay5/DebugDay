@@ -63,7 +63,7 @@ public class BossFirstPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // player.GetComponent<Player>().TakeDamage(30);
+                // PlayerManager.Instance.Hp -= 30;
             }
         }
 
@@ -85,7 +85,7 @@ public class BossFirstPhase : BossState
         {
             if (player.CompareTag("Player"))
             {
-                // player.GetComponent<Player>().TakeDamage(50);
+                // PlayerManager.Instance.Hp -= 50;
             }
         }
 
