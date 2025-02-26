@@ -1,4 +1,5 @@
-[
+{
+  "items": [
     {
       "itemId": 10001,
       "itemName": "일반 활",
@@ -7,7 +8,7 @@
       "itemStatCode": [ 1 ],
       "itemStat1": 10,
       "itemSellPrice": 500,
-      "iconPath": "weapon_1"
+      "iconPath": "Item/weapon_1"
     },
     {
       "itemId": 10002,
@@ -17,7 +18,7 @@
       "itemStatCode": [ 3 ],
       "itemStat1": 10,
       "itemSellPrice": 500,
-      "iconPath": "armor_1"
+      "iconPath": "Item/armor_1"
     },
     {
       "itemId": 10003,
@@ -27,7 +28,7 @@
       "itemStatCode": [ 2 ],
       "itemStat1": 100,
       "itemSellPrice": 500,
-      "iconPath": "neckless_1"
+      "iconPath": "Item/neckless_1"
     },
     {
       "itemId": 10004,
@@ -37,7 +38,7 @@
       "itemStatCode": [ 4 ],
       "itemStat1": 5,
       "itemSellPrice": 500,
-      "iconPath": "ring_1"
+      "iconPath": "Item/ring_1"
     },
     {
       "itemId": 20001,
@@ -47,7 +48,7 @@
       "itemStatCode": [ 1 ],
       "itemStat1": 30,
       "itemSellPrice": 1500,
-      "iconPath": "weapon_2"
+      "iconPath": "Item/weapon_2"
     },
     {
       "itemId": 20002,
@@ -57,7 +58,7 @@
       "itemStatCode": [ 3 ],
       "itemStat1": 30,
       "itemSellPrice": 1500,
-      "iconPath": "armor_2"
+      "iconPath": "Item/armor_2"
     },
     {
       "itemId": 20003,
@@ -67,7 +68,7 @@
       "itemStatCode": [ 2 ],
       "itemStat1": 300,
       "itemSellPrice": 1500,
-      "iconPath": "neckless_2"
+      "iconPath": "Item/neckless_2"
     },
     {
       "itemId": 20004,
@@ -77,7 +78,7 @@
       "itemStatCode": [ 4 ],
       "itemStat1": 15,
       "itemSellPrice": 1500,
-      "iconPath": "ring_2"
+      "iconPath": "Item/ring_2"
     },
     {
       "itemId": 30001,
@@ -88,7 +89,7 @@
       "itemStat1": 40,
       "itemStat2": 30,
       "itemSellPrice": 5000,
-      "iconPath": "weapon_3"
+      "iconPath": "Item/weapon_3"
     },
     {
       "itemId": 30002,
@@ -99,7 +100,7 @@
       "itemStat1": 300,
       "itemStat2": 40,
       "itemSellPrice": 5000,
-      "iconPath": "armor_3"
+      "iconPath": "Item/armor_3"
     },
     {
       "itemId": 30003,
@@ -110,7 +111,7 @@
       "itemStat1": 30,
       "itemStat2": 400,
       "itemSellPrice": 5000,
-      "iconPath": "neckless_3"
+      "iconPath": "Item/neckless_3"
     },
     {
       "itemId": 30004,
@@ -121,7 +122,7 @@
       "itemStat1": 40,
       "itemStat2": 30,
       "itemSellPrice": 5000,
-      "iconPath": "ring_3"
+      "iconPath": "Item/ring_3"
     },
     {
       "itemId": 40001,
@@ -132,7 +133,7 @@
       "itemStat1": 80,
       "itemStat2": 50,
       "itemSellPrice": 30000,
-      "iconPath": "weapon_4"
+      "iconPath": "Item/weapon_4"
     },
     {
       "itemId": 40002,
@@ -143,7 +144,7 @@
       "itemStat1": 500,
       "itemStat2": 80,
       "itemSellPrice": 30000,
-      "iconPath": "armor_4"
+      "iconPath": "Item/armor_4"
     },
     {
       "itemId": 40003,
@@ -154,7 +155,7 @@
       "itemStat1": 50,
       "itemStat2": 800,
       "itemSellPrice": 30000,
-      "iconPath": "neckless_4"
+      "iconPath": "Item/neckless_4"
     },
     {
       "itemId": 40004,
@@ -165,6 +166,7 @@
       "itemStat1": 80,
       "itemStat2": 50,
       "itemSellPrice": 30000,
-      "iconPath": "ring_4"
+      "iconPath": "Item/ring_4"
     }
-]
+  ]
+}

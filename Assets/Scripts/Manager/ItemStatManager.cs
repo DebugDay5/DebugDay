@@ -29,14 +29,25 @@ public class ItemStatManager : MonoBehaviour    // StatData.json, 아이템 스탯 관
 
     private void LoadStatData()
     {
-        if (!File.Exists(savePath))
+        TextAsset jsonFile = Resources.Load<TextAsset>("Item/StatData");
+        if (jsonFile == null)
         {
-            Debug.LogError("StatData.json 파일이 존재하지 않음");
+            Debug.LogError("Resources 폴더에 Item/StatData.json 존재하지 않음");
             return;
         }
 
-        string json = File.ReadAllText(savePath);
-        ItemStatList statList = JsonUtility.FromJson<ItemStatList>(json);
+        string json = jsonFile.text;
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogError("StatData.json이 비어있음");
+            return;
+        }
+
+        Debug.Log($"불러온 JSON 데이터 : {json}");
+
+        ItemStatList statList = new ItemStatList();
+        JsonUtility.FromJsonOverwrite(json, statList);
 
         if (statList == null || statList.stats == null)
         {
@@ -44,8 +55,21 @@ public class ItemStatManager : MonoBehaviour    // StatData.json, 아이템 스탯 관
             return;
         }
 
+        statDictionary.Clear();
+
         foreach (var stat in statList.stats)
+        {
+            if (stat == null)
+            {
+                Debug.LogWarning("NULL 스탯 데이터 발견됨");
+                continue;
+            }
+
+            Debug.Log($"스탯 로드됨 : 코드 {stat.statCode}, 이름 {stat.statName}");
             statDictionary[stat.statCode] = stat.statName;
+        }
+
+        
 
         Debug.Log($"{statDictionary.Count}개의 스탯 로드됨");
     }
@@ -62,7 +86,7 @@ public class ItemStatData
     public int statCode;
     public string statName;
 }
-
+[System.Serializable]
 public class ItemStatList
 {
     public List<ItemStatData> stats;

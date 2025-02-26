@@ -23,27 +23,45 @@ public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터
             return;
         }
 
-        savePath = Path.Combine(Application.persistentDataPath, "ItemData.json");
         LoadItemsFromJson();
     }
 
     void LoadItemsFromJson()
     {
-        if (!File.Exists(savePath))
+        TextAsset jsonFile = Resources.Load<TextAsset>("Item/ItemData");
+        if (jsonFile == null)
         {
-            Debug.LogError("ItemData.json 파일이 존재하지 않습니다");
+            Debug.LogError("Resources 폴더에 Item/ItemData.json 존재하지 않음");
             return;
         }
 
-        string json = File.ReadAllText(savePath);
-        ItemList itemList = JsonUtility.FromJson<ItemList>(json);
+        string json = jsonFile.text;
 
-        if (itemList == null || itemList.items == null)
+        if (string.IsNullOrEmpty(json))
         {
-            Debug.LogError("LoadItemsFronJson에서 오류 발생 - 데이터 오류");
+            Debug.LogError("ItemData.json이 비어있음");
             return;
         }
 
+        Debug.Log($"불러온 JSON 데이터: {json}");
+
+        ItemList itemList = new ItemList();
+        JsonUtility.FromJsonOverwrite(json, itemList);
+
+        if (itemList == null)
+        {
+            Debug.LogError("JsonUtility.FromJson<ItemList>(json)에서 NULL 반환");
+            return;
+        }
+
+        // itemList.items가 NULL인지 확인
+        if (itemList.items == null)
+        {
+            Debug.LogError("itemList.items가 NULL");
+            return;
+        }
+
+        itemDatabase.Clear();
         foreach (ItemData data in itemList.items)
             itemDatabase.Add(new Item(data));
         
@@ -118,5 +136,5 @@ public class ItemManager : MonoBehaviour    // ItemData.json 참조, 아이템 데이터
 [System.Serializable]
 public class ItemList
 {
-    public List<ItemData> items;
+    public List<ItemData> items = new List<ItemData>();
 }

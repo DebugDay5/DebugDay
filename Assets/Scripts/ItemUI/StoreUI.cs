@@ -8,7 +8,7 @@ public class StoreUI : MonoBehaviour
 {
     public static StoreUI Instance;
 
-    [Header("UI Elements")]
+    [Header("UI")]
     public TextMeshProUGUI goldText;
     public Button highGachaOnePull;
     public Button highGachaTenPull;
@@ -21,6 +21,8 @@ public class StoreUI : MonoBehaviour
     public Image highGachaImage;
     public Image lowGachaImage;
 
+    private ItemManager itemManager;
+    private PlayerInventoryManager inventoryManager;
     private int playerGold = 10000; // 플레이어의 소지골드 가져오게 되면 이거 지워야됨
 
     private void Awake()
@@ -31,11 +33,19 @@ public class StoreUI : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-    }
 
+        Debug.Log("StoreUI.cs의 Awake() 실행됨");
+    }
 
     private void Start()
     {
+        itemManager = ItemManager.Instance;
+        inventoryManager = PlayerInventoryManager.Instance;
+
+        if (itemManager == null)
+            Debug.LogError("StoreUI.cs의 Start()에서 ItemManager가 NULL");
+        if (inventoryManager == null)
+            Debug.LogError("StoreUI.cs의 Start()에서 PlayerInventoryManager가 NULL");
 
         UpdateGoldUI();
 
@@ -49,6 +59,11 @@ public class StoreUI : MonoBehaviour
     {
         goldText.text = $"GOLD {playerGold}";
     }
+
+    public void PullItemHighOne() => PullItem("high", 1);
+    public void PullItemHighTen() => PullItem("high", 10);
+    public void PullItemLowOne() => PullItem("low", 1);
+    public void PullItemLowTen() => PullItem("low", 10);
 
     private void PullItem(string gachaType, int count)
     {
@@ -64,8 +79,7 @@ public class StoreUI : MonoBehaviour
         playerGold -= cost;
         UpdateGoldUI();
 
-        ItemManager itemManager = ItemManager.Instance;
-        PlayerInventoryManager inventoryManager = PlayerInventoryManager.Instance;
+        
 
         List<Item> obtainedItems = new List<Item>();
         for (int i = 0; i < count; i++)
@@ -88,7 +102,7 @@ public class StoreUI : MonoBehaviour
             else if (rand < 90) return itemManager.GetRandomItemByRarity("unique");
             else return itemManager.GetRandomItemByRarity("legendary");
         }
-        else
+        else    // 일반가챠 커먼70% 레어25% 유니크5%
         {
             if (rand < 70) return itemManager.GetRandomItemByRarity("common");
             else if (rand < 95) return itemManager.GetRandomItemByRarity("rare");
