@@ -35,6 +35,7 @@ public class Ability
     }
     public void InvokeAction() 
     {
+        //Debug.Log($"{abilityName}에 해당하는 카드의 invoke");
         abilityEffect.Invoke();
     }
 }
