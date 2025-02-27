@@ -84,13 +84,34 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     public void OnClick()   // ÀÎº¥Åä¸®ÀÇ ¾ÆÀÌÅÛ ½½·Ô Å¬¸¯ ½Ã ¾ÆÀÌÅÛ Á¤º¸Ã¢ÀÌ ³ª¿À°í °­È­, ÀåÂøÀ» ¼±ÅÃ
     {
-        Debug.Log($"OnClick() È£Ãâ itemData: {(itemData != null ? itemData.name : "NULL")}");
-
         if (itemData == null)
         {
-            Debug.LogError("OnClick()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù");
-            return;
+            Debug.LogError("OnClick()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù. Setup()ÀÌ Á¤»óÀûÀ¸·Î ½ÇÇàµÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
+
+            // itemData¸¦ °­Á¦·Î ÃÊ±âÈ­ÇÏ´Â ·ÎÁ÷ Ãß°¡
+            if (itemIcon != null && inventoryUI != null)
+            {
+                Debug.Log("OnClick()¿¡¼­ itemData °­Á¦ ÃÊ±âÈ­ ½Ãµµ");
+                List<Item> ownedItems = PlayerInventoryManager.Instance.GetOwnedItems();
+                foreach (var item in ownedItems)
+                {
+                    if (item.icon == itemIcon.sprite) // ÇöÀç ½½·Ô°ú ÀÏÄ¡ÇÏ´Â ¾ÆÀÌÅÛÀ» Ã£À½
+                    {
+                        itemData = item;
+                        Debug.Log($"OnClick()¿¡¼­ itemData °­Á¦ ÃÊ±âÈ­ ¿Ï·á: {itemData.name}");
+                        break;
+                    }
+                }
+            }
+
+            if (itemData == null)
+            {
+                Debug.LogError("OnClick()¿¡¼­ itemData¸¦ °­Á¦ ÃÊ±âÈ­ÇÒ ¼ö ¾øÀ½.");
+                return;
+            }
         }
+
+        Debug.Log($"OnClick() È£Ãâ itemData: {itemData.name}");
 
         if (itemInfoPanel == null)
         {
@@ -107,20 +128,14 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         itemName.text = itemData.name;
         itemStats.text = GetStatInfo();
 
-        if (equipButton == null)
+        if (equipButton == null || enhanceButton == null)
         {
-            Debug.LogError("equipButtonÀÌ NULLÀÔ´Ï´Ù!", this);
-            return;
-        }
-
-        if (enhanceButton == null)
-        {
-            Debug.LogError("enhanceButtonÀÌ NULLÀÔ´Ï´Ù!", this);
+            Debug.LogError("OnClick()¿¡¼­ ¹öÆ° ÇÒ´çÀÌ Àß¸øµÊ.");
             return;
         }
 
         equipButton.onClick.RemoveAllListeners();
-        enhanceButton.onClick.RemoveAllListeners(); // Áßº¹ ¹æÁö
+        enhanceButton.onClick.RemoveAllListeners();
 
         equipButton.onClick.AddListener(() => {
             Debug.Log("EquipButton ´­·¯Áü");
@@ -144,13 +159,13 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             CanvasGroup canvasGroup = itemInfoPanel.GetComponent<CanvasGroup>();
             if (canvasGroup != null)
             {
-                canvasGroup.alpha = 0f;
                 canvasGroup.blocksRaycasts = true;  // UI ÀÔ·Â È°¼ºÈ­
                 canvasGroup.interactable = true;
                 Debug.Log("ItemInfoPanel ´ÝÈû, UI ÀÔ·Â ´Ù½Ã È°¼ºÈ­µÊ.");
             }
 
-            EventSystem.current.SetSelectedGameObject(null); // UI ÀÔ·Â ÃÊ±âÈ­
+            /*Debug.Log("EventSystem.current.SetSelectedGameObject(null) ½ÇÇà");
+            EventSystem.current.SetSelectedGameObject(null); // UI ÀÔ·Â ÃÊ±âÈ­*/ // ¾ø¾îµµ ¹«¹æÇÑ Ä£±¸
 
             Debug.Log("ItemInfoPanel ´ÝÈû, UI ÀÔ·Â ´Ù½Ã È°¼ºÈ­µÊ.");
         }
@@ -187,7 +202,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         var inventoryManager = PlayerInventoryManager.Instance;
         if (inventoryManager == null)
         {
-            Debug.LogError("PlayerInventoryManager ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾øÀ½");
+            Debug.LogError("PlayerInventoryManager ÀÎ½ºÅÏ½º°¡ NULL");
             return;
         }
 
@@ -204,27 +219,26 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         // ±âÁ¸ ÀåÂø ¾ÆÀÌÅÛ ÇØÁ¦(Á¸ÀçÇÑ´Ù¸é)
         if (inventoryManager.IsEquipped(itemType))
         {
-            Item unequippedItem = inventoryManager.GetEquippedItem(itemType);
+            Debug.Log($"{itemType} ½½·Ô¿¡¼­ ±âÁ¸ ÀåÂø ¾ÆÀÌÅÛ ÇØÁ¦ Áß...");
             equipSlot.UnequipItem();
-
-            // ÇØÁ¦ÇÑ ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸®¿¡ Ãß°¡
-            if (unequippedItem != null)
-            {
-                inventoryManager.AddItem(unequippedItem);
-                Debug.Log($"±âÁ¸ ¾ÆÀÌÅÛ {unequippedItem.name} ÇØÁ¦ ÈÄ ÀÎº¥Åä¸®¿¡ Ãß°¡µÊ");
-            }
         }
 
-        // »õ ¾ÆÀÌÅÛ ÀåÂø
+        // ¾ÆÀÌÅÛ ÀåÂø
         inventoryManager.EquipItem(itemType, itemData);
+        equipSlot.UpdateSlot(itemData);
         Debug.Log($"{itemData.name} ÀåÂøµÊ");
 
-        equipSlot.UpdateSlot(itemData);
-
+        // ÀåÂøÇÑ ¾ÆÀÌÅÛ ÀÎº¥Åä¸®¿¡¼­ Á¦°Å
         inventoryManager.RemoveItem(itemData);
         Debug.Log($"{itemData.name} ÀÎº¥Åä¸®¿¡¼­ Á¦°ÅµÊ");
 
         InventoryUI inventoryUI = FindObjectOfType<InventoryUI>();
+        if (inventoryUI == null)
+        {
+            Debug.LogError("InventoryUI¸¦ Ã£À» ¼ö ¾øÀ½ - InventoryUI¸¦ °­Á¦·Î Ã£À½");
+            inventoryUI = GameObject.Find("InventoryPanel")?.GetComponent<InventoryUI>();
+        }
+
         if (inventoryUI != null)
         {
             inventoryUI.RefreshInventory(inventoryManager.GetOwnedItems());
@@ -232,16 +246,34 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         }
         else
         {
-            Debug.LogError("InventoryUI¸¦ Ã£À» ¼ö ¾øÀ½.");
+            Debug.LogError("InventoryUI Ã£±â ½ÇÆÐ - UI °»½Å ºÒ°¡´É.");
         }
 
+        Debug.Log("CloseItemInfoPanel ½ÇÇà");
         CloseItemInfoPanel();
+
+        /*Debug.Log("EventSystem.current.SetSelectedGameObject(null) ½ÇÇà");
+        EventSystem.current.SetSelectedGameObject(null);*/  // ¾ø¾îµµ ¹«¹æÇÔ
     }
 
     public void EnhanceItem()  // °­È­¹öÆ°
     {
+        if (itemData == null)
+        {
+            Debug.LogError("EnhanceItem()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù.");
+            return;
+        }
+
         Debug.Log($"{itemData.name} °­È­ÇÔ");
-        itemInfoPanel.SetActive(false);
+
+        if (itemInfoPanel != null)
+        {
+            itemInfoPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("EnhanceItem()¿¡¼­ itemInfoPanelÀÌ NULLÀÔ´Ï´Ù.");
+        }
     }
 
     private EquipSlot FindEquipSlot(string itemType)
