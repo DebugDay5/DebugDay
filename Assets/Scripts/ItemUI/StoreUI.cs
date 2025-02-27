@@ -24,7 +24,7 @@ public class StoreUI : MonoBehaviour
     private ItemManager itemManager;
     private PlayerInventoryManager inventoryManager;
 
-    private int PlayerGold => PlayerManager.Instance.Gold;
+    private int PlayerGold => GameManager.Instance.Gold;
 
     private void Awake()
     {
@@ -40,13 +40,13 @@ public class StoreUI : MonoBehaviour
 
     private IEnumerator WaitForPlayerManager()
     {
-        while (PlayerManager.Instance == null)
+        while (GameManager.Instance == null)
         {
-            Debug.LogWarning("PlayerManager를 찾을 수 없음. 대기 중...");
+            Debug.LogWarning("GameManager를 찾을 수 없음. 대기 중...");
             yield return new WaitForSeconds(0.1f);
         }
 
-        Debug.Log("PlayerManager 발견됨!");
+        Debug.Log("GameManager 발견됨!");
         UpdateGoldUI();
     }
 
@@ -135,6 +135,6 @@ public class StoreUI : MonoBehaviour
 
     private void ReducePlayerGold(int amount)
     {
-        typeof(PlayerManager).GetProperty("Gold")?.SetValue(PlayerManager.Instance, PlayerGold - amount);   // reflection
+        typeof(GameManager).GetProperty("Gold")?.SetValue(GameManager.Instance, PlayerGold - amount);   // reflection
     }
 }
