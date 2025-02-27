@@ -41,6 +41,9 @@ public class DungeonManager : MonoBehaviour
 
     public GateCollider currentGate;  // 문 콜리더
     private int remainingEnemies;
+    private int remainingPlayer;
+
+    private bool isClearChecked;
 
     public void Awake()
     {
@@ -54,11 +57,10 @@ public class DungeonManager : MonoBehaviour
         }
 
         currentDungeon = Instantiate(startDungeon);
+        isClearChecked = false;
         
         currentStage = 0;  // 현재 스테이지 번호 초기화
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버를 초기화
-
-        remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
 
         postProcessVolume.profile.TryGetSettings(out colorGrading);
         colorGrading.postExposure.value = 0f;  // 배경색상 초기화
@@ -67,6 +69,9 @@ public class DungeonManager : MonoBehaviour
         winLosePanel.SetActive(false); // 승패 화면을 숨김
         winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
         homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
+
+        remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
+        // remainingPlayer = GameObject.FindGameObjectsWithTag("Player").Length;  //  플레이어 찾기
     }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -74,11 +79,15 @@ public class DungeonManager : MonoBehaviour
         currentDungeonData = dungeonData;
     }
 
+
+
     private void Update()
     {
-        if (remainingEnemies <= 0)  // 남아있는 몬스터 수가 0이면 문을 열도록
+        if (remainingEnemies <= 0  &&  isClearChecked == false)  // 남아있는 몬스터 수가 0이면 문을 열도록
         {
-            OnDungeonClear(); ;  // 문 열기
+            OnDungeonClear();  // 문 열기
+            isClearChecked = true;
+
         }
 
         if (player == null || !player.gameObject.activeInHierarchy)
@@ -93,6 +102,14 @@ public class DungeonManager : MonoBehaviour
             Debug.Log("플레이어 사망 - ui 작동");
             ShowWinLoseUI(false);
         }
+    }
+
+    public void OnEnemyDead()
+    {
+        remainingEnemies--;
+
+        // enemy가 죽었을 때 이 함수를 싱글톤으로 호출해달라.
+        // DungeonManager.Instance.OnEnemyDead
     }
 
     public void LoadCurrentDungeon()   // 현재 스테이지에 따라 맵을 로드하는 매서드
@@ -119,6 +136,8 @@ public class DungeonManager : MonoBehaviour
                 break;
         }
 
+        remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        isClearChecked = false;
     }
 
     private GameObject GetUniqueDungeon(List<GameObject> dungeonList, HashSet<int> usedIndices)
@@ -157,27 +176,28 @@ public class DungeonManager : MonoBehaviour
         if (currentStage == 3)  // 보스방까지 깨면 승패ui를 켜라.
         {
             isBossDungeonCleared = true;
-            ShowWinLoseUI(true); 
+            ShowWinLoseUI(true); // 성공한 경우의 ui 실행 
         }
 
         if (player == null)
         {
             Debug.Log("플레이어 사망 - UI 실행");
-            isGameOver = true;
-            ShowWinLoseUI(false);  // ui 실행
+            isGameOver = true;  
+            ShowWinLoseUI(false);  // 실패한 경우의 ui 실행
         }
     }
 
     public void ShowWinLoseUI(bool isWin)
     {
-        Debug.Log("ShowWinLoseUI 실행됨, isWin:  " + isWin);
+        winLosePanel.SetActive(true);
+        winLoseText.gameObject.SetActive(true);
+        homeButton.gameObject.SetActive(true);
+
 
         if (winLosePanel != null)
         {
             Debug.Log("WinLoseUIPanel 정상적으로 연결됨");
-            winLosePanel.SetActive(true);
-            winLoseText.gameObject.SetActive(true);
-            homeButton.gameObject.SetActive(true);
+
         }
         else
         {

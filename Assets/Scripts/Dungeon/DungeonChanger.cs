@@ -34,10 +34,6 @@ public class DungeonChanger : MonoBehaviour
             PlayerManager.Instance.target = enemys;
         }
 
-        for (int i = 0; i < enemys.Length; i++)
-        {
-            DungeonManager.Instance.enemies.Add(enemys[i].GetComponent<BaseEnemy>());
-        }
 
     }
     private void Start()
