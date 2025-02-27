@@ -183,7 +183,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         string statInfo = "";
         foreach (var stat in itemData.stats)
         {
-            string statName = statManager.GetStatName(stat.Key);
+            string statName = statManager.GetStatName(stat.Key);    // ÀÌºÎºÐ Ãæµ¹³¯ °¡´É¼º ¸Å¿ì³ôÀ½
             statInfo += $"{statName}: {stat.Value}\n";
         }
         return statInfo;
@@ -206,7 +206,8 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             Debug.LogError("PlayerInventoryManager ÀÎ½ºÅÏ½º°¡ NULL");
             return;
         }
-        var statManager = GameManager.Instance;
+        var gameManager = GameManager.Instance;
+        var playerManager = PlayerManager.Instance;
 
         string itemType = itemData.type;
 
@@ -225,15 +226,21 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             equipSlot.UnequipItem();
         }
 
+        foreach (var stat in itemData.stats)
+        {
+            int statCode = stat.Key;
+            float statValue = stat.Value;
+
+            // °ÔÀÓ ¸Å´ÏÀú
+            gameManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
+            // ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ ½ºÅÈ
+            playerManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
+        }
+
         // ¾ÆÀÌÅÛ ÀåÂø
         inventoryManager.EquipItem(itemType, itemData);
         equipSlot.UpdateSlot(itemData);
         Debug.Log($"{itemData.name} ÀåÂøµÊ");
-
-        foreach (var stat in itemData.stats)
-        {
-            statManager.UpdateStat(stat.Value, (PlayerManager.PlayerStat)stat.key)
-        }
 
         // ÀåÂøÇÑ ¾ÆÀÌÅÛ ÀÎº¥Åä¸®¿¡¼­ Á¦°Å
         inventoryManager.RemoveItem(itemData);

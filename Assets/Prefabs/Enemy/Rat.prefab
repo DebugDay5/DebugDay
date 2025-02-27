@@ -51,7 +51,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   player: {fileID: 0}
   hp: 15
-  speed: 3
+  speed: 2.5
   damage: 2
   gold: 2
   enemyHPBarPrefab: {fileID: 390627517609146257, guid: 94b47abbc8d9241beb142e6fc579c888,

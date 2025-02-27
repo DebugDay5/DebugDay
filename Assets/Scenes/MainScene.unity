@@ -4153,6 +4153,8 @@ MonoBehaviour:
   - {fileID: 1525124098}
   - {fileID: 1191937404}
   - {fileID: 640691519}
+  expText: {fileID: 2314238715389861095}
+  expSlider: {fileID: 402857694824759877}
 --- !u!1 &681668021
 GameObject:
   m_ObjectHideFlags: 0

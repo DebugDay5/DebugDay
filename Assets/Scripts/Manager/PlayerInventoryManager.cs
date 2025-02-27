@@ -10,14 +10,17 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
     private List<Item> ownedItems = new List<Item>();
     private Dictionary<string, Item> equippedItems = new Dictionary<string, Item>();
     private string savePath;
+    private string equippedItemsPath;
     private const int MAX_INVENTORY_SIZE = 100;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
         savePath = Path.Combine(Application.persistentDataPath, "PlayerInventory.json");
+        equippedItemsPath = Path.Combine(Application.persistentDataPath, "EquippedItems.json");
         LoadInventory();
+        LoadEquippedItems();
     }
     void Start()
     {
@@ -75,12 +78,16 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
             equippedItems[itemType] = item;
         else
             equippedItems.Add(itemType, item);
+
+        SaveEquippedItems();
     }
 
     public void UnequipItem(string itemType)
     {
         if (equippedItems.ContainsKey(itemType))
             equippedItems.Remove(itemType);
+
+        SaveEquippedItems();
     }
 
     public bool IsEquipped(string itemType) => equippedItems.ContainsKey(itemType);
@@ -105,6 +112,29 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
         }
     }
 
+    private void LoadEquippedItems()
+    {
+        if (!File.Exists(equippedItemsPath))
+        {
+            CreateDefaultEquippedFile();
+            return;
+        }
+
+        string json = File.ReadAllText(equippedItemsPath);
+        PlayerEquippedData data = JsonUtility.FromJson<PlayerEquippedData>(json);
+
+        equippedItems.Clear();
+        foreach (var kvp in data.equippedItemIds)
+        {
+            Item item = ItemManager.Instance.GetItemById(kvp.Value);
+            if (item != null)
+            {
+                equippedItems[kvp.Key] = item;
+                Debug.Log($"ºÒ·¯¿Â ÀåÂø ¾ÆÀÌÅÛ: {item.name} (½½·Ô: {kvp.Key})");
+            }
+        }
+    }
+
     private void CreateDefaultInventoryFile()
     {
         PlayerInventoryData defaultData = new PlayerInventoryData { ownedItemIds = new List<int>() };
@@ -113,12 +143,33 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
         Debug.Log("ºó ÀÎº¥Åä¸® ÆÄÀÏ »ý¼ºµÊ");
     }
 
+    private void CreateDefaultEquippedFile()
+    {
+        PlayerEquippedData defaultData = new PlayerEquippedData();
+        string json = JsonUtility.ToJson(defaultData, true);
+        File.WriteAllText(equippedItemsPath, json);
+        Debug.Log("ºó ÀåÂø ¾ÆÀÌÅÛ ÆÄÀÏ »ý¼ºµÊ: " + equippedItemsPath);
+    }
+
     private void SaveInventory()
     {
         PlayerInventoryData data = new PlayerInventoryData { ownedItemIds = new List<int>() };
         foreach (Item item in ownedItems)
             data.ownedItemIds.Add(item.id);
         File.WriteAllText(savePath, JsonUtility.ToJson(data, true));
+    }
+
+    private void SaveEquippedItems()
+    {
+        PlayerEquippedData data = new PlayerEquippedData();
+
+        foreach (var kvp in equippedItems)
+        {
+            data.equippedItemIds[kvp.Key] = kvp.Value.id;
+        }
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(equippedItemsPath, json);
+        Debug.Log($"ÀåÂøÇÑ ¾ÆÀÌÅÛ ÀúÀå ¿Ï·á: {json}");
     }
 
     private void SortInventory()
@@ -133,4 +184,9 @@ public class PlayerInventoryManager : MonoBehaviour // ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÁßÀÎ Àåºñ¾
 public class PlayerInventoryData
 {
     public List<int> ownedItemIds;
+}
+[System.Serializable]
+public class PlayerEquippedData
+{
+    public Dictionary<string, int> equippedItemIds = new Dictionary<string, int>(); // ÀåÂøµÈ ¾ÆÀÌÅÛ ID ÀúÀå
 }
