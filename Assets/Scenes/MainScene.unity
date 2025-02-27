@@ -3274,18 +3274,31 @@ MonoBehaviour:
   storePanel: {fileID: 752591508}
   inventoryPanel: {fileID: 2004883418}
   lobbyPanel: {fileID: 978120065}
-  selectedIcon: []
+  selectedIcon:
+  - {fileID: 418644113}
+  - {fileID: 6493610572984441838}
+  - {fileID: 2996250746006657606}
   profileButton: {fileID: 9173751422963519106}
   lobbyButton: {fileID: 3580106296305467904}
   inventoryButton: {fileID: 6187207787905358669}
   gameStartButton: {fileID: 7759439523095267214}
   storeButton: {fileID: 1168378481}
-  goldText: {fileID: 0}
-  playerNameText: {fileID: 0}
-  statePlayerName: {fileID: 0}
-  stateText: []
-  expText: {fileID: 0}
-  expSlider: {fileID: 0}
+  goldText: {fileID: 304244526033052674}
+  playerNameText: {fileID: 4746339899706419463}
+  statePlayerName: {fileID: 6118068266382124813}
+  stateText:
+  - {fileID: 580346386049640146}
+  - {fileID: 6686740048193703300}
+  - {fileID: 2287875031755071661}
+  - {fileID: 533730547282606589}
+  - {fileID: 7852604613276652127}
+  - {fileID: 766125886048170100}
+  - {fileID: 3388328247752245878}
+  - {fileID: 1860716008686684190}
+  - {fileID: 6172660322611334636}
+  - {fileID: 7114565041290838806}
+  expText: {fileID: 2314238715389861095}
+  expSlider: {fileID: 402857694824759877}
 --- !u!1 &681668021
 GameObject:
   m_ObjectHideFlags: 0
