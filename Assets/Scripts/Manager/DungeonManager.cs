@@ -33,12 +33,6 @@ public class DungeonManager : MonoBehaviour
     public GameObject winUiCanvas;  // 이긴 상태 패널
     public GameObject loseUiCanvas;   //  진 상태 패널
 
-    //public GameObject winLosePanel;  // 승패 화면 패널
-    //public Text winLoseText;  // 승패 텍스트
-    //public Button homeButton;  // 홈으로 가는 버튼
-    //public Image winImage;  // 승리한 이미지
-    //public Image loseImage;  // 패배한 이미지
-
     public bool isDungeonCleared = false;  // 던전 클리어 여부
     [SerializeField]
     public bool isBossDungeonCleared = false;   // 보스 던전 클리어 여부
@@ -68,16 +62,10 @@ public class DungeonManager : MonoBehaviour
 
         postProcessVolume.profile.TryGetSettings(out colorGrading);
         colorGrading.postExposure.value = 0f;  // 배경색상 초기화
-        colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
+        colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0); 
 
-        winUiCanvas.gameObject.SetActive(false);
+        winUiCanvas.gameObject.SetActive(false);   // ui 초기화
         loseUiCanvas.gameObject.SetActive(false);
-
-        //winLosePanel.SetActive(false); // 승패 화면을 숨김
-        //winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
-        //winImage.gameObject.SetActive(false);  // 승리한 이미지 숨김
-        //loseImage.gameObject.SetActive(false);  //  패배한 이미지 숨김
-        //homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
 
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
     }
