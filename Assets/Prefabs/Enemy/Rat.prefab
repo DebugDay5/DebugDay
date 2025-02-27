@@ -51,7 +51,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   player: {fileID: 0}
   hp: 15
-  speed: 3
+  speed: 2.5
   damage: 2
   gold: 2
   enemyHPBarPrefab: {fileID: 390627517609146257, guid: 94b47abbc8d9241beb142e6fc579c888,
@@ -126,7 +126,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -43,7 +43,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
         if (enemyHPBarPrefab != null)
         {
-            GameObject hpBarObj = Instantiate(enemyHPBarPrefab, transform);
+            GameObject hpBarObj = Instantiate(enemyHPBarPrefab);
             enemyHPBar = hpBarObj.GetComponentInChildren<EnemyHPBar>();
             enemyHPBar.Initialize(transform);
         }
@@ -78,7 +78,8 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     public virtual void TakeDamage(float damage)
     {
         HP -= PlayerManager.Instance.Damage;
-        animationHandler?.Hit();
+        animationHandler.Hit(true);
+        StartCoroutine(HitMotion(0.6f));
 
         if (enemyHPBar != null)
         {
@@ -91,9 +92,15 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         }
     }
 
+    private IEnumerator HitMotion(float delay)
+    {
+        yield return new WaitForSeconds(delay); // 애니메이션 길이만큼 대기
+        animationHandler.Hit(false); // 애니메이션 중지
+    }
+
     protected void Die()
     {
-        animationHandler?.Die();
+        animationHandler.Die();
         EnemyManager.Instance?.RemoveEnemy(this);
         Destroy(gameObject);
     }
@@ -110,6 +117,12 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         else
         {
             transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
+        }
+
+        if (enemyHPBar != null)
+        {
+            Transform hpBarTransform = enemyHPBar.transform;
+            hpBarTransform.localScale = new Vector3(Mathf.Abs(hpBarTransform.localScale.x), hpBarTransform.localScale.y, hpBarTransform.localScale.z);
         }
     }
 }

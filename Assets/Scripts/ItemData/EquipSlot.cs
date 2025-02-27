@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -88,13 +87,6 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
         PlayerInventoryManager inventoryManager = PlayerInventoryManager.Instance;
         GameManager gameManager = GameManager.Instance;
-        PlayerManager playerManager = PlayerManager.Instance;
-
-        if (gameManager == null || playerManager == null || inventoryManager == null)
-        {
-            Debug.LogError("UnequipItem() 실행 실패 - GameManager, PlayerManager, 또는 PlayerInventoryManager 인스턴스가 NULL입니다.");
-            return;
-        }
 
         Debug.Log($"{equippedItem.name} 장착 해제");
 
@@ -102,21 +94,8 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
         {
             int statCode = stat.Key;
             float statValue = stat.Value;
-
-            if (Enum.IsDefined(typeof(PlayerManager.PlayerStat), statCode))
-            {
-                var playerStat = (PlayerManager.PlayerStat)statCode;
-
-                // GameManager와 PlayerManager에 스탯 감소 적용
-                gameManager.UpdateStat(-statValue, playerStat);
-                playerManager.UpdateStat(-statValue, playerStat);
-
-                Debug.Log($"{playerStat} 스탯 감소: {-statValue}");
-            }
-            else
-            {
-                Debug.LogError($"UnequipItem() 오류 - {statCode}는 PlayerStat에 정의되지 않은 값입니다.");
-            }
+            gameManager.UpdateStat(-statValue, (PlayerManager.PlayerStat)statCode);
+            Debug.Log($"스탯 감소: {statCode} - {statValue}");
         }
 
         inventoryManager.AddItem(equippedItem); // 장착 해제한 아이템은 인벤토리로 이동
@@ -124,18 +103,6 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
         equippedItem = null;
         itemIcon.enabled = false;
-
-        InventoryUI inventoryUI = FindObjectOfType<InventoryUI>();
-        if (inventoryUI != null)
-        {
-            inventoryUI.RefreshInventory(inventoryManager.GetOwnedItems());
-            Debug.Log("인벤토리 UI 갱신됨.");
-        }
-        else
-        {
-            Debug.LogError("InventoryUI 찾기 실패 - UI 갱신 불가능.");
-        }
-
         CloseItemInfoPanel();
     }
 

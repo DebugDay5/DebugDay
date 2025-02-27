@@ -12,8 +12,8 @@ public class Rat : BaseEnemy
     protected override void Awake()
     {
         base.Awake();
-        hp = 30;
-        speed = 3f;
+        hp = 15;
+        speed = 2.5f;
         damage = 2;
         gold = 2;
     }

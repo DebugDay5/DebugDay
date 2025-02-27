@@ -17,16 +17,16 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        Invoke("Destroy", 5f); // 5초 후 자동 삭제
+        Invoke("DestroyProjectile", 3f);
     }
 
     private void Update()
     {
         if (isDestroyed) return;
-        transform.position += direction * speed * Time.deltaTime; // 투사체의 독립적인 이동
+        transform.position += direction * speed * Time.deltaTime;
     }
 
-    public void SetDirection(Vector3 newDirection) // 투사체 방향 설정
+    public void SetDirection(Vector3 newDirection)
     {
         if (!isDestroyed)
         {
@@ -66,6 +66,7 @@ public class Projectile : MonoBehaviour
     {
         if (!isDestroyed)
         {
+            isDestroyed = true;
             Destroy(gameObject);
         }
     }

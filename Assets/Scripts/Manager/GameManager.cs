@@ -1,24 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class GameManager : MonoBehaviour
 {
-    
+    private static GameManager instance;
+    public static GameManager Instance { get { return instance; } }
+
+    [Header("===playerState===")]
 
     public float[] playerStat = new float[11]; //플레이어 매니저의 enum과 같음 //0번 index는 사용하지 않음
+    public string playerName;
 
+    [Header("===GOld===")]
     private int gold = 100;
     public int Gold { get { return gold; } }
 
-    private static GameManager instance;
-    public static GameManager Instance {  get { return instance; } }
+    private const int maxLv = 20; //최대레벨
+    private int level = 1;
+    private int exp = 0;
+
+
+    private int[] expGuage = new int[maxLv] {
+        10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+        110, 120, 130, 140, 150, 160, 170, 180, 190, 200
+    }; //레벨 업 경험치 통
+    public int Level { get => level; }
+    public int Exp { get => exp; }
+    public int LevelPerMaxExp(int le) { return expGuage[le]; }
 
     private void Awake()
     {
-        if(instance == null)
-            instance = this;
+        // 이미 인스턴스가 존재하고 현재 오브젝트가 아니라면
+        if (instance != null && instance != this)
+        {
+            // 중복된 인스턴스 제거
+            Destroy(gameObject);
+            return;
+        }
 
+        // 인스턴스가 없으면 현재 인스턴스 설정
+        instance = this;
+
+        playerName = "스파르타";
+
+        // 플레이어 스탯 초기화
         playerStat[0] = 0f;     //no usage
         playerStat[1] = 1f;     //Damage
         playerStat[2] = 100f;   //MaxHP
@@ -33,16 +60,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void UpdateGold(int g) 
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.gold += g;
     }
 
     public void UpdateStat(float change, PlayerManager.PlayerStat stat) //스탯 증가 //영구 스탯 증가
@@ -81,5 +101,28 @@ public class GameManager : MonoBehaviour
                 playerStat[10] += (int)change;
                 break;
         }
+    }
+
+    public void GetExp(int amount)
+    {
+        if (maxLv == level) return;
+
+        exp += amount;
+
+        if (exp >= expGuage[level - 1])
+        {
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        exp -= expGuage[level - 1];
+        level++;
+
+        /*
+         * give additional stat 
+         */
+
     }
 }
