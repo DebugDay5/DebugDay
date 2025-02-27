@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -31,9 +30,14 @@ public class DungeonManager : MonoBehaviour
     public PostProcessVolume postProcessVolume;
     private ColorGrading colorGrading;
 
-    public GameObject winLosePanel;  // 승패 화면 패널
-    public Text winLoseText;  // 승패 텍스트
-    public Button homeButton;  // 홈으로 가는 버튼
+    public GameObject winUiCanvas;  // 이긴 상태 패널
+    public GameObject loseUiCanvas;   //  진 상태 패널
+
+    //public GameObject winLosePanel;  // 승패 화면 패널
+    //public Text winLoseText;  // 승패 텍스트
+    //public Button homeButton;  // 홈으로 가는 버튼
+    //public Image winImage;  // 승리한 이미지
+    //public Image loseImage;  // 패배한 이미지
 
     public bool isDungeonCleared = false;  // 던전 클리어 여부
     [SerializeField]
@@ -42,7 +46,6 @@ public class DungeonManager : MonoBehaviour
 
     public GateCollider currentGate;  // 문 콜리더
     private int remainingEnemies;
-    private int remainingPlayer;
 
     private bool isClearChecked;
 
@@ -67,9 +70,14 @@ public class DungeonManager : MonoBehaviour
         colorGrading.postExposure.value = 0f;  // 배경색상 초기화
         colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
 
-        winLosePanel.SetActive(false); // 승패 화면을 숨김
-        winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
-        homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
+        winUiCanvas.gameObject.SetActive(false);
+        loseUiCanvas.gameObject.SetActive(false);
+
+        //winLosePanel.SetActive(false); // 승패 화면을 숨김
+        //winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
+        //winImage.gameObject.SetActive(false);  // 승리한 이미지 숨김
+        //loseImage.gameObject.SetActive(false);  //  패배한 이미지 숨김
+        //homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
 
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
     }
@@ -79,10 +87,9 @@ public class DungeonManager : MonoBehaviour
         currentDungeonData = dungeonData;
     }
 
-
-
     private void Update()
     {
+        int remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         if (remainingEnemies <= 0  &&  isClearChecked == false)  // 남아있는 몬스터 수가 0이면 문을 열도록
         {
             OnDungeonClear();  // 문 열기
@@ -103,10 +110,12 @@ public class DungeonManager : MonoBehaviour
 
     public void OnEnemyDead()
     {
-        remainingEnemies--;
+        remainingEnemies--;   // 이 함수를 BaseEnemy 스크립트에서 싱글톤으로 호출해줘야 함
+        if (remainingEnemies < 0)  // 음수로 내려가지 않게 방지
+        {
+            remainingEnemies = 0;
+        }
 
-        // enemy가 죽었을 때 이 함수를 싱글톤으로 호출해달라.
-        // DungeonManager.Instance.OnEnemyDead
     }
 
     public void LoadCurrentDungeon()   // 현재 스테이지에 따라 맵을 로드하는 매서드
@@ -131,12 +140,6 @@ public class DungeonManager : MonoBehaviour
                 colorGrading.postExposure.value = 6.93f;  // 보스맵 배경 파란색
                 colorGrading.colorFilter.value = new Color(0.0055f, 0.0105f, 0.0943f, 0);
                 break;
-        }
-
-        currentGate = currentDungeon.GetComponentInChildren<GateCollider>();
-        if (currentGate == null)
-        {
-            Debug.LogWarning("새로운 던전에 GateCollider가 없음");
         }
 
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
@@ -200,22 +203,17 @@ public class DungeonManager : MonoBehaviour
 
     public void ShowWinLoseUI(bool isWin)
     {
-        winLosePanel.SetActive(true);
-        winLoseText.gameObject.SetActive(true);
-        homeButton.gameObject.SetActive(true);
+        winUiCanvas.SetActive(false);
+        loseUiCanvas.SetActive(false);
 
-
-        if (winLosePanel != null)
+        if (isWin)
         {
-            Debug.Log("WinLoseUIPanel 정상적으로 연결됨");
-
+            winUiCanvas.SetActive(true);
         }
         else
         {
-            Debug.LogError("WinLoseUIPanel 연결 안 됨. Inspector 확인");
+            loseUiCanvas.SetActive(true);
         }
-
-        winLoseText.text = isWin ? "You Win! 용사는(은) 던전을 정복했다!" : "You Lose! 죽음은 새로운 기회. 부활하시겠습니까?";
 
     }
 

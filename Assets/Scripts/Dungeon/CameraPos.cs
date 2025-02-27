@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestCamera_KHY : MonoBehaviour
+public class CameraPos : MonoBehaviour
 {
     public Transform target;   // 추적할 플레이어
     public float minBounds;  // 카메라 이동 최소 제한

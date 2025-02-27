@@ -8,7 +8,7 @@ public class DungeonChanger : MonoBehaviour
 {
     public DungeonSO dungeonSO;
     public PlayerController playerController;
-    public TestCamera_KHY cameraController;
+    public CameraPos cameraController;
 
     public GameObject[] enemys;  // 적 수동할당 가능
 
@@ -22,7 +22,7 @@ public class DungeonChanger : MonoBehaviour
     private void Awake()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        cameraController = Camera.main.GetComponent<TestCamera_KHY>();
+        cameraController = Camera.main.GetComponent<CameraPos>();
 
         if (enemys == null ||  enemys.Length == 0 )  // 수동 할당이 없을 경우 적 오브젝트 자동 탐색
         {
