@@ -106,6 +106,7 @@ public class DungeonManager : MonoBehaviour
     private void Update()
     {
         if (!isDungeonCleared)  // 던전 클리어 여부 체크
+            // isDungeonCleared가 몬스터를 잡았을 때 true가 되는지?
         {
             CheckDungeonClear();
         }

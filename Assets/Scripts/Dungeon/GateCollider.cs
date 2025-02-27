@@ -11,6 +11,7 @@ public class GateCollider : MonoBehaviour
     public bool isStartMap = false;
     private Collider2D coll;
 
+
     private void Start()
     {
         //if (Instance == null)

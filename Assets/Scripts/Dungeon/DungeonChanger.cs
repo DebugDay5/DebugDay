@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cainos.PixelArtTopDown_Basic;
 using UnityEngine;
 
@@ -31,6 +32,11 @@ public class DungeonChanger : MonoBehaviour
         if (PlayerManager.Instance != null)
         {
             PlayerManager.Instance.target = enemys;
+        }
+
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            DungeonManager.Instance.enemies.Add(enemys[i].GetComponent<BaseEnemy>());
         }
 
     }
