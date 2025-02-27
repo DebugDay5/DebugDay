@@ -110,15 +110,15 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         if (animationHandler != null)
         {
             animationHandler.Die(true);
+                    
+            yield return new WaitForSeconds(1f);
+
+            StopAllCoroutines();
+
+            EnemyManager.Instance?.RemoveEnemy(this);
+            animationHandler.Die(false);
+            Destroy(gameObject);
         }
-        
-        yield return new WaitForSeconds(1f);
-
-        StopAllCoroutines();
-
-        EnemyManager.Instance?.RemoveEnemy(this);
-        animationHandler.Die(false);
-        Destroy(gameObject);
     }
 
     public abstract void Attack(); // abstract를 사용하여 각 Enemy마다 공격 방식 정의
