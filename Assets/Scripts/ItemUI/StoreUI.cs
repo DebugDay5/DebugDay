@@ -28,9 +28,10 @@ public class StoreUI : MonoBehaviour
 
     private ItemManager itemManager;
     private PlayerInventoryManager inventoryManager;
+    private string lastGachaType;
+    private int lastGachaCount;
 
     private int PlayerGold => GameManager.Instance.Gold;
-    private string lastGachaType = "";
 
 
     private void Awake()
@@ -92,6 +93,8 @@ public class StoreUI : MonoBehaviour
         }
 
         lastGachaType = gachaType;
+        lastGachaCount = count;
+
         ReducePlayerGold(cost);
 
         List<Item> obtainedItems = new List<Item>();
@@ -103,6 +106,9 @@ public class StoreUI : MonoBehaviour
         }
 
         ShowGachaResult(obtainedItems);
+
+        retryButton.onClick.RemoveAllListeners();
+        retryButton.onClick.AddListener(() => PullItem(lastGachaType, lastGachaCount));
     }
 
     private Item GetRandomItem(string gachatype)
