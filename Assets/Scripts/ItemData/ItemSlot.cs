@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -60,16 +61,16 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     public void Setup(Item item)
     {
-        Debug.Log($"Setup() ½ÇÇàµÊ itemData: {(item != null ? item.name : "NULL")}");
+        Debug.Log($"Setup() ½ÇÇàµÊ itemData: {(item != null ? item.name : "NULL")}");  // Setup() ½ÇÇàµÊ itemData: Á¤±³ÇÑ È°
         itemData = item;
 
         if (itemData == null)
         {
-            Debug.LogError("Setup()¿¡¼­ itemData°¡ NULL - ItemManager¿¡¼­ Á¤»óÀûÀ¸·Î µ¥ÀÌÅÍ°¡ Àü´ÞµÇ´ÂÁö È®ÀÎ ÇÊ¿äÇÔ");
+            Debug.LogError("Setup()¿¡¼­ itemData°¡ NULL - ItemManager¿¡¼­ Á¤»óÀûÀ¸·Î µ¥ÀÌÅÍ°¡ Àü´ÞµÇ´ÂÁö È®ÀÎ ÇÊ¿äÇÔ"); // ÀÌ ¸Þ¼¼Áö´Â ¾È¶ß°íÀÖÀ½
             return;
         }
 
-        Debug.Log($"Setup() ½ÇÇàµÊ itemData: {itemData.name}");
+        Debug.Log($"Setup() ½ÇÇàµÊ itemData: {itemData.name}");    // µð¹ö±× ¾ÆÀÌÅÛ ÀÌ¸§ µé¾î°£°É·Î µÎ¹ø¶ß´Â°Ô Á¤»óÀÓ
 
         if (item.icon != null)
         {
@@ -88,7 +89,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         {
             Debug.LogError("OnClick()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù. Setup()ÀÌ Á¤»óÀûÀ¸·Î ½ÇÇàµÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
 
-            // itemData¸¦ °­Á¦·Î ÃÊ±âÈ­ÇÏ´Â ·ÎÁ÷ Ãß°¡
+            // itemData¸¦ °­Á¦·Î ÃÊ±âÈ­ÇÏ´Â ·ÎÁ÷ Ãß°¡ - °­Á¦ ÃÊ±âÈ­ ½Ãµµ ·Î±×µµ ¶áÀû ¾øÀ½
             if (itemIcon != null && inventoryUI != null)
             {
                 Debug.Log("OnClick()¿¡¼­ itemData °­Á¦ ÃÊ±âÈ­ ½Ãµµ");
@@ -138,7 +139,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         enhanceButton.onClick.RemoveAllListeners();
 
         equipButton.onClick.AddListener(() => {
-            Debug.Log("EquipButton ´­·¯Áü");
+            Debug.Log($"EquipButton ´­·¯Áü - itemData »óÅÂ: {(itemData != null ? itemData.name : "NULL")}"); // EquipButton ´­·¯Áü - itemData »óÅÂ: ÀÏ¹Ý È°
             EquipItem();
         });
 
@@ -190,14 +191,20 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     public void EquipItem()    // ÀåÂø¹öÆ°
     {
-        Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {(itemData != null ? itemData.name : "NULL")}");
+        Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {(itemData != null ? itemData.name : "NULL")}");     // ¿©±â¼­ NULLÀÌ¾úÀ½ ÀÌ ÀÌÀü½ÃÁ¡¿¡ NULLÀÎÁö È®ÀÎÇÊ¿ä
         if (itemData == null)
         {
             Debug.LogError("EquipItem()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù OnClick() ½ÇÇà ÈÄ itemData°¡ ÃÊ±âÈ­µÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
             return;
         }
 
-        Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {itemData.name}");
+        Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {itemData.name}"); // ¿©±â¼± °©ÀÚ±â µ¥ÀÌÅÍ ÀÖÀ½ - itemData´Â nullÀÎµ¥ itemData.name´Â nullÀÌ ¾Æ´Ò ¼ö°¡ ÀÖ³ª?
+
+        if (itemData == null)
+        {
+            Debug.LogError("EquipItem()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù OnClick() ½ÇÇà ÈÄ itemData°¡ ÃÊ±âÈ­µÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
+            return;
+        }
 
         var inventoryManager = PlayerInventoryManager.Instance;
         if (inventoryManager == null)
