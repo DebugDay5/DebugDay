@@ -91,6 +91,11 @@ public class RouletteManager : MonoBehaviour
         // StartRulette();
     }
 
+    public void OffPanel() 
+    {
+        roulettPanel.SetActive(false);
+    }
+
     private void RandomAbility() 
     {
         // 3개의 능력을 선택

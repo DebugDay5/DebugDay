@@ -49,6 +49,8 @@ public class DungeonManager : MonoBehaviour
 
     private bool isClearChecked;
 
+    public bool flag = false;
+
     public void Awake()
     {
         if (Instance == null)
@@ -95,6 +97,7 @@ public class DungeonManager : MonoBehaviour
             OnDungeonClear();  // 문 열기
             isClearChecked = true;
 
+            flag = true;
         }
 
         if (player == null || !player.gameObject.activeInHierarchy)
@@ -199,6 +202,15 @@ public class DungeonManager : MonoBehaviour
             isGameOver = true;  
             ShowWinLoseUI(false);  // 실패한 경우의 ui 실행
         }
+
+        if (flag && (!isBossDungeonCleared))
+            RouletteManager.Instance.StartRulette();
+        else if(flag && (!isGameOver))
+            RouletteManager.Instance.StartRulette();
+
+        if (isBossDungeonCleared)
+            RouletteManager.Instance.OffPanel();
+
     }
 
     public void ShowWinLoseUI(bool isWin)
