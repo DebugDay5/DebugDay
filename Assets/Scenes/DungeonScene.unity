@@ -1250,17 +1250,17 @@ PrefabInstance:
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
       propertyPath: hp
-      value: 1000
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
       propertyPath: maxhp
-      value: 1000
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
       propertyPath: damage
-      value: 100
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
