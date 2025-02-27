@@ -13,9 +13,9 @@ public class RangeEnemy : BaseEnemy
     protected override void Awake()
     {
         base.Awake();
-        hp = 70;
+        hp = 30;
         speed = 2f;
-        damage = 0; // 지워도 됨
+        damage = 0;
         gold = 5;
     }
     

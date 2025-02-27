@@ -26,9 +26,9 @@ public class AnimationHandler : MonoBehaviour
         animator.SetBool(IsAttack, isAttacking);
     }
 
-    public void Hit()
+    public void Hit(bool isHit)
     {
-        animator.SetBool(IsHit, true);
+        animator.SetBool(IsHit, isHit);
     }
 
     public void Die()
