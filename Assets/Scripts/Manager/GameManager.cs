@@ -16,6 +16,15 @@ public class GameManager : MonoBehaviour
     private int gold = 100;
     public int Gold { get { return gold; } }
 
+    private const int maxLv = 20; //최대레벨
+    private int level = 1;
+
+    private int exp = 0;
+
+    private int[] expGuage = new int[maxLv] {
+        10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+        110, 120, 130, 140, 150, 160, 170, 180, 190, 200
+    }; //레벨 업 경험치 통
 
     private void Awake()
     {
@@ -88,5 +97,28 @@ public class GameManager : MonoBehaviour
                 playerStat[10] += (int)change;
                 break;
         }
+    }
+
+    public void GetExp(int amount)
+    {
+        if (maxLv == level) return;
+
+        exp += amount;
+
+        if (exp >= expGuage[level - 1])
+        {
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        exp -= expGuage[level - 1];
+        level++;
+
+        /*
+         * give additional stat 
+         */
+
     }
 }

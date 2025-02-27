@@ -168,6 +168,19 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    private void LevelUp()
+    {
+        exp -= expGuage[level - 1];
+        level++;
+
+        hp = maxhp;
+
+        /*
+         * give additional stat 
+         */
+
+    }
+
     public void UpdateStat(float change, PlayerStat stat) //스탯 증가 //일시적 수치 증가용
     {
         int num = (int)stat;
@@ -207,16 +220,5 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void LevelUp()
-    {
-        exp -= expGuage[level - 1];
-        level++;
-
-        hp = maxhp;
-
-        /*
-         * give additional stat 
-         */
-
-    }
+    
 }
