@@ -13,12 +13,18 @@ public interface IEnemy
 
 public abstract class BaseEnemy : MonoBehaviour, IEnemy
 {
+    [HideInInspector] public PlayerController playerController;
+    [HideInInspector] public Transform player;
+
     [SerializeField] protected float hp;
     [SerializeField] protected float speed;
     [SerializeField] protected float damage;
     [SerializeField] protected int gold;
-    [HideInInspector] public Transform player;
-    [HideInInspector] public PlayerController playerController;
+
+    [SerializeField] private GameObject enemyHPBarPrefab;
+    private EnemyHPBar enemyHPBar;
+    private float maxHP;
+
     protected AnimationHandler animationHandler;
 
     public float HP { get => hp; set => hp = value; }
@@ -33,6 +39,14 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         StartCoroutine(FindPlayer()); // 플레이어 자동 검색 시작
+        maxHP = hp;
+
+        if (enemyHPBarPrefab != null)
+        {
+            GameObject hpBarObj = Instantiate(enemyHPBarPrefab, transform);
+            enemyHPBar = hpBarObj.GetComponentInChildren<EnemyHPBar>();
+            enemyHPBar.Initialize(transform);
+        }
     }
 
     private IEnumerator FindPlayer()
@@ -47,7 +61,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
                     player = playerObject.transform;
                 }
             }
-            yield return new WaitForSeconds(1f); // 1초마다 확인
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -58,13 +72,19 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
     protected virtual void Update()
     {
-        if (!IsPlayerAvailable()) return; // 플레이어가 없으면 동작 중지
+        if (!IsPlayerAvailable()) return;
     }
 
     public virtual void TakeDamage(float damage)
     {
         HP -= PlayerManager.Instance.Damage;
         animationHandler?.Hit();
+
+        if (enemyHPBar != null)
+        {
+            enemyHPBar.UpdateHP(HP, maxHP);
+        }
+
         if (HP <= 0)
         {
             Die();
@@ -85,11 +105,11 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         Vector3 currentScale = transform.localScale; // 현재 스케일 저장
         if (player.position.x > transform.position.x)
         {
-            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), currentScale.y, currentScale.z); // x축 방향을 양수로 설정
+            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
         }
         else
         {
-            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z); // x축 방향을 음수로 설정
+            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
         }
     }
 }

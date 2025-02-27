@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 1
+  m_SortingOrder: 100
   m_Sprite: {fileID: 7013631516640934163, guid: b438465a32eb63243a7889eb1f400d29,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -155,12 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b67d88cfaf6da4bae812a347834c97d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  player: {fileID: 0}
   hp: 70
   speed: 2
   damage: 0
   gold: 5
-  player: {fileID: 0}
-  playerController: {fileID: 0}
+  enemyHPBarPrefab: {fileID: 390627517609146257, guid: 94b47abbc8d9241beb142e6fc579c888,
+    type: 3}
   attackRange: 5
   attackCooldown: 2
   projectilePrefab: {fileID: 3728256965279023165, guid: 1b87c22798673401bbc63dd2ad47a5de,

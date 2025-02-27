@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 1
+  m_SortingOrder: 100
   m_Sprite: {fileID: 6526941409322004256, guid: e5a4c6877f7a1d74aac8a9fc1620e166,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -240,12 +240,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f10308af1c44bf49a8860ff7aff35e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  player: {fileID: 0}
   hp: 1000
   speed: 0
   damage: 0
   gold: 100
-  player: {fileID: 0}
-  playerController: {fileID: 0}
+  enemyHPBarPrefab: {fileID: 390627517609146257, guid: 94b47abbc8d9241beb142e6fc579c888,
+    type: 3}
   attackCooldown: 3
   firstPhaseAnimator: {fileID: 9100000, guid: 43ffd0e7451a14a43824ed9ef1c9391f, type: 2}
   secondPhaseAnimator: {fileID: 9100000, guid: 3900555431d4043bc98c3cdadb3b4ff4, type: 2}
@@ -291,9 +293,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 1
+  m_SortingOrder: 100
   m_Sprite: {fileID: 4628221225906215552, guid: 6946cd59d8c7e234f851a23d8ce98454,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -410,9 +412,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 1
+  m_SortingOrder: 100
   m_Sprite: {fileID: 6753996268325372770, guid: 17d4906971d6bda4e933ec3e391815ea,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

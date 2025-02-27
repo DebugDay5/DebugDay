@@ -32,15 +32,16 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        // 이미 인스턴스가 존재하고 현재 오브젝트가 아니라면
+        if (instance != null && instance != this)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject); //  씬 전환 시 object 유지
-        }
-        else
-        {
+            // 중복된 인스턴스 제거
             Destroy(gameObject);
+            return;
         }
+
+        // 인스턴스가 없으면 현재 인스턴스 설정
+        instance = this;
     }
 
     [Header("===Player Sound===")]

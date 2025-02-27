@@ -10,7 +10,7 @@ public class SceneManager : MonoBehaviour
 
     public static SceneManager Instance { get => instance; }
 
-    public int TestNum = 0;
+    //public int TestNum = 0;
 
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class SceneManager : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.L))
         {
             TestNum++;
@@ -36,6 +37,7 @@ public class SceneManager : MonoBehaviour
         {
             ChangeLobbyScene();
         }
+        */
     }
 
     public void ChangeLobbyScene() 
