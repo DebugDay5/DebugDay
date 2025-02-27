@@ -109,8 +109,8 @@ public class PlayerManager : MonoBehaviour
         maxhp = stats[2];
         hp = maxhp;
         defense = stats[3];
-        critDamage = stats[4];
-        critRate = stats[5];
+        critRate = stats[4];
+        critDamage = stats[5];
         moveSpeed = stats[6];
         attackSpeed = stats[7];
         shotSpeed = stats[8];
