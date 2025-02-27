@@ -87,7 +87,6 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
         PlayerInventoryManager inventoryManager = PlayerInventoryManager.Instance;
         GameManager gameManager = GameManager.Instance;
-        PlayerManager playerManager = PlayerManager.Instance;
 
         Debug.Log($"{equippedItem.name} 장착 해제");
 
@@ -95,12 +94,8 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
         {
             int statCode = stat.Key;
             float statValue = stat.Value;
-
-            // 게임 매니저
             gameManager.UpdateStat(-statValue, (PlayerManager.PlayerStat)statCode);
-            // 현재 플레이어 스탯
-            playerManager.UpdateStat(-statValue, (PlayerManager.PlayerStat)statCode);
-            Debug.Log($"스탯 복구됨: {statCode} - {statValue}");
+            Debug.Log($"스탯 감소: {statCode} - {statValue}");
         }
 
         inventoryManager.AddItem(equippedItem); // 장착 해제한 아이템은 인벤토리로 이동

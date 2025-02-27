@@ -207,7 +207,6 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
             return;
         }
         var gameManager = GameManager.Instance;
-        var playerManager = PlayerManager.Instance;
 
         string itemType = itemData.type;
 
@@ -230,11 +229,7 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
         {
             int statCode = stat.Key;
             float statValue = stat.Value;
-
-            // 게임 매니저
             gameManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
-            // 현재 플레이어의 스탯
-            playerManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
         }
 
         // 아이템 장착
