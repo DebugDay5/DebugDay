@@ -72,7 +72,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
     protected virtual void Update()
     {
-        if (!IsPlayerAvailable()) return; // 플레이어가 없으면 동작 중지
+        if (!IsPlayerAvailable()) return;
     }
 
     public virtual void TakeDamage(float damage)
@@ -105,11 +105,11 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         Vector3 currentScale = transform.localScale; // 현재 스케일 저장
         if (player.position.x > transform.position.x)
         {
-            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), currentScale.y, currentScale.z); // x축 방향을 양수로 설정
+            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
         }
         else
         {
-            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z); // x축 방향을 음수로 설정
+            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
         }
     }
 }

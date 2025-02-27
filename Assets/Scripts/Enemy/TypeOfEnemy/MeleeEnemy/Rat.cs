@@ -18,7 +18,7 @@ public class Rat : BaseEnemy
         gold = 2;
     }
 
-    private void Update()
+    private new void Update()
     {
         if (!IsPlayerAvailable()) return;
         

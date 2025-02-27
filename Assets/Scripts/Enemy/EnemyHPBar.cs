@@ -10,11 +10,11 @@ public class EnemyHPBar : MonoBehaviour
     public void Initialize(Transform enemyTransform)
     {
         enemy = enemyTransform;
-        rectTransform = GetComponent<RectTransform>();
-        hpFillImage = transform.Find("Background").GetComponent<Image>(); 
+        rectTransform = GetComponentInChildren<RectTransform>();
+        hpFillImage = transform.Find("HP").GetComponentInChildren<Image>(); 
 
         transform.SetParent(enemy);
-        transform.localPosition = new Vector3(0, 0.5f, 0);
+        transform.localPosition = new Vector3(0, 0.3f, 0);
     }
 
     public void UpdateHP(float currentHP, float maxHP)
