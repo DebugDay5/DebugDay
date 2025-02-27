@@ -87,8 +87,8 @@ public class RouletteManager : MonoBehaviour
         // 값 초기화 
         SettingAbility();
 
-        // 테스트
-        StartRulette();
+        // 룰렛 시작 
+        // StartRulette();
     }
 
     private void RandomAbility() 
