@@ -183,7 +183,7 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
         string statInfo = "";
         foreach (var stat in itemData.stats)
         {
-            string statName = statManager.GetStatName(stat.Key);
+            string statName = statManager.GetStatName(stat.Key);    // 이부분 충돌날 가능성 매우높음
             statInfo += $"{statName}: {stat.Value}\n";
         }
         return statInfo;
