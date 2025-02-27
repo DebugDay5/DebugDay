@@ -106,7 +106,12 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     private IEnumerator Die()
     {
         DungeonManager.Instance.OnEnemyDead();
-        animationHandler.Die(true);
+
+        if (animationHandler != null)
+        {
+            animationHandler.Die(true);
+        }
+        
         yield return new WaitForSeconds(1f);
 
         StopAllCoroutines();
