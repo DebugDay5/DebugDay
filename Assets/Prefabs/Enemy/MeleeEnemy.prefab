@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
   player: {fileID: 0}
-  hp: 100
+  hp: 30
   speed: 1.5
   damage: 0
   gold: 5
@@ -233,7 +233,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -249,9 +249,9 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.27290702, y: 0.0658381}
-      - {x: 0.2233988, y: 0.23397088}
-      - {x: -0.03432429, y: 0.27947974}
-      - {x: -0.25145686, y: 0.2086227}
+      - {x: 0.22500932, y: 0.25490713}
+      - {x: -0.03432429, y: 0.3100791}
+      - {x: -0.2562883, y: 0.2343905}
       - {x: -0.33134454, y: 0.1094251}
       - {x: -0.34253836, y: -0.014680624}
       - {x: -0.32090753, y: -0.12309945}

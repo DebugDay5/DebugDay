@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8831840870656098644}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: EnemyHPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2766649117794125087}
   - component: {fileID: 7783432490647415500}
   - component: {fileID: 3227905135369328293}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 7157406825068030308}
   - component: {fileID: 6589229967430872878}
   - component: {fileID: 4771854242375704780}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 748509517023856540}
   - component: {fileID: 2082372758195183331}
   - component: {fileID: 3972125880477830667}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
