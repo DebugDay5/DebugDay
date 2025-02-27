@@ -53,7 +53,7 @@ public class DungeonManager : MonoBehaviour
 
     [Header("===사운드===")]
     public GameObject audioObj;
-    public AudioSource dungeonSource;
+    public AudioSource dungeonAudioSource;
 
     public void Awake()
     {
@@ -87,9 +87,9 @@ public class DungeonManager : MonoBehaviour
 
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
 
-        dungeonSource = audioObj.GetComponent<AudioSource>();
+        dungeonAudioSource = audioObj.GetComponent<AudioSource>();
         // 기본 배경음 실행
-        SoundManager.Instance.PlaySounds(dungeonSource , BGM.DungeonRoom);
+        SoundManager.Instance.PlaySounds(dungeonAudioSource , BGM.DungeonRoom);
     }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -115,6 +115,9 @@ public class DungeonManager : MonoBehaviour
                 Debug.Log("플레이어 사망 - UI 실행");
                 isGameOver = true;
                 ShowWinLoseUI(false);
+
+                // 실패 사운드
+                SoundManager.Instance.PlaySounds(dungeonAudioSource, DungeonSound.Fail);
             }
         }
     }
@@ -148,7 +151,7 @@ public class DungeonManager : MonoBehaviour
                 break;
             case 2:  // 보스 맵 로드
                 // 보스방 사운드 실행
-                SoundManager.Instance.PlaySounds(dungeonSource, BGM.BossRoom);
+                SoundManager.Instance.PlaySounds(dungeonAudioSource, BGM.BossRoom);
 
                 // 보스 맵 로드
                 currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedBossIndices));
@@ -192,6 +195,9 @@ public class DungeonManager : MonoBehaviour
 
         if (currentGate != null)
         {
+            // 문열리는 사운드 
+            SoundManager.Instance.PlaySounds(dungeonAudioSource, DungeonSound.EnterDoor);
+
             currentGate.OpenGate();  // 던전 클리어 후 게이트를 연다
         }
         else
@@ -206,6 +212,9 @@ public class DungeonManager : MonoBehaviour
         {
             isBossDungeonCleared = true;
             ShowWinLoseUI(true); // 성공한 경우의 ui 실행 
+
+            // 성공 사운드
+            SoundManager.Instance.PlaySounds(dungeonAudioSource, DungeonSound.Success);
         }
 
         if (player == null)

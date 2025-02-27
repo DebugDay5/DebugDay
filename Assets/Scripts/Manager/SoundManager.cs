@@ -118,6 +118,7 @@ public class SoundManager : MonoBehaviour
         try
         {
             audioSource.PlayOneShot(dungeonSound[(int)sound]);
+            Debug.Log(sound.ToString() + "실행");
         }
         catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
     }
