@@ -93,6 +93,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         if (HP <= 0)
         {
             StartCoroutine(Die());
+            return;
         }
     }
 
@@ -111,6 +112,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         StopAllCoroutines();
 
         EnemyManager.Instance?.RemoveEnemy(this);
+        animationHandler.Die(false);
         Destroy(gameObject);
     }
 
