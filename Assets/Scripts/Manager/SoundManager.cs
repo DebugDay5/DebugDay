@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerSound 
@@ -22,6 +23,11 @@ public enum DungeonSound
     EnterDoor,
     Success,
     Fail
+}
+
+public enum UISound
+{
+    Click
 }
 
 public class SoundManager : MonoBehaviour
@@ -53,6 +59,9 @@ public class SoundManager : MonoBehaviour
     [Header("===Dungeon Sound===")]
     [SerializeField] AudioClip[] dungeonSound;
 
+    [Header("===Ui Sound===")]
+    [SerializeField] AudioClip[] uiClickSound;
+
     /// <summary>
     /// 사용방법
     /// 1. 프리팹에 AudioSource컴포넌트를 할당한다
@@ -79,6 +88,16 @@ public class SoundManager : MonoBehaviour
         try
         {
             audioSource.PlayOneShot(backGroundClip[(int)sound]);
+        }
+        catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
+    }
+
+    // Ui 사운드
+    public void PlaySounds(AudioSource audioSource, UISound sound)
+    {
+        try
+        {
+            audioSource.PlayOneShot(uiClickSound[(int)sound]);
         }
         catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
     }

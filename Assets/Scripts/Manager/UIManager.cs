@@ -34,6 +34,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI expText;
     [SerializeField] Slider expSlider;
 
+    [Header("===Sound===")]
+    [SerializeField] private AudioSource audioSource;
+
     private GameObject currentActivePanel; // 현재 활성화된 패널 (로비 제외)
 
     private void Awake()
@@ -42,28 +45,38 @@ public class UIManager : MonoBehaviour
         currentActivePanel = null;
 
         // 프로필버튼 이벤트 
-        profileButton.onClick.AddListener(ProfilePanel);
+        profileButton.onClick.AddListener( () => {
+            ProfilePanel();
+            UiSoundPlay();
+        });
 
         // 로비 버튼 이벤트 
         lobbyButton.onClick.AddListener(() => {
             OnOffPanel(null);
             UpdateSelectedIcon(1); // 로비 버튼에 해당하는 아이콘(1번째)
+            UiSoundPlay();
         });
 
         // 인벤토리 버튼 이벤트
         inventoryButton.onClick.AddListener(() => {
             OnOffPanel(inventoryPanel);
             UpdateSelectedIcon(2); // 인벤토리 버튼에 해당하는 아이콘(2번째)
+            UiSoundPlay();
         });
 
         // 상점 버튼 이벤트
         storeButton.onClick.AddListener(() => {
             OnOffPanel(storePanel);
             UpdateSelectedIcon(0); // 상점 버튼에 해당하는 아이콘(0번째)
+            UiSoundPlay();
         });
 
         // 세팅버튼 
-        settingButton.onClick.AddListener(() => OnOffPanel(settingPanel));
+        settingButton.onClick.AddListener(() => {
+
+            OnOffPanel(settingPanel);
+            UiSoundPlay();
+        });
 
         // 게임시작 버튼 이벤트 => 던전 씬 load
         gameStartButton.onClick.AddListener( ()=> SceneManager.Instance.ChangeDungeonScene() );
@@ -84,10 +97,15 @@ public class UIManager : MonoBehaviour
         UpdateExpUI();
     }
 
+    private void UiSoundPlay() 
+    {
+        SoundManager.Instance.PlaySounds(audioSource, UISound.Click);
+    }
+
     // 현재 panel을 Off, 들어온패널 On
     private void OnOffPanel(GameObject newPanel) 
     {
-        Debug.Log("패널 전환: " + (newPanel != null ? newPanel.name : "로비만"));
+        // Debug.Log("패널 전환: " + (newPanel != null ? newPanel.name : "로비만"));
 
         // 이전에 활성화된 패널이 있고, 새 패널과 다르면 끄기
         if (currentActivePanel != null && currentActivePanel != newPanel)
