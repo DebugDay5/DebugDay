@@ -43,7 +43,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
         if (enemyHPBarPrefab != null)
         {
-            GameObject hpBarObj = Instantiate(enemyHPBarPrefab, transform);
+            GameObject hpBarObj = Instantiate(enemyHPBarPrefab);
             enemyHPBar = hpBarObj.GetComponentInChildren<EnemyHPBar>();
             enemyHPBar.Initialize(transform);
         }
@@ -117,6 +117,12 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         else
         {
             transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
+        }
+
+        if (enemyHPBar != null)
+        {
+            Transform hpBarTransform = enemyHPBar.transform;
+            hpBarTransform.localScale = new Vector3(Mathf.Abs(hpBarTransform.localScale.x), hpBarTransform.localScale.y, hpBarTransform.localScale.z);
         }
     }
 }

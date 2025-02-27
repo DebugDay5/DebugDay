@@ -13,7 +13,7 @@ public class Rat : BaseEnemy
     {
         base.Awake();
         hp = 15;
-        speed = 3f;
+        speed = 2.5f;
         damage = 2;
         gold = 2;
     }
