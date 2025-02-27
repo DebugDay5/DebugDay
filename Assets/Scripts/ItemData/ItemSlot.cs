@@ -14,6 +14,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemStats;
     public Button equipButton;
+    public Button unEquipButton;
     public Button enhanceButton;
     public Button closeButton;
 
@@ -35,6 +36,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             itemName = itemInfoPanel.transform.Find("ItemName")?.GetComponent<TextMeshProUGUI>();
             itemStats = itemInfoPanel.transform.Find("ItemStats")?.GetComponent<TextMeshProUGUI>();
             equipButton = itemInfoPanel.transform.Find("EquipButton")?.GetComponent<Button>();
+            unEquipButton = itemInfoPanel.transform.Find("UnequipButton")?.GetComponent<Button>();
             enhanceButton = itemInfoPanel.transform.Find("EnhanceButton")?.GetComponent<Button>();
             closeButton = itemInfoPanel.transform.Find("CloseButton")?.GetComponent<Button>();
 
@@ -122,6 +124,9 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
         itemInfoPanel.SetActive(true);
         itemInfoPanel.transform.SetAsLastSibling();
+
+        equipButton.gameObject.SetActive(true);
+        unEquipButton.gameObject.SetActive(false);
 
         RectTransform infoPanelRect = itemInfoPanel.GetComponent<RectTransform>();
         infoPanelRect.anchoredPosition = Vector2.zero;
@@ -230,6 +235,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             int statCode = stat.Key;
             float statValue = stat.Value;
             gameManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
+            Debug.Log($"½ºÅÈ Áõ°¡: {statCode} + {statValue}");
         }
 
         // ¾ÆÀÌÅÛ ÀåÂø
