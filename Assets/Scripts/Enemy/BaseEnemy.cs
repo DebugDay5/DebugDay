@@ -100,6 +100,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
     protected void Die()
     {
+        DungeonManager.Instance.OnEnemyDead();
         animationHandler.Die();
         EnemyManager.Instance?.RemoveEnemy(this);
         Destroy(gameObject);
