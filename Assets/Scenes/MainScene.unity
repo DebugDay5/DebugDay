@@ -4130,6 +4130,10 @@ MonoBehaviour:
   storePanel: {fileID: 752591508}
   inventoryPanel: {fileID: 2004883418}
   lobbyPanel: {fileID: 978120065}
+  selectedIcon:
+  - {fileID: 418644113}
+  - {fileID: 6493610572984441838}
+  - {fileID: 2996250746006657606}
   profileButton: {fileID: 9173751422963519106}
   lobbyButton: {fileID: 3580106296305467904}
   inventoryButton: {fileID: 6187207787905358669}
