@@ -24,13 +24,16 @@ public class UIManager : MonoBehaviour
     [Header("===Text===")]
     [SerializeField] private TextMeshProUGUI goldText;
 
+    [Header("===Profile Panel===")]
+    [SerializeField] TextMeshProUGUI[] stateText;
+
     private void Awake()
     {
         // 현재 panel을 lobby로
         nowOnPanel = lobbyPanel;
 
         // 프로필버튼 이벤트 
-        profileButton.onClick.AddListener(() => OnOffPanel(profilePanel)) ;
+        profileButton.onClick.AddListener(ProfilePanel);
         // 로비 버튼 이벤트 
         lobbyButton.onClick.AddListener(()=> OnOffPanel(lobbyPanel)) ;
         // 인벤토리 버튼 이벤트
@@ -44,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        //goldText.text = PlayerManager.Instance.Gold.ToString();
+        UpdateGoldText();
     }
 
     // 현재 panel을 Off, 들어온패널 On
@@ -64,6 +67,23 @@ public class UIManager : MonoBehaviour
         nowOnPanel = panel;
 
         nowOnPanel.SetActive(true);
+    }
+
+    private void ProfilePanel() 
+    {
+        Debug.Log( "프로필 버튼클릭 ");
+
+        for (int i = 1; i < GameManager.Instance.playerStat.Length; i++) 
+        {
+            stateText[i - 1].text = GameManager.Instance.playerStat[i].ToString();
+        }
+
+        OnOffPanel(profilePanel);
+    }
+
+    public void UpdateGoldText() 
+    {
+        goldText.text = GameManager.Instance.Gold.ToString();
     }
 
 }
