@@ -92,7 +92,6 @@ public class StoreUI : MonoBehaviour
         }
 
         ReducePlayerGold(cost);
-        UpdateGoldUI();
 
         List<Item> obtainedItems = new List<Item>();
         for (int i = 0; i < count; i++)
@@ -135,6 +134,7 @@ public class StoreUI : MonoBehaviour
 
     private void ReducePlayerGold(int amount)
     {
-        typeof(GameManager).GetProperty("Gold")?.SetValue(GameManager.Instance, PlayerGold - amount);   // reflection
+        GameManager.Instance.UpdateGold(-amount); // 골드 차감
+        UpdateGoldUI(); // UI 업데이트
     }
 }
