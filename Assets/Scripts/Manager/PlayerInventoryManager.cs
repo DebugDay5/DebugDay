@@ -116,6 +116,7 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
     {
         if (!File.Exists(equippedItemsPath))
         {
+            Debug.Log("장착한 아이템 데이터가 없습니다.");
             CreateDefaultEquippedFile();
             return;
         }
@@ -131,8 +132,33 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
             {
                 equippedItems[kvp.Key] = item;
                 Debug.Log($"불러온 장착 아이템: {item.name} (슬롯: {kvp.Key})");
+
+                EquipSlot equipSlot = FindEquipSlot(kvp.Key);
+                if (equipSlot != null)
+                {
+                    equipSlot.UpdateSlot(item);
+                    Debug.Log($"EquipSlot에 아이템 적용 : {item.name}");
+                }
+                else
+                    Debug.LogError($"EquipSlot를 찾을 수 없음 : {kvp.Key}");
+            }
+            else
+            {
+                Debug.LogError($"장착한 아이템을 찾을 수 없음! itemId: {kvp.Value}");
             }
         }
+    }
+    private EquipSlot FindEquipSlot(string itemType)
+    {
+        EquipSlot[] equipSlots = FindObjectsOfType<EquipSlot>();
+        foreach (var slot in equipSlots)
+        {
+            if (slot.itemType.Equals(itemType, System.StringComparison.OrdinalIgnoreCase))
+            {
+                return slot;
+            }
+        }
+        return null;
     }
 
     private void CreateDefaultInventoryFile()

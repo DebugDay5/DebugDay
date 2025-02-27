@@ -10,12 +10,12 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
     public Image itemIcon;
     public GameObject itemInfoPanel; // 아이템 정보 패널 (UI)
-    public GameObject closePanel;
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemStats;
-    public Button unequipButton;
+    public Button unEquipButton;
     public Button equipButton;
     public Button enhanceButton;
+    public Button closeButton;
 
     private Item equippedItem;  // 현재 장착된 아이템
 
@@ -29,16 +29,16 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
     public void UpdateSlot(Item newItem)
     {
+        if (newItem == null)
+        {
+            Debug.LogError("UpdateSlot()에서 newItem이 NULL입니다!");
+            return;
+        }
+
         equippedItem = newItem;
-        if (equippedItem != null)
-        {
-            itemIcon.sprite = equippedItem.icon;
-            itemIcon.enabled = true;
-        }
-        else
-        {
-            itemIcon.enabled = false;
-        }
+        itemIcon.sprite = newItem.icon;
+        itemIcon.enabled = true;
+        Debug.Log($"EquipSlot 업데이트 완료: {newItem.name}");
     }
 
     public void OnClick()
@@ -50,24 +50,24 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
         else
         {
             itemInfoPanel.SetActive(true);
-            closePanel.SetActive(true);
 
             itemName.text = equippedItem.name;
             itemStats.text = GetStatInfo();
 
             equipButton.gameObject.SetActive(false);
-            unequipButton.gameObject.SetActive(true);
-            unequipButton.onClick.RemoveAllListeners();
+            unEquipButton.gameObject.SetActive(true);
+            unEquipButton.onClick.RemoveAllListeners();
             enhanceButton.onClick.RemoveAllListeners();
-            unequipButton.onClick.AddListener(UnequipItem);
+            closeButton.onClick.RemoveAllListeners();
+            unEquipButton.onClick.AddListener(UnequipItem);
             enhanceButton.onClick.AddListener(EnhanceItem);
+            closeButton.onClick.AddListener(CloseItemInfoPanel);
         }
     }
 
     public void CloseItemInfoPanel()
     {
         itemInfoPanel.SetActive(false);
-        closePanel.SetActive(false);
     }
 
     private string GetStatInfo()
@@ -100,6 +100,23 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
         inventoryManager.AddItem(equippedItem); // 장착 해제한 아이템은 인벤토리로 이동
         inventoryManager.UnequipItem(itemType);
+
+        InventoryUI inventoryUI = FindObjectOfType<InventoryUI>();
+        if (inventoryUI == null)
+        {
+            Debug.LogError("InventoryUI를 찾을 수 없음 - InventoryUI를 강제로 찾음");
+            inventoryUI = GameObject.Find("InventoryPanel")?.GetComponent<InventoryUI>();
+        }
+
+        if (inventoryUI != null)
+        {
+            inventoryUI.RefreshInventory(inventoryManager.GetOwnedItems());
+            Debug.Log("인벤토리 UI 갱신됨.");
+        }
+        else
+        {
+            Debug.LogError("InventoryUI 찾기 실패 - UI 갱신 불가능.");
+        }
 
         equippedItem = null;
         itemIcon.enabled = false;
