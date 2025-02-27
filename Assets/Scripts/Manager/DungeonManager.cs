@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -92,15 +93,12 @@ public class DungeonManager : MonoBehaviour
 
         if (player == null || !player.gameObject.activeInHierarchy)
         {
-            Debug.Log("플레이어 죽으면 ui 실행");
-            isGameOver = true;
-            ShowWinLoseUI(false);
-        }
-
-        if (isGameOver)
-        {
-            Debug.Log("플레이어 사망 - ui 작동");
-            ShowWinLoseUI(false);
+            if (!isGameOver)  // UI 중복 실행 방지
+            {
+                Debug.Log("플레이어 사망 - UI 실행");
+                isGameOver = true;
+                ShowWinLoseUI(false);
+            }
         }
     }
 
@@ -136,6 +134,12 @@ public class DungeonManager : MonoBehaviour
                 break;
         }
 
+        currentGate = currentDungeon.GetComponentInChildren<GateCollider>();
+        if (currentGate == null)
+        {
+            Debug.LogWarning("새로운 던전에 GateCollider가 없음");
+        }
+
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         isClearChecked = false;
     }
@@ -168,7 +172,15 @@ public class DungeonManager : MonoBehaviour
     private void OnDungeonClear()
     {
         Debug.Log("Dungeon Cleared!");
-        currentGate.OpenGate();  // 던전 클리어 후 게이트를 연다
+
+        if (currentGate != null)
+        {
+            currentGate.OpenGate();  // 던전 클리어 후 게이트를 연다
+        }
+        else
+        {
+            Debug.LogWarning("currentGate가 존재하지 않음. 이미 삭제되었을 가능성 있음.");
+        }
         
         passedNum++;  // 통과한 횟수 증가
         StageChecker(); 
@@ -210,7 +222,17 @@ public class DungeonManager : MonoBehaviour
 
     public void OnHomeButtonPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+        Time.timeScale = 1f; // 혹시 게임이 멈춰 있다면 다시 정상 속도로 변경
+        StartCoroutine(LoadMainScene());
+    }
+
+    private IEnumerator LoadMainScene()
+    {
+        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // 로딩이 완료될 때까지 대기
+        }
     }
 
     public void StageChecker()
@@ -223,7 +245,7 @@ public class DungeonManager : MonoBehaviour
         {
             currentStage = 2; 
         }
-        else if (currentStage == 2  && !CompareTag("Monster"))  // 보스 스테이지 클리어 체크
+        else if (currentStage == 2)  // 보스 스테이지 클리어 체크
         {
             currentStage = 3;  // 보스 스테이지 클리어 후 다른 화면으로 이동
         }
