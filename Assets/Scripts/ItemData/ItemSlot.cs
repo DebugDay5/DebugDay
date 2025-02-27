@@ -230,6 +230,7 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
             int statCode = stat.Key;
             float statValue = stat.Value;
             gameManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
+            Debug.Log($"스탯 증가: {statCode} + {statValue}");
         }
 
         // 아이템 장착

@@ -29,16 +29,16 @@ public class EquipSlot : MonoBehaviour      // 장비 슬롯 관리
 
     public void UpdateSlot(Item newItem)
     {
+        if (newItem == null)
+        {
+            Debug.LogError("UpdateSlot()에서 newItem이 NULL입니다!");
+            return;
+        }
+
         equippedItem = newItem;
-        if (equippedItem != null)
-        {
-            itemIcon.sprite = equippedItem.icon;
-            itemIcon.enabled = true;
-        }
-        else
-        {
-            itemIcon.enabled = false;
-        }
+        itemIcon.sprite = newItem.icon;
+        itemIcon.enabled = true;
+        Debug.Log($"EquipSlot 업데이트 완료: {newItem.name}");
     }
 
     public void OnClick()
