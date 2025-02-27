@@ -104,15 +104,9 @@ public class ItemDismantle : MonoBehaviour  // 아이템 분해
         selectedItems.Clear();
         dismantleButton.interactable = false;
 
-        if (InventoryManager.Instance != null)
-        {
-            InventoryManager.Instance.RefreshInventory();   // 디버그 끝나면 if문 이줄만 남기기
-            Debug.Log("인벤토리 UI 갱신됨.");
-        }
-        else
-        {
-            Debug.LogError("InventoryManager 인스턴스를 찾을 수 없습니다.");
-        }
+        
+        InventoryManager.Instance.RefreshInventory();   // 디버그 끝나면 if문 이줄만 남기기
+        
 
         string materialsLog = "";
         foreach (var mat in obtainedMaterials)
