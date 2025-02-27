@@ -45,7 +45,7 @@ public class SceneManager : MonoBehaviour
 
     public void ChangeDungeonScene() 
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DungeonScene_KHY");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("DungeonScene");
     }
 
 }
