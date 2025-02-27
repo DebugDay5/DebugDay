@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -69,9 +70,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float defense = 0f;
     public float Defense { get { return defense; } }
 
-    [SerializeField] private int gold = 100;
-    public int Gold { get { return gold; } }
-
     private const int maxLv = 20; //최대레벨
     private int level = 1;
     
@@ -96,22 +94,28 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-
+        Init();
     }
 
     private void Init() //스탯 초기화를 해줘야 되는 경우
     {
-        damage = 1f; 
-        maxhp = 100f;
+        if (GameManager.Instance == null)
+        {
+            Debug.Log("GameManager is null at PlayerManager.Init()");
+            return;
+        }
+        float[] stats = GameManager.Instance.playerStat;
+        damage = stats[1]; 
+        maxhp = stats[2];
         hp = maxhp;
-        defense = 0f;
-        critDamage = 1.5f;
-        critRate = 0f;
-        moveSpeed = 5f;
-        attackSpeed = 1f;
-        shotSpeed = 6f;
-        numOfShooting = 1;
-        numOfOneShot = 1;
+        defense = stats[3];
+        critDamage = stats[4];
+        critRate = stats[5];
+        moveSpeed = stats[6];
+        attackSpeed = stats[7];
+        shotSpeed = stats[8];
+        numOfShooting = (int)stats[9];
+        numOfOneShot = (int)stats[10];
 
         level = 1;
         exp = 0;
@@ -151,44 +155,6 @@ public class PlayerManager : MonoBehaviour
         //미구현
     }
 
-    public void UpdateStat(float change, PlayerStat stat) //스탯 증가
-    {
-        int num = (int)stat;
-        switch (num)
-        {
-            case 1:
-                damage += change;
-                break;
-            case 2:
-                MaxHp += change;
-                break;
-            case 3:
-                defense += change;
-                break;
-            case 4:
-                critRate += change;
-                break;
-            case 5:
-                critDamage += change;
-                break;
-            case 6:
-                moveSpeed += change;
-                break;
-            case 7:
-                attackSpeed += change;
-                break;
-            case 8:
-                shotSpeed += change;
-                break;
-            case 9:
-                numOfOneShot += (int)change;
-                break;
-            case 10:
-                numOfShooting += (int)change;
-                break;
-        }
-    }
-
     public void GetExp(int amount)
     {
         if (maxLv == level) return;
@@ -202,10 +168,51 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    public void UpdateStat(float change, PlayerStat stat) //스탯 증가 //일시적 수치 증가용
+    {
+        int num = (int)stat;
+        switch (num)
+        {
+            case 1: //damage
+                damage += change;
+                break;
+            case 2: //MaxHp
+                maxhp += change;
+                hp += change;
+                break;
+            case 3://Defence
+                defense += change;
+                break;
+            case 4://CritRate
+                critRate += change;
+                break;
+            case 5://CritDamage
+                critDamage += change;
+                break;
+            case 6://MoveSpeed
+                moveSpeed += change;
+                break;
+            case 7://AttackSpeed
+                attackSpeed += change;
+                break;
+            case 8://ShotSpeed
+                shotSpeed += change;
+                break;
+            case 9://NumOfOneShot
+                numOfOneShot += (int)change;
+                break;
+            case 10://NumOfShooting
+                numOfShooting += (int)change;
+                break;
+        }
+    }
+
     private void LevelUp()
     {
         exp -= expGuage[level - 1];
         level++;
+
+        hp = maxhp;
 
         /*
          * give additional stat 
