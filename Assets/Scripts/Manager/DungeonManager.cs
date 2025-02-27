@@ -220,20 +220,11 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-    public void OnHomeButtonPressed()
+    public void pushHomeBtn()
     {
-        Time.timeScale = 1f; // 혹시 게임이 멈춰 있다면 다시 정상 속도로 변경
-        StartCoroutine(LoadMainScene());
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
-    private IEnumerator LoadMainScene()
-    {
-        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene");
-        while (!asyncLoad.isDone)
-        {
-            yield return null; // 로딩이 완료될 때까지 대기
-        }
-    }
 
     public void StageChecker()
     {
