@@ -232,7 +232,7 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
 
         foreach (var stat in itemData.stats)
         {
-            statManager.UpdateStat(stat.Value, (PlayerManager.PlayerStat)stat.key)
+            //statManager.UpdateStat(stat.Value, (PlayerManager.PlayerStat)stat.key);
         }
 
         // 장착한 아이템 인벤토리에서 제거

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,13 +19,16 @@ public class GameManager : MonoBehaviour
 
     private const int maxLv = 20; //최대레벨
     private int level = 1;
-
     private int exp = 0;
+
 
     private int[] expGuage = new int[maxLv] {
         10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
         110, 120, 130, 140, 150, 160, 170, 180, 190, 200
     }; //레벨 업 경험치 통
+    public int Level { get => level; }
+    public int Exp { get => exp; }
+    public int LevelPerMaxExp(int le) { return expGuage[le]; }
 
     private void Awake()
     {

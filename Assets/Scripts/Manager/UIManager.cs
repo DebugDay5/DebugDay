@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI statePlayerName;
     [SerializeField] TextMeshProUGUI[] stateText;
 
+    [Header("===EXP===")]
+    [SerializeField] TextMeshProUGUI expText;
+    [SerializeField] Slider expSlider;
+
     private GameObject currentActivePanel; // 현재 활성화된 패널 (로비 제외)
 
     private void Awake()
@@ -70,6 +74,9 @@ public class UIManager : MonoBehaviour
 
         playerNameText.text = GameManager.Instance.playerName;
         statePlayerName.text = GameManager.Instance.playerName;
+
+        // 경험치 ui 초기화
+        UpdateExpUI();
     }
 
     // 현재 panel을 Off, 들어온패널 On
@@ -131,5 +138,12 @@ public class UIManager : MonoBehaviour
         {
             selectedIcon[activeIconIndex].SetActive(true);
         }
+    }
+
+    private void UpdateExpUI() 
+    {
+        int level = GameManager.Instance.Level; ;
+        expText.text = level.ToString();
+        expSlider.value = GameManager.Instance.Exp / GameManager.Instance.LevelPerMaxExp(level) ;
     }
 }
