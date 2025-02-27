@@ -8,8 +8,6 @@ public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager Instance { get; private set; }
 
-    public List<BaseEnemy> enemies = new List<BaseEnemy>();  // 모든 적 리스트
-
     public GameObject startDungeon;
     public List<GameObject> normalDungeon;  // 노멀맵 프리팹 리스트
     public List<GameObject> hardDungeon;  // 하드맵 프리팹 리스트
@@ -24,7 +22,6 @@ public class DungeonManager : MonoBehaviour
     public Transform player;  // 플레이어 사망 여부 체크
     public DungeonSO currentDungeonData;  // 현재 던전 데이터. ScriptableObject를 불러와 사용
     public Animator canvasAnim; //페이드인 아웃 기능
-    public GateCollider currentGate;
 
     private HashSet<int> usedNormalIndices = new HashSet<int>(); // 한 번 등장한 맵의 인덱스 저장
     private HashSet<int> usedHardIndices = new HashSet<int>();
@@ -41,26 +38,12 @@ public class DungeonManager : MonoBehaviour
     [SerializeField]
     public bool isBossDungeonCleared = false;   // 보스 던전 클리어 여부
     private bool isGameOver = false;
-    
+
+    public GateCollider currentGate;  // 문 콜리더
+    private int remainingEnemies;
 
     public void Awake()
     {
-        Debug.Log("Awake() 실행됨");  // 실행 자체가 되는지 확인
-
-        // postProcessVolume 자동 할당
-        if (postProcessVolume == null)
-        {
-            postProcessVolume = FindObjectOfType<PostProcessVolume>();
-            if (postProcessVolume == null)
-            {
-                Debug.LogError("postProcessVolume을 찾을 수 없음! 씬에 PostProcessVolume이 있는지 확인하라.");
-            }
-            else
-            {
-                Debug.Log("postProcessVolume 자동 할당 완료!");
-            }
-        }
-
         if (Instance == null)
         {
             Instance = this;
@@ -75,23 +58,11 @@ public class DungeonManager : MonoBehaviour
         currentStage = 0;  // 현재 스테이지 번호 초기화
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버를 초기화
 
-        if (postProcessVolume.profile == null)
-        {
-            Debug.LogError("postProcessVolume.profile이 null임! 프로파일을 설정했는지 확인하라.");
-        }
-        else
-        {
-            postProcessVolume.profile.TryGetSettings(out colorGrading);
-            if (colorGrading == null)
-            {
-                Debug.LogError("ColorGrading이 PostProcessProfile에 추가되지 않음.");
-            }
-            else
-            {
-                colorGrading.postExposure.value = 0f;  // 배경색상 초기화
-                colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
-            }
-        }
+        remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
+
+        postProcessVolume.profile.TryGetSettings(out colorGrading);
+        colorGrading.postExposure.value = 0f;  // 배경색상 초기화
+        colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
 
         winLosePanel.SetActive(false); // 승패 화면을 숨김
         winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
@@ -105,10 +76,9 @@ public class DungeonManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isDungeonCleared)  // 던전 클리어 여부 체크
-            // isDungeonCleared가 몬스터를 잡았을 때 true가 되는지?
+        if (remainingEnemies <= 0)  // 남아있는 몬스터 수가 0이면 문을 열도록
         {
-            CheckDungeonClear();
+            OnDungeonClear(); ;  // 문 열기
         }
 
         if (player == null || !player.gameObject.activeInHierarchy)
@@ -125,25 +95,8 @@ public class DungeonManager : MonoBehaviour
         }
     }
 
-    public void AddEnemy(BaseEnemy enemy) 
-    {
-        if (!enemies.Contains(enemy))
-        {
-            enemies.Add(enemy);
-        }
-    }
-
-    public void RemoveEnemy(BaseEnemy enemy)
-    {
-        if (enemies.Contains(enemy))
-        {
-            enemies.Remove(enemy);
-        }
-    }
-
     public void LoadCurrentDungeon()   // 현재 스테이지에 따라 맵을 로드하는 매서드
     {
-
         if(currentDungeon != null)  
         {
             Destroy(currentDungeon);
@@ -193,15 +146,6 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-    public void CheckDungeonClear()
-    {
-        if (enemies.Count == 0 && !isDungeonCleared)  // 모든 적이 처치되었을 때 던전 클리어
-        {
-            isDungeonCleared = true;
-            OnDungeonClear();
-        }
-    }
-
     private void OnDungeonClear()
     {
         Debug.Log("Dungeon Cleared!");
@@ -240,14 +184,7 @@ public class DungeonManager : MonoBehaviour
             Debug.LogError("WinLoseUIPanel 연결 안 됨. Inspector 확인");
         }
 
-        if (isBossDungeonCleared)   // 보스 던전 클리어 여부 체크
-        {
-            winLoseText.text = "You Win! 용사는(은) 던전을 정복했다!";
-        }
-        else  // 기본적으로는 isWin값에 따라 텍스트 표시
-        {
-            winLoseText.text = isWin ? "You Win! 용사는(은) 던전을 정복했다!" : "You Lose! 죽음은 새로운 기회. 부활하시겠습니까?";
-        }
+        winLoseText.text = isWin ? "You Win! 용사는(은) 던전을 정복했다!" : "You Lose! 죽음은 새로운 기회. 부활하시겠습니까?";
 
     }
 
