@@ -56,7 +56,7 @@ MonoBehaviour:
   gold: 2
   enemyHPBarPrefab: {fileID: 390627517609146257, guid: 94b47abbc8d9241beb142e6fc579c888,
     type: 3}
-  attackRange: 0.4
+  attackRange: 1
   attackCooldown: 1
 --- !u!114 &5448418343911914311
 MonoBehaviour:

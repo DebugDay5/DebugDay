@@ -78,8 +78,12 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     public virtual void TakeDamage(float damage)
     {
         HP -= PlayerManager.Instance.Damage;
-        animationHandler.Hit(true);
-        StartCoroutine(HitMotion(0.6f));
+
+        if (animationHandler != null)
+        {
+            animationHandler.Hit(true);
+            StartCoroutine(HitMotion(0.6f));
+        }
 
         if (enemyHPBar != null)
         {
@@ -88,7 +92,8 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
         if (HP <= 0)
         {
-            Die();
+            StartCoroutine(Die());
+            return;
         }
     }
 
@@ -98,10 +103,21 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         animationHandler.Hit(false); // 애니메이션 중지
     }
 
-    protected void Die()
+    private IEnumerator Die()
     {
-        animationHandler.Die();
+        DungeonManager.Instance.OnEnemyDead();
+
+        if (animationHandler != null)
+        {
+            animationHandler.Die(true);
+        }
+        
+        yield return new WaitForSeconds(1f);
+
+        StopAllCoroutines();
+
         EnemyManager.Instance?.RemoveEnemy(this);
+        animationHandler.Die(false);
         Destroy(gameObject);
     }
 

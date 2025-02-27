@@ -5,23 +5,14 @@ using UnityEngine;
 
 public class GateCollider : MonoBehaviour
 {
-    //public static GateCollider Instance {  get; private set; }
     [SerializeField]
     private Animator animator;
     public bool isStartMap = false;
     private Collider2D coll;
 
+
     private void Start()
     {
-        //if (Instance == null)
-        //{
-        //    Instance = this;
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
-
         DungeonManager.Instance.currentGate = this;
         coll = GetComponent<Collider2D>();
         coll.enabled = false;
@@ -30,27 +21,17 @@ public class GateCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if(other.CompareTag("Player"))
         {
-            if (!isStartMap)
+            if (DungeonManager.Instance != null && DungeonManager.Instance.passedNum > 0)
             {
-                if (DungeonManager.Instance != null && DungeonManager.Instance.passedNum > 0)
-                {
-                    PlayStageTransition(); // 애니메이션 실행 후 다음 스테이지로 이동
-                }
-                else
-                {
-                    Debug.LogError("DungeonManager 인스턴스가 존재하지 않거나 던전 미클리어");
-                }
+                PlayStageTransition(); // 애니메이션 실행 후 다음 스테이지로 이동
             }
             else
             {
-                if (DungeonManager.Instance != null && DungeonManager.Instance.passedNum > 0)
-                {
-                    PlayStageTransition(); // 애니메이션 실행 후 다음 스테이지로 이동
-                }
+            Debug.LogError("DungeonManager 인스턴스가 존재하지 않거나 던전 미클리어");
             }
+
         }
     }
 

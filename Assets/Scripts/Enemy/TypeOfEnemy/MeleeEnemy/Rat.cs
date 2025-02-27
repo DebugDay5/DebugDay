@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rat : BaseEnemy
 {
-    [SerializeField] private float attackRange = 0.4f; // 공격 범위
+    [SerializeField] private float attackRange = 1f; // 공격 범위
     [SerializeField] private float attackCooldown = 1.0f; // 공격 속도
     private float lastAttackTime; // 공격 시간
     private bool isAttacking = true;

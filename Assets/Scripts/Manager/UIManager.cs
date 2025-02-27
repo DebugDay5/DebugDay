@@ -112,21 +112,25 @@ public class UIManager : MonoBehaviour
 
     private void ProfilePanel() 
     {
+        
         for (int i = 1; i < GameManager.Instance.playerStat.Length; i++) 
         {
             stateText[i - 1].text = GameManager.Instance.playerStat[i].ToString();
         }
+        
 
         OnOffPanel(profilePanel);
     }
 
     public void UpdateGoldText() 
     {
+        
         goldText.text = GameManager.Instance.Gold.ToString();
     }
 
     private void UpdateSelectedIcon(int activeIconIndex)
     {
+        
         // 모든 아이콘 비활성화
         for (int i = 0; i < selectedIcon.Length; i++)
         {
@@ -142,8 +146,10 @@ public class UIManager : MonoBehaviour
 
     private void UpdateExpUI() 
     {
+        
         int level = GameManager.Instance.Level; ;
         expText.text = level.ToString();
         expSlider.value = GameManager.Instance.Exp / GameManager.Instance.LevelPerMaxExp(level) ;
+        
     }
 }
