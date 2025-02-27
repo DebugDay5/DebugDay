@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public string playerName;
 
     [Header("===GOld===")]
-    private int gold = 100;
+    private int gold = 100000;
     public int Gold { get { return gold; } }
 
     private const int maxLv = 20; //최대레벨

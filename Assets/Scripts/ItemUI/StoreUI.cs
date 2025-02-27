@@ -18,13 +18,20 @@ public class StoreUI : MonoBehaviour
     [Header("Gacha Panel")]
     public GameObject highGachaPanel;
     public GameObject lowGachaPanel;
-    public Image highGachaImage;
-    public Image lowGachaImage;
+
+    [Header("Gacha Result Panel")]
+    public GameObject gachaResultPanel;          // 가챠 결과 전체 패널 (비활성화 상태)
+    public Transform resultItemContainer;          // GridLayoutGroup이 적용된 컨테이너
+    public GameObject gachaItemPrefab;             // GachaItem 프리팹 (아이콘 + 이름)
+    public Button retryButton;                     // "한 번 더" 버튼
+    public Button closeResultButton;               // 결과창 닫기 버튼
 
     private ItemManager itemManager;
     private PlayerInventoryManager inventoryManager;
 
     private int PlayerGold => GameManager.Instance.Gold;
+    private string lastGachaType = "";
+
 
     private void Awake()
     {
@@ -38,21 +45,11 @@ public class StoreUI : MonoBehaviour
         Debug.Log("StoreUI.cs의 Awake() 실행됨");
     }
 
-    private IEnumerator WaitForPlayerManager()
-    {
-        while (GameManager.Instance == null)
-        {
-            Debug.LogWarning("GameManager를 찾을 수 없음. 대기 중...");
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        Debug.Log("GameManager 발견됨!");
-        UpdateGoldUI();
-    }
+    
 
     private void Start()
     {
-        WaitForPlayerManager();
+        UpdateGoldUI();
 
         itemManager = ItemManager.Instance;
         inventoryManager = PlayerInventoryManager.Instance;
@@ -68,6 +65,9 @@ public class StoreUI : MonoBehaviour
         highGachaTenPull.onClick.AddListener(() => PullItem("high", 10));
         lowGachaOnePull.onClick.AddListener(() => PullItem("low", 1));
         lowGachaTenPull.onClick.AddListener(() => PullItem("low", 10));
+
+        retryButton.onClick.AddListener(() => PullItem(lastGachaType, 10));
+        closeResultButton.onClick.AddListener(CloseGachaResult);
     }
 
     private void UpdateGoldUI()
@@ -91,20 +91,21 @@ public class StoreUI : MonoBehaviour
             return;
         }
 
+        lastGachaType = gachaType;
         ReducePlayerGold(cost);
 
         List<Item> obtainedItems = new List<Item>();
         for (int i = 0; i < count; i++)
         {
-            Item item = GetRandomItem(gachaType, itemManager);
+            Item item = GetRandomItem(gachaType);
             obtainedItems.Add(item);
             PlayerInventoryManager.Instance.AddItem(item);
         }
 
-        DisplayPulledItem(gachaType, obtainedItems[0]);
+        ShowGachaResult(obtainedItems);
     }
 
-    private Item GetRandomItem(string gachatype, ItemManager itemManager)
+    private Item GetRandomItem(string gachatype)
     {
         float rand = Random.value * 100;
 
@@ -122,14 +123,43 @@ public class StoreUI : MonoBehaviour
         }
     }
 
-    private void DisplayPulledItem(string gachaType, Item item)
+    private void ShowGachaResult(List<Item> items)
     {
-        if (gachaType == "high")
-            highGachaImage.sprite = item.icon;
-        else
-            lowGachaImage.sprite = item.icon;
+        // 결과창 UI 초기화
+        foreach (Transform child in resultItemContainer)
+        {
+            Destroy(child.gameObject);
+        }
 
-        Debug.Log($"획득한 아이템 : {item.name} ({item.rarity})");
+        // 아이템 표시 (아이템 아이콘과 이름)
+        foreach (Item item in items)
+        {
+            GameObject slot = Instantiate(gachaItemPrefab, resultItemContainer);
+            // GachaItem 프리팹에서 "ItemIcon"과 "ItemName" 오브젝트가 있어야 함.
+            Image iconImage = slot.transform.Find("ItemIcon")?.GetComponent<Image>();
+            TextMeshProUGUI nameText = slot.transform.Find("ItemName")?.GetComponent<TextMeshProUGUI>();
+
+            if (iconImage != null) iconImage.sprite = item.icon;
+            if (nameText != null) nameText.text = item.name;
+        }
+
+        // 1pull인 경우 중앙 배치, 10pull인 경우 한 줄에 5개씩 2줄 표시
+        GridLayoutGroup grid = resultItemContainer.GetComponent<GridLayoutGroup>();
+        if (items.Count == 1)
+        {
+            grid.constraintCount = 1;
+        }
+        else
+        {
+            grid.constraintCount = 5;
+        }
+
+        gachaResultPanel.SetActive(true);
+    }
+
+    private void CloseGachaResult()
+    {
+        gachaResultPanel.SetActive(false);
     }
 
     private void ReducePlayerGold(int amount)
