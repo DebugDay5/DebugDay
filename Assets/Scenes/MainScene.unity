@@ -3790,7 +3790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1002f63e2ef74fc4585fb345c3b29974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldText: {fileID: 0}
+  goldText: {fileID: 304244526033052674}
   highGachaOnePull: {fileID: 786127636}
   highGachaTenPull: {fileID: 1087168058}
   lowGachaOnePull: {fileID: 2106683717}
@@ -7180,6 +7180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2000814017}
+  - component: {fileID: 2000814018}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7202,6 +7203,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1315091929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000814018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000814016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e61eeb34550842778b635102a278eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStat:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!1 &2004883418
 GameObject:
   m_ObjectHideFlags: 0
