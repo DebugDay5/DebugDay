@@ -31,9 +31,9 @@ public class AnimationHandler : MonoBehaviour
         animator.SetBool(IsHit, isHit);
     }
 
-    public void Die()
+    public void Die(bool isDie)
     {
-        animator.SetBool(IsDie, true);
+        animator.SetBool(IsDie, isDie);
     }
 
     public float GetAnimationLength(string animationName)
