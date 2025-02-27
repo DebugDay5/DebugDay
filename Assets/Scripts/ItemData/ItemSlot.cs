@@ -87,6 +87,12 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     public void OnClick()   // ÀÎº¥Åä¸®ÀÇ ¾ÆÀÌÅÛ ½½·Ô Å¬¸¯ ½Ã ¾ÆÀÌÅÛ Á¤º¸Ã¢ÀÌ ³ª¿À°í °­È­, ÀåÂøÀ» ¼±ÅÃ
     {
+        if (ItemDismantle.Instance.IsDismantling)  // ºÐÇØ ¸ðµåÀÎÁö È®ÀÎ
+        {
+            ItemDismantle.Instance.ToggleItemSelection(itemData, this);
+            return;  // ItemInfoPanelÀ» ¶ç¿ìÁö ¾Ê°í ¸®ÅÏ
+        }
+
         if (itemData == null)
         {
             Debug.LogError("OnClick()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù. Setup()ÀÌ Á¤»óÀûÀ¸·Î ½ÇÇàµÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
@@ -199,7 +205,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {(itemData != null ? itemData.name : "NULL")}");     // ¿©±â¼­ NULLÀÌ¾úÀ½ ÀÌ ÀÌÀü½ÃÁ¡¿¡ NULLÀÎÁö È®ÀÎÇÊ¿ä
         if (itemData == null)
         {
-            Debug.LogError("EquipItem()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù OnClick() ½ÇÇà ÈÄ itemData°¡ ÃÊ±âÈ­µÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
+            Debug.Log("EquipItem()¿¡¼­ itemData°¡ NULLÀÔ´Ï´Ù OnClick() ½ÇÇà ÈÄ itemData°¡ ÃÊ±âÈ­µÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
             return;
         }
 
@@ -304,5 +310,15 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
         }
         Debug.LogError($"{itemType} ÀåÂø ½½·ÔÀ» Ã£´Âµ¥ ½ÇÆÐÇÔ");
         return null;
+    }
+
+    public void Select()
+    {
+        GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f); // ¼±ÅÃ ½Ã ¹ÝÅõ¸íÇÏ°Ô
+    }
+
+    public void Deselect()
+    {
+        GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f); // ¿ø·¡´ë·Î º¹±Í
     }
 }
