@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject storePanel;     // 상점 패널
     [SerializeField] private GameObject inventoryPanel; // 인벤토리 패널
     [SerializeField] private GameObject lobbyPanel;     // 로비 패널
-    [SerializeField] private GameObject nowOnPanel;     // 현재 켜져있는 panel
 
     [Header("===Button===")]
     [SerializeField] private Button profileButton;      // 프로필 버튼
@@ -27,10 +26,13 @@ public class UIManager : MonoBehaviour
     [Header("===Profile Panel===")]
     [SerializeField] TextMeshProUGUI[] stateText;
 
+    private Stack<GameObject> PanelStack;
+
     private void Awake()
     {
         // 현재 panel을 lobby로
-        nowOnPanel = lobbyPanel;
+        PanelStack = new Stack<GameObject>();
+        PanelStack.Push(lobbyPanel);
 
         // 프로필버튼 이벤트 
         profileButton.onClick.AddListener(ProfilePanel);
@@ -55,24 +57,20 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log( panel.name + "버튼클릭 ");
 
-        if (nowOnPanel == panel)
+        if (PanelStack.Peek().name == panel.name
+            && panel.name != lobbyPanel.name)  
         {
-            nowOnPanel.SetActive(false);
+            GameObject temp = PanelStack.Pop();
+            temp.SetActive(false);
+            return;
         }
 
-        // 현재 panel 끄기
-        if(panel.name == "LobbyPanel")
-            nowOnPanel.SetActive(false);
-
-        nowOnPanel = panel;
-
-        nowOnPanel.SetActive(true);
+        PanelStack.Push(panel);
+        panel.SetActive(true);
     }
 
     private void ProfilePanel() 
     {
-        Debug.Log( "프로필 버튼클릭 ");
-
         for (int i = 1; i < GameManager.Instance.playerStat.Length; i++) 
         {
             stateText[i - 1].text = GameManager.Instance.playerStat[i].ToString();
