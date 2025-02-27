@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject storePanel;     // 상점 패널
     [SerializeField] private GameObject inventoryPanel; // 인벤토리 패널
     [SerializeField] private GameObject lobbyPanel;     // 로비 패널
+    [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject[] selectedIcon; // 선택 시 on 되는 아이콘
 
     [Header("===Button===")]
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button inventoryButton;    // 인벤토리 버튼
     [SerializeField] private Button gameStartButton;    // 게임시작 버튼
     [SerializeField] private Button storeButton;        // store button
+    [SerializeField] private Button settingButton;      // 세팅버튼
 
     [Header("===Text===")]
     [SerializeField] private TextMeshProUGUI goldText;
@@ -59,6 +61,9 @@ public class UIManager : MonoBehaviour
             OnOffPanel(storePanel);
             UpdateSelectedIcon(0); // 상점 버튼에 해당하는 아이콘(0번째)
         });
+
+        // 세팅버튼 
+        settingButton.onClick.AddListener(() => OnOffPanel(settingPanel));
 
         // 게임시작 버튼 이벤트 => 던전 씬 load
         gameStartButton.onClick.AddListener( ()=> SceneManager.Instance.ChangeDungeonScene() );
