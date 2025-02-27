@@ -19,7 +19,7 @@ public class RangeEnemy : BaseEnemy
         gold = 5;
     }
     
-    private void Update()
+    protected override void Update()
     {
         if (!IsPlayerAvailable()) return;
 

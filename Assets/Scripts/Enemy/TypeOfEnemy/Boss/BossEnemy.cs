@@ -31,7 +31,7 @@ public class BossEnemy : BaseEnemy
         StartCoroutine(BossAttackPattern()); // 보스 공격 패턴
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (!IsPlayerAvailable()) return;
         

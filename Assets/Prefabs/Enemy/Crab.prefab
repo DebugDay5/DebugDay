@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 441012007587277533}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.005, y: 0.156, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
   player: {fileID: 0}
-  hp: 50
+  hp: 20
   speed: 2
   damage: 5
   gold: 5
@@ -248,11 +248,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.123915404, y: 0.047976732}
-      - {x: -0.10886589, y: 0.014159083}
-      - {x: -0.30995744, y: -0.108302206}
-      - {x: -0.3337648, y: -0.34331298}
-      - {x: -0.04726556, y: -0.37960142}
-      - {x: 0.1671403, y: -0.36979985}
-      - {x: 0.26157263, y: -0.08410972}
+    - - {x: 0.11800483, y: 0.16914296}
+      - {x: -0.1147764, y: 0.12941444}
+      - {x: -0.2922258, y: 0.0010427535}
+      - {x: -0.30125684, y: -0.17190695}
+      - {x: -0.056131393, y: -0.2259273}
+      - {x: 0.11985594, y: -0.19839382}
+      - {x: 0.24975148, y: 0.0075038075}
   m_UseDelaunayMesh: 0
