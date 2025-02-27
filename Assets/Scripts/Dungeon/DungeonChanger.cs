@@ -10,6 +10,8 @@ public class DungeonChanger : MonoBehaviour
     public PlayerController playerController;
     public TestCamera_KHY cameraController;
 
+    public GameObject[] enemys;
+
     public void ChangeDungeon()
     {
         DungeonManager.Instance.SetCurrentMap(dungeonSO);  // 맵 데이터 업데이트
@@ -22,6 +24,8 @@ public class DungeonChanger : MonoBehaviour
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         cameraController = Camera.main.GetComponent<TestCamera_KHY>();
+        PlayerManager.Instance.target = new GameObject[enemys.Length];
+        PlayerManager.Instance.target = enemys;
     }
     private void Start()
     {
