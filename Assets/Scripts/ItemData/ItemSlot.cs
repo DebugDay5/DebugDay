@@ -305,4 +305,14 @@ public class ItemSlot : MonoBehaviour   // 인벤토리 화면 아이템슬롯에 아이템 배�
         Debug.LogError($"{itemType} 장착 슬롯을 찾는데 실패함");
         return null;
     }
+
+    public void Select()
+    {
+        GetComponent<Image>().color = Color.red; // 선택 시 빨간 테두리 효과
+    }
+
+    public void Deselect()
+    {
+        GetComponent<Image>().color = Color.white; // 원래대로 복귀
+    }
 }
