@@ -72,7 +72,6 @@ public class DungeonManager : MonoBehaviour
         homeButton.gameObject.SetActive(false);  // 홈 버튼 숨김
 
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
-        // remainingPlayer = GameObject.FindGameObjectsWithTag("Player").Length;  //  플레이어 찾기
     }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용

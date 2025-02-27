@@ -668,12 +668,12 @@ PrefabInstance:
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
       propertyPath: hp
-      value: 1000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
       propertyPath: maxhp
-      value: 1000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1366589929376258784, guid: 70e85ef98820d704fb167bbc38412297,
         type: 3}
@@ -1205,7 +1205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2036120913}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 582683649}
+        m_TargetAssemblyTypeName: DungeonManager, Assembly-CSharp
+        m_MethodName: pushHomeBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2036120913
 MonoBehaviour:
   m_ObjectHideFlags: 0
