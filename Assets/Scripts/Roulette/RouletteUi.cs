@@ -19,7 +19,7 @@ public class RouletteUi : MonoBehaviour
             try
             {
                 cardName[i].text = abli[i].AbilityName;
-                //cardIcon[i].sprite = abli[i].Abilityicon;
+                cardIcon[i].sprite = abli[i].Abilityicon;
                 cardDesc[i].text = abli[i].AbilityDescription;
             }
             catch (Exception e) { Debug.Log(e); }

@@ -23,7 +23,7 @@ public class Ability
     public string AbilityDescription { get => abilityDescription; set => abilityDescription = value; }
     public Sprite Abilityicon { get => abilityicon; set => abilityicon = value; }
 
-    public Ability(string n, string d, Action ac , Action ac2 = null , Action ac3 = null) 
+    public Ability(string n, string d, Sprite sprite, Action ac , Action ac2 = null , Action ac3 = null ) 
     {
         this.abilityName = n;
         this.abilityDescription = d;
@@ -32,6 +32,8 @@ public class Ability
         this.abilityEffect += ac;
         this.abilityEffect += ac2;
         this.abilityEffect += ac3;
+
+        this.abilityicon = sprite;
     }
     public void InvokeAction() 
     {
@@ -58,6 +60,9 @@ public class RouletteManager : MonoBehaviour
     [Header("===UI===")]
     [SerializeField] private RouletteUi rouletteUi; 
     [SerializeField] private GameObject roulettPanel;
+
+    [Header("===Sprite===")]
+    [SerializeField] Sprite[] iconSprite;
 
     private void Awake()
     {
@@ -139,54 +144,54 @@ public class RouletteManager : MonoBehaviour
     {
         #region Rare 
         stateToAbility[AblityState.Rare].Add(
-            new Ability("데미지 증가", "데미지가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Damage)));
+            new Ability("데미지 증가", "데미지가 소폭 증가합니다", iconSprite[0] ,() => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Damage)) );
         stateToAbility[AblityState.Rare].Add(
-            new Ability("최대 체력 증가", "최대 체력이 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.MaxHP)));
+            new Ability("최대 체력 증가", "최대 체력이 소폭 증가합니다", iconSprite[1], () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.MaxHP)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("방어력 증가", "방어력이 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence)));
+            new Ability("방어력 증가", "방어력이 소폭 증가합니다", iconSprite[2], () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("크리티컬 비율 증가", "크리티컬 비율이 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritRate)));
+            new Ability("크리티컬 비율 증가", "크리티컬 비율이 소폭 증가합니다", iconSprite[3], () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritRate)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("크리티컬 데미지 증가", "크리티컬 데미지가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritDamage)));
+            new Ability("크리티컬 데미지 증가", "크리티컬 데미지가 소폭 증가합니다", iconSprite[4], () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritDamage)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("이동속도 증가", "이동속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(2f, PlayerManager.PlayerStat.MoveSpeed)));
+            new Ability("이동속도 증가", "이동속도가 소폭 증가합니다", iconSprite[5], () => PlayerManager.Instance.UpdateStat(2f, PlayerManager.PlayerStat.MoveSpeed)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("공격속도 증가", "공격속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed)));
+            new Ability("공격속도 증가", "공격속도가 소폭 증가합니다", iconSprite[6], () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("발사체 속도 증가", "발사체 속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
+            new Ability("발사체 속도 증가", "발사체 속도가 소폭 증가합니다", iconSprite[7], () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("동시 발사 갯수 증가", "동시에 발사 가능한 투사체 갯수가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(1f, PlayerManager.PlayerStat.NumOfOneShot)));
+            new Ability("동시 발사 갯수 증가", "동시에 발사 가능한 투사체 갯수가 소폭 증가합니다", iconSprite[8], () => PlayerManager.Instance.UpdateStat(1f, PlayerManager.PlayerStat.NumOfOneShot)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("연속 발사 갯수 증가", "연속으로 발사 가능한 투사체 갯수가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(1f, PlayerManager.PlayerStat.NumOfShooting)));
+            new Ability("연속 발사 갯수 증가", "연속으로 발사 가능한 투사체 갯수가 소폭 증가합니다", iconSprite[9], () => PlayerManager.Instance.UpdateStat(1f, PlayerManager.PlayerStat.NumOfShooting)));
         #endregion
 
         #region Epic
         stateToAbility[AblityState.Epic].Add(
-            new Ability("바위처럼 단단하게!", "방어력과 최대체력이 동시에 증가합니다", 
+            new Ability("바위처럼 단단하게!", "방어력과 최대체력이 동시에 증가합니다", iconSprite[10],
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.MaxHP)));
         stateToAbility[AblityState.Epic].Add(
-            new Ability("한방을 노려", "크리티컬 비율과 데미지가 동시에 증가합니다",
+            new Ability("한방을 노려", "크리티컬 비율과 데미지가 동시에 증가합니다", iconSprite[11],
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritRate),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritDamage)));
         stateToAbility[AblityState.Epic].Add(
-            new Ability("내 총이 불을 내뿜는군", "동시 발사 갯수와 연속 발사 갯수가 동시에 증가합니다",
+            new Ability("내 총이 불을 내뿜는군", "동시 발사 갯수와 연속 발사 갯수가 동시에 증가합니다", iconSprite[12],
                 () => PlayerManager.Instance.UpdateStat(2f, PlayerManager.PlayerStat.NumOfShooting),
                 () => PlayerManager.Instance.UpdateStat(2f, PlayerManager.PlayerStat.NumOfOneShot)));
         stateToAbility[AblityState.Epic].Add(
-            new Ability("빠르게 없애주지", "공격속도와 발사체 속도가 동시에 증가합니다",
+            new Ability("빠르게 없애주지", "공격속도와 발사체 속도가 동시에 증가합니다", iconSprite[13],
                 () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
         #endregion
 
         #region Legendary
         stateToAbility[AblityState.Legendary].Add(
-            new Ability("이제 결판내볼까요?", "공격력이 대폭 증가합니다",
+            new Ability("이제 결판내볼까요?", "공격력이 대폭 증가합니다", iconSprite[14],
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence)));
         stateToAbility[AblityState.Legendary].Add(
-            new Ability("방출하세요", "이동속도,공격속도,발사체 속도 모두 증가합니다",
+            new Ability("방출하세요", "이동속도,공격속도,발사체 속도 모두 증가합니다", iconSprite[15],
                 () => PlayerManager.Instance.UpdateStat(3f, PlayerManager.PlayerStat.MoveSpeed),
                 () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
