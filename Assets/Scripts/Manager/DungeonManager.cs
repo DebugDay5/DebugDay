@@ -45,7 +45,23 @@ public class DungeonManager : MonoBehaviour
 
     public void Awake()
     {
-        if(Instance == null)
+        Debug.Log("Awake() 실행됨");  // 실행 자체가 되는지 확인
+
+        // postProcessVolume 자동 할당
+        if (postProcessVolume == null)
+        {
+            postProcessVolume = FindObjectOfType<PostProcessVolume>();
+            if (postProcessVolume == null)
+            {
+                Debug.LogError("postProcessVolume을 찾을 수 없음! 씬에 PostProcessVolume이 있는지 확인하라.");
+            }
+            else
+            {
+                Debug.Log("postProcessVolume 자동 할당 완료!");
+            }
+        }
+
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -59,9 +75,23 @@ public class DungeonManager : MonoBehaviour
         currentStage = 0;  // 현재 스테이지 번호 초기화
         passedNum = 0;  // 통과한 방의 수를 check하는 넘버를 초기화
 
-        postProcessVolume.profile.TryGetSettings(out colorGrading);   
-        colorGrading.postExposure.value = 0f;  // 배경색상 초기화
-        colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
+        if (postProcessVolume.profile == null)
+        {
+            Debug.LogError("postProcessVolume.profile이 null임! 프로파일을 설정했는지 확인하라.");
+        }
+        else
+        {
+            postProcessVolume.profile.TryGetSettings(out colorGrading);
+            if (colorGrading == null)
+            {
+                Debug.LogError("ColorGrading이 PostProcessProfile에 추가되지 않음.");
+            }
+            else
+            {
+                colorGrading.postExposure.value = 0f;  // 배경색상 초기화
+                colorGrading.colorFilter.value = new Color(1f, 1f, 1f, 0);  // 배경색상 초기화
+            }
+        }
 
         winLosePanel.SetActive(false); // 승패 화면을 숨김
         winLoseText.gameObject.SetActive(false);  // 승패 텍스트 숨김
