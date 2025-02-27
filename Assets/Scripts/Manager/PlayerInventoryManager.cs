@@ -70,6 +70,8 @@ public class PlayerInventoryManager : MonoBehaviour // 플레이어가 보유중인 장비�
             SaveInventory();
             Debug.Log($"{item.name} 제거 완료. 저장됨");
         }
+        else
+            Debug.LogError($"{item.name} 제거 실패 - 인벤토리에 존재하지 않음.");
     }
 
     public void EquipItem(string itemType, Item item)
