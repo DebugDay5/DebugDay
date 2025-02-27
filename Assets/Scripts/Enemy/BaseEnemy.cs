@@ -77,7 +77,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
     public virtual void TakeDamage(float damage)
     {
-        HP -= PlayerManager.Instance.Damage;
+        HP -= damage;
 
         if (animationHandler != null)
         {
