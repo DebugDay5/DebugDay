@@ -22,9 +22,11 @@ public class UIManager : MonoBehaviour
 
     [Header("===Text===")]
     [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI playerNameText;
 
     [Header("===Profile Panel===")]
-    [SerializeField] TextMeshProUGUI[] stateText;
+    [SerializeField] TextMeshProUGUI statePlayerName;
+    [SerializeField] TextMeshProUGUI[] stateText;  
 
     private Stack<GameObject> PanelStack;
 
@@ -50,6 +52,9 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         UpdateGoldText();
+
+        playerNameText.text = GameManager.Instance.playerName;
+        statePlayerName.text = GameManager.Instance.playerName;
     }
 
     // 현재 panel을 Off, 들어온패널 On

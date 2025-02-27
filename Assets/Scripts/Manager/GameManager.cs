@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("===playerState===")]
 
     public float[] playerStat = new float[11]; //플레이어 매니저의 enum과 같음 //0번 index는 사용하지 않음
+    public string playerName;
 
     [Header("===GOld===")]
     private int gold = 100;
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
 
         // 인스턴스가 없으면 현재 인스턴스 설정
         instance = this;
+
+        playerName = "스파르타";
 
         // 플레이어 스탯 초기화
         playerStat[0] = 0f;     //no usage
