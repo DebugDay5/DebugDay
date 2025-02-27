@@ -87,7 +87,17 @@ public class SoundManager : MonoBehaviour
     {
         try
         {
-            audioSource.PlayOneShot(backGroundClip[(int)sound]);
+            //audioSource.PlayOneShot(backGroundClip[(int)sound]);
+
+            // 현재 재생 중인 사운드가 있으면 중지
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+
+            // 새 클립 설정 후 재생
+            audioSource.clip = backGroundClip[(int)sound];
+            audioSource.Play();
         }
         catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
     }
@@ -108,6 +118,7 @@ public class SoundManager : MonoBehaviour
         try
         {
             audioSource.PlayOneShot(dungeonSound[(int)sound]);
+            Debug.Log(sound.ToString() + "실행");
         }
         catch (Exception ex) { Debug.Log($"SoundManager 오류 : {ex}"); }
     }

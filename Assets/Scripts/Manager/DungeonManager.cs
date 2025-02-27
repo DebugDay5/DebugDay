@@ -43,6 +43,12 @@ public class DungeonManager : MonoBehaviour
 
     private bool isClearChecked;
 
+    public bool isEnterFirstRoom = false;
+
+    [Header("===사운드===")]
+    public GameObject audioObj;
+    public AudioSource dungeonAudioSource;
+
     public void Awake()
     {
         if (Instance == null)
@@ -68,6 +74,10 @@ public class DungeonManager : MonoBehaviour
         loseUiCanvas.gameObject.SetActive(false);
 
         remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;  // 던전 내 몬스터 수 세기
+
+        dungeonAudioSource = audioObj.GetComponent<AudioSource>();
+        // 기본 배경음 실행
+        SoundManager.Instance.PlaySounds(dungeonAudioSource , BGM.DungeonRoom);
     }
 
     public void SetCurrentMap(DungeonSO dungeonData)  // 현재 던전 데이터. ScriptableObject를 불러와 사용
@@ -83,6 +93,7 @@ public class DungeonManager : MonoBehaviour
             OnDungeonClear();  // 문 열기
             isClearChecked = true;
 
+            isEnterFirstRoom = true;
         }
 
         if (player == null || !player.gameObject.activeInHierarchy)
@@ -92,6 +103,9 @@ public class DungeonManager : MonoBehaviour
                 Debug.Log("플레이어 사망 - UI 실행");
                 isGameOver = true;
                 ShowWinLoseUI(false);
+
+                // 실패 사운드
+                SoundManager.Instance.PlaySounds(dungeonAudioSource, DungeonSound.Fail);
             }
         }
     }
@@ -124,6 +138,10 @@ public class DungeonManager : MonoBehaviour
                 colorGrading.colorFilter.value = new Color(1f,0.3f,0.3f,0);
                 break;
             case 2:  // 보스 맵 로드
+                // 보스방 사운드 실행
+                SoundManager.Instance.PlaySounds(dungeonAudioSource, BGM.BossRoom);
+
+                // 보스 맵 로드
                 currentDungeon = Instantiate(GetUniqueDungeon(bossDungeon, usedBossIndices));
                 colorGrading.postExposure.value = 6.93f;  // 보스맵 배경 파란색
                 colorGrading.colorFilter.value = new Color(0.0055f, 0.0105f, 0.0943f, 0);
@@ -165,6 +183,9 @@ public class DungeonManager : MonoBehaviour
 
         if (currentGate != null)
         {
+            // 문열리는 사운드 
+            SoundManager.Instance.PlaySounds(dungeonAudioSource, DungeonSound.EnterDoor);
+
             currentGate.OpenGate();  // 던전 클리어 후 게이트를 연다
         }
         else
@@ -179,6 +200,9 @@ public class DungeonManager : MonoBehaviour
         {
             isBossDungeonCleared = true;
             ShowWinLoseUI(true); // 성공한 경우의 ui 실행 
+
+            // 성공 사운드
+            SoundManager.Instance.PlaySounds(dungeonAudioSource, DungeonSound.Success);
         }
 
         if (player == null)
@@ -187,6 +211,15 @@ public class DungeonManager : MonoBehaviour
             isGameOver = true;  
             ShowWinLoseUI(false);  // 실패한 경우의 ui 실행
         }
+
+        if (isEnterFirstRoom && (!isBossDungeonCleared))
+            RouletteManager.Instance.StartRulette();
+        else if(isEnterFirstRoom && (!isGameOver))
+            RouletteManager.Instance.StartRulette();
+
+        if (isBossDungeonCleared)
+            RouletteManager.Instance.OffPanel();
+
     }
 
     public void ShowWinLoseUI(bool isWin)
