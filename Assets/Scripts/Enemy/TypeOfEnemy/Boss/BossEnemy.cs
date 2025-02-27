@@ -11,12 +11,14 @@ public class BossEnemy : BaseEnemy
     private bool isSecondPhase = false; // 2페이즈
     private bool isArmorBroken = false; // BreakArmor 실행 여부
     private bool canAttack = true;
-    private bool isDead = false; // 보스 처치 여부
+    public bool isDead = false; // 보스 처치 여부
     private BossState currentState; // 현재 페이즈
     private BossAnimatorController animatorController;
     public GameObject firstProjectilePrefab;
     public GameObject stone;
     public Transform attackPoint;
+
+    private bool isInvulnerable = false;
 
     protected override void Awake()
     {
@@ -45,12 +47,25 @@ public class BossEnemy : BaseEnemy
         currentState.Attack(); // 현재 페이즈 공격
     }
 
+    public override void TakeDamage(float damage)
+    {
+        if (isDead || isInvulnerable) return;
+        base.TakeDamage(damage);
+
+        if (HP <= 0)
+        {
+            isDead = true;
+            StartCoroutine(BossDie());
+        }
+    }
+
     private IEnumerator BossAttackPattern() // 현재 페이즈 공격 패턴
     {
         while (!isDead && HP > 0)
         {
             if (isTransitioning || isArmorBroken || !canAttack) yield break;
             yield return new WaitForSeconds(attackCooldown);
+            if (isDead) yield break;
             if (!isDead && !isArmorBroken && canAttack) currentState.Attack();
         }
     }
@@ -60,33 +75,38 @@ public class BossEnemy : BaseEnemy
         if (HP <= 1000 * 0.5f && !isSecondPhase && !isTransitioning)
         {
             isTransitioning = true;
-            StopAllCoroutines();
             StartCoroutine(TransitionToSecondPhase());
         }
     }
 
     private IEnumerator TransitionToSecondPhase()
     {
-        if (isDead) yield break;
         isTransitioning = true;
+        isInvulnerable = true;
         animatorController.PhaseTransition(true);
 
         float animationLength = animatorController.GetAnimationLength("PhaseTransition");
         yield return new WaitForSeconds(animationLength);
 
-        if (isDead) yield break;
         animatorController.PhaseTransition(false);
         isSecondPhase = true;
         isTransitioning = false;
+
         GetComponent<Animator>().runtimeAnimatorController = secondPhaseAnimator;
         currentState = new BossSecondPhase(this);
+        
+        isInvulnerable = false;
         StartCoroutine(BossAttackPattern());
+
+        if (HP <= 0)
+        {
+            StartCoroutine(BossDie());
+            yield break;
+        }
     }
 
     private void CheckLowHealthPhase() // 체력 10% 이하
     {
-        if (isDead) return;
-
         if (HP <= 1000 * 0.1f && isSecondPhase && !isArmorBroken)
         {
             canAttack = false;
@@ -101,42 +121,50 @@ public class BossEnemy : BaseEnemy
 
     private IEnumerator ExecuteBreakArmorAndLast()
     {
+        isInvulnerable = true;
         isArmorBroken = true;
         yield return StartCoroutine(BreakArmor());
         yield return StartCoroutine(Last());
+        isInvulnerable = false;
     }
 
     private IEnumerator BreakArmor()
     {
-        if (isDead) yield break;
         animatorController.SecondBreakArmor(true);
 
         float animationLength = animatorController.GetAnimationLength("BreakArmor");
         yield return new WaitForSeconds(animationLength);
 
-        if (isDead) yield break;
         animatorController.SecondBreakArmor(false);
+            if (HP <= 0)
+    {
+        StartCoroutine(BossDie());
+    }
     }
 
     private IEnumerator Last()
     {
-        if (isDead) yield break;
         animatorController.SecondLast(true);
 
         float animationLength = animatorController.GetAnimationLength("Last");
         yield return new WaitForSeconds(animationLength);
-    }
 
-    private IEnumerator BossDie() // 처치 애니메이션
+        animatorController.SecondLast(false);
+            if (HP <= 0)
     {
-        if (isDead) yield break;
-        isDead = true;
-        StopAllCoroutines();
-        animatorController.BossDie(true);
-
-        float animationLength = animatorController.GetAnimationLength("BossDie");
-        yield return new WaitForSeconds(animationLength);
-        
-        Destroy(gameObject);
+        StartCoroutine(BossDie());
     }
+    }
+
+private IEnumerator BossDie()
+{
+    isDead = true;
+    animatorController.BossDie(true);
+
+    float animationLength = animatorController.GetAnimationLength("BossDie");
+    yield return new WaitForSeconds(animationLength);
+
+    Destroy(gameObject);
+}
+
 }
