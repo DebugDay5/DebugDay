@@ -25,5 +25,13 @@ public class InventoryUI : MonoBehaviour    //인벤토리 화면 UI
 
             itemSlot.Setup(item);
         }
+        Debug.Log("인벤토리 UI 갱신됨.");
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+            Debug.Log("UI 입력 다시 활성화됨 (RefreshInventory 실행)");
+        }
     }
 }
