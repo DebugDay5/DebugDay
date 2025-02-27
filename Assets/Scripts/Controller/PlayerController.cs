@@ -33,7 +33,9 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI healthBarText;
 
     public Vector2 minBounds;  
-    public Vector2 maxBounds;  
+    public Vector2 maxBounds;
+
+    [SerializeField] private AudioSource audioSource;
 
     private void Awake()
     {
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour
         shootTime = playerManager.AttackSpeed;
         shootNum = playerManager.NumOfShooting;
         healthBarText.text = playerManager.Hp.ToString();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -142,7 +146,7 @@ public class PlayerController : MonoBehaviour
         if (shootTime < 0)
         {
             isShooting = true;
-
+            SoundManager.Instance.PlaySounds(audioSource, PlayerSound.Shoot);
             MakeProjectile();
         }
     }
@@ -178,6 +182,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (isInvincible) return; //무적 시간
+        if (isDead) return;
         
         playerManager.Hp -= damage;
         HealthBar.GetComponent<Slider>().value = playerManager.Hp / playerManager.MaxHp;
@@ -188,12 +193,14 @@ public class PlayerController : MonoBehaviour
             playerManager.PlayerDead();
             isDead = true;
             Invoke("DeletePlayer", 3f); //3초뒤 삭제 
+            SoundManager.Instance.PlaySounds(audioSource, PlayerSound.Die);
             return;
         }
 
         isInvincible = true;
         _animator.SetBool("IsInvincible", true);
         Invoke("InvincibleChange", 0.5f); //0.5초 무적
+        SoundManager.Instance.PlaySounds(audioSource, PlayerSound.Hit);
     }
 
     private void InvincibleChange()
