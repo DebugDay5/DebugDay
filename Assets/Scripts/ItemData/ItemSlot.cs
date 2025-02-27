@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,9 +20,15 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     private Item itemData;
     private InventoryUI inventoryUI;
+    private GameManager gameManager;
 
     public void Start()
     {
+        gameManager = GameManager.Instance;
+
+        if (gameManager == null)
+            Debug.LogError("ItemSlotÀÇ Start()¿¡¼­ GameManager ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!", this);
+
         if (inventoryUI == null)
             inventoryUI = FindObjectOfType<InventoryUI>();
 
@@ -191,6 +198,7 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
 
     public void EquipItem()    // ÀåÂø¹öÆ°
     {
+
         Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {(itemData != null ? itemData.name : "NULL")}");     // ¿©±â¼­ NULLÀÌ¾úÀ½ ÀÌ ÀÌÀü½ÃÁ¡¿¡ NULLÀÎÁö È®ÀÎÇÊ¿ä
         if (itemData == null)
         {
@@ -198,19 +206,27 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             return;
         }
 
-        Debug.Log($"EquipItem() ½ÇÇàµÊ itemData »óÅÂ: {itemData.name}"); // ¿©±â¼± °©ÀÚ±â µ¥ÀÌÅÍ ÀÖÀ½ - itemData´Â nullÀÎµ¥ itemData.name´Â nullÀÌ ¾Æ´Ò ¼ö°¡ ÀÖ³ª?
-
         var inventoryManager = PlayerInventoryManager.Instance;
+        var gameManager = GameManager.Instance;
+        var playerManager = PlayerManager.Instance;
+
         if (inventoryManager == null)
         {
             Debug.LogError("PlayerInventoryManager ÀÎ½ºÅÏ½º°¡ NULL");
             return;
         }
-        var gameManager = GameManager.Instance;
-        var playerManager = PlayerManager.Instance;
+        if (gameManager == null)
+        {
+            Debug.LogError("EquipItem() ½ÇÇà ½ÇÆÐ - GameManager ÀÎ½ºÅÏ½º°¡ NULLÀÔ´Ï´Ù.");
+            return;
+        }
+        if (playerManager == null)
+        {
+            Debug.LogError("EquipItem() ½ÇÇà ½ÇÆÐ - PlayerManager ÀÎ½ºÅÏ½º°¡ NULLÀÔ´Ï´Ù.");
+            return;
+        }
 
         string itemType = itemData.type;
-
         EquipSlot equipSlot = FindEquipSlot(itemType);
 
         if (equipSlot == null)
@@ -226,15 +242,28 @@ public class ItemSlot : MonoBehaviour   // ÀÎº¥Åä¸® È­¸é ¾ÆÀÌÅÛ½½·Ô¿¡ ¾ÆÀÌÅÛ ¹èÄ
             equipSlot.UnequipItem();
         }
 
+        Debug.Log($"ÀåÂøÇÒ ¾ÆÀÌÅÛ: {itemData.name}");
+
         foreach (var stat in itemData.stats)
         {
             int statCode = stat.Key;
             float statValue = stat.Value;
 
-            // °ÔÀÓ ¸Å´ÏÀú
-            gameManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
-            // ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ ½ºÅÈ
-            playerManager.UpdateStat(statValue, (PlayerManager.PlayerStat)statCode);
+            // statCode°¡ PlayerStatÀÇ À¯È¿ÇÑ °ªÀÎÁö È®ÀÎ ÈÄ Àû¿ë
+            if (Enum.IsDefined(typeof(PlayerManager.PlayerStat), statCode))
+            {
+                var playerStat = (PlayerManager.PlayerStat)statCode;
+
+                // GameManager¿Í PlayerManager¿¡ ½ºÅÈ Àû¿ë
+                gameManager.UpdateStat(statValue, playerStat);
+                playerManager.UpdateStat(statValue, playerStat);
+
+                Debug.Log($"{playerStat} Áõ°¡: {statValue}");
+            }
+            else
+            {
+                Debug.LogError($"EquipItem() ¿À·ù - {statCode}´Â PlayerStat¿¡ Á¤ÀÇµÇÁö ¾ÊÀº °ªÀÔ´Ï´Ù.");
+            }
         }
 
         // ¾ÆÀÌÅÛ ÀåÂø
