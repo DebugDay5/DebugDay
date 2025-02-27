@@ -12,7 +12,7 @@ public class Crab : BaseEnemy
     protected override void Awake()
     {
         base.Awake();
-        hp = 50;
+        hp = 20;
         speed = 2f;
         damage = 5;
         gold = 5;

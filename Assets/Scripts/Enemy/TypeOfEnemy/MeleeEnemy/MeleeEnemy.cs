@@ -12,8 +12,8 @@ public class MeleeEnemy : BaseEnemy
     protected override void Awake()
     {
         base.Awake();
-        hp = 100;
-        speed = 1.5f;
+        hp = 30;
+        speed = 1f;
         damage = 10;
         gold = 5;
     }
