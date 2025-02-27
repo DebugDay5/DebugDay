@@ -149,9 +149,9 @@ public class RouletteManager : MonoBehaviour
         stateToAbility[AblityState.Rare].Add(
             new Ability("크리티컬 데미지 증가", "크리티컬 데미지가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.CritDamage)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("이동속도 증가", "이동속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.MoveSpeed)));
+            new Ability("이동속도 증가", "이동속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(2f, PlayerManager.PlayerStat.MoveSpeed)));
         stateToAbility[AblityState.Rare].Add(
-            new Ability("공격속도 증가", "공격속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.AttackSpeed)));
+            new Ability("공격속도 증가", "공격속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed)));
         stateToAbility[AblityState.Rare].Add(
             new Ability("발사체 속도 증가", "발사체 속도가 소폭 증가합니다", () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
         stateToAbility[AblityState.Rare].Add(
@@ -175,7 +175,7 @@ public class RouletteManager : MonoBehaviour
                 () => PlayerManager.Instance.UpdateStat(2f, PlayerManager.PlayerStat.NumOfOneShot)));
         stateToAbility[AblityState.Epic].Add(
             new Ability("빠르게 없애주지", "공격속도와 발사체 속도가 동시에 증가합니다",
-                () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.AttackSpeed),
+                () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
         #endregion
 
@@ -187,8 +187,8 @@ public class RouletteManager : MonoBehaviour
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.Defence)));
         stateToAbility[AblityState.Legendary].Add(
             new Ability("방출하세요", "이동속도,공격속도,발사체 속도 모두 증가합니다",
-                () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.MoveSpeed),
-                () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.AttackSpeed),
+                () => PlayerManager.Instance.UpdateStat(3f, PlayerManager.PlayerStat.MoveSpeed),
+                () => PlayerManager.Instance.UpdateStat(-0.1f, PlayerManager.PlayerStat.AttackSpeed),
                 () => PlayerManager.Instance.UpdateStat(5f, PlayerManager.PlayerStat.ShotSpeed)));
         #endregion
     }
