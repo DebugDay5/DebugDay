@@ -90,11 +90,11 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Init();
     }
 
     private void Start()
     {
-        Init();
     }
 
     private void Init() //스탯 초기화를 해줘야 되는 경우
