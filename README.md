@@ -18,6 +18,12 @@ Unity - 궁수의 전설 모작
 - `C#`
 - `Unity 2022.3.17f`
 
+### 🖥️시연 영상
+[Youtubue](https://youtu.be/kf-juVuOngY)
+<br>
+### 🖥️빌드 파일
+<br>
+
 ---
 
 ## 📌 주요 기능
